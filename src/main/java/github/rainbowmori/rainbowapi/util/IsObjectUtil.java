@@ -10,27 +10,27 @@ public class IsObjectUtil {
         return is instanceof Component;
     }
 
-    public static Optional<Integer> IsInt(String s) {
+    public static int IsInt(String s) {
         try {
-            return Optional.of(Integer.parseInt(s));
+            return Integer.parseInt(s);
         } catch (NumberFormatException ex) {
-            return Optional.empty();
+            return -1;
         }
     }
 
-    public static Optional<Float> IsFloat(String s) {
+    public static float IsFloat(String s) {
         try {
-            return Optional.of(Float.parseFloat(s));
+            return Float.parseFloat(s);
         } catch (NumberFormatException ex) {
-            return Optional.empty();
+            return -1;
         }
     }
 
-    public static Optional<Double> IsDouble(String s) {
+    public static double IsDouble(String s) {
         try {
-            return Optional.of(Double.parseDouble(s));
+            return Double.parseDouble(s);
         } catch (NumberFormatException ex) {
-            return Optional.empty();
+            return -1;
         }
     }
 
