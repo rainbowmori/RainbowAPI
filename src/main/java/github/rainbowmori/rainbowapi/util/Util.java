@@ -85,4 +85,17 @@ public class Util {
     public static String Placeholder(Player player, String text) {
         return PlaceholderAPI.setPlaceholders(player, text);
     }
+
+    public static class Send {
+
+        private final Player p;
+        public Send(Player player) {
+            this.p = player;
+        }
+
+        public void send(Object text) {
+            Util.send(p,text);
+        }
+    }
+
 }
