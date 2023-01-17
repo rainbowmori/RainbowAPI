@@ -1,6 +1,7 @@
 package github.rainbowmori.rainbowapi;
 
 import com.google.gson.Gson;
+import github.rainbowmori.rainbowapi.listener.JoinQuitEvents;
 import github.rainbowmori.rainbowapi.object.ui.GuiListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -27,5 +28,6 @@ public final class RainbowAPI extends JavaPlugin {
         RainbowAPI.plugin = plugin;
         RainbowAPI.prefix = prefix;
         manager.registerEvents(GuiListener.getInstance(), plugin);
+        manager.registerEvents(new JoinQuitEvents(),plugin);
     }
 }
