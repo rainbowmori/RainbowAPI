@@ -6,6 +6,7 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P>{
@@ -16,27 +17,27 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P>{
 
     public MenuHolder(PlayerData playerData, P plugin, InventoryType type, String title, MenuButton<?>[] buttons) {
         super(playerData, plugin, type, title);
-        this.buttons = buttons;
+        this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[type.getDefaultSize()]);
     }
 
     public MenuHolder(PlayerData playerData, P plugin, int size, String title, MenuButton<?>[] buttons) {
         super(playerData, plugin, size, title);
-        this.buttons = buttons;
+        this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[size]);
     }
 
     public MenuHolder(PlayerData playerData, P plugin, InventoryType type, MenuButton<?>[] buttons) {
         super(playerData, plugin, type);
-        this.buttons = buttons;
+        this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[type.getDefaultSize()]);
     }
 
     public MenuHolder(PlayerData playerData, P plugin, int size, MenuButton<?>[] buttons) {
         super(playerData, plugin, size);
-        this.buttons = buttons;
+        this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[size]);
     }
 
     public MenuHolder(PlayerData playerData, P plugin, Inventory inventory, MenuButton<?>[] buttons) {
         super(playerData, plugin, inventory);
-        this.buttons = buttons;
+        this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[inventory.getSize()]);
     }
 
 
