@@ -1,6 +1,5 @@
 package github.rainbowmori.rainbowapi.object;
 
-import github.rainbowmori.rainbowapi.object.PlayerData;
 import github.rainbowmori.rainbowapi.util.Util;
 
 import java.util.*;
@@ -9,7 +8,7 @@ import java.util.function.Predicate;
 
 public class PlayerInput {
 
-    private final PlayerData data;
+    private final RMData data;
     private final Consumer<List<String>> consumer;
     private final int getTexts;
     private final List<String> texts = new ArrayList<>();
@@ -18,11 +17,11 @@ public class PlayerInput {
 
     private final boolean cancelable;
 
-    public PlayerInput(PlayerData data, int getTexts, boolean cancelable, Consumer<List<String>> consumer) {
+    public PlayerInput(RMData data, int getTexts, boolean cancelable, Consumer<List<String>> consumer) {
         this(data, getTexts, cancelable, consumer, new HashMap<>());
     }
 
-    public PlayerInput(PlayerData data, int getTexts, boolean cancelable,
+    public PlayerInput(RMData data, int getTexts, boolean cancelable,
                        Consumer<List<String>> consumer, Map<Integer, Predicate<String>> predicates) {
         this.data = data;
         this.getTexts = getTexts;

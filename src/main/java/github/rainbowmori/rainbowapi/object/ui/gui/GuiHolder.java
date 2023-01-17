@@ -1,6 +1,6 @@
 package github.rainbowmori.rainbowapi.object.ui.gui;
 
-import github.rainbowmori.rainbowapi.object.PlayerData;
+import github.rainbowmori.rainbowapi.object.RMData;
 import github.rainbowmori.rainbowapi.util.Util;
 import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
@@ -13,44 +13,44 @@ import java.util.Objects;
 
 public abstract class GuiHolder<P extends JavaPlugin> implements InventoryHolder {
 
-    protected final PlayerData playerData;
+    protected final RMData RMData;
 
     private final Inventory inventory;
 
     private final P plugin;
 
-    public GuiHolder(PlayerData playerData, P plugin, InventoryType type, String title) {
-        this.playerData = playerData;
+    public GuiHolder(RMData RMData, P plugin, InventoryType type, String title) {
+        this.RMData = RMData;
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, type, Util.mm(title));
     }
 
-    public GuiHolder(PlayerData playerData, P plugin, int size, String title) {
-        this.playerData = playerData;
+    public GuiHolder(RMData RMData, P plugin, int size, String title) {
+        this.RMData = RMData;
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, size, Util.mm(title));
     }
 
-    public GuiHolder(PlayerData playerData, P plugin, InventoryType type) {
-        this.playerData = playerData;
+    public GuiHolder(RMData RMData, P plugin, InventoryType type) {
+        this.RMData = RMData;
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, type);
     }
 
-    public GuiHolder(PlayerData playerData, P plugin, int size) {
-        this.playerData = playerData;
+    public GuiHolder(RMData RMData, P plugin, int size) {
+        this.RMData = RMData;
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, size);
     }
 
-    public GuiHolder(PlayerData playerData, P plugin, Inventory inventory) {
-        this.playerData = playerData;
+    public GuiHolder(RMData RMData, P plugin, Inventory inventory) {
+        this.RMData = RMData;
         this.plugin = Objects.requireNonNull(plugin, "Plugin cannot be null");
         this.inventory = Objects.requireNonNull(inventory, "Inventory cannot be null");
     }
 
     public void open() {
-        playerData.getPlayer().openInventory(getInventory());
+        RMData.getPlayer().openInventory(getInventory());
     }
 
     @Override

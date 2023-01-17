@@ -1,6 +1,6 @@
 package github.rainbowmori.rainbowapi.object.ui.gui;
 
-import github.rainbowmori.rainbowapi.object.PlayerData;
+import github.rainbowmori.rainbowapi.object.RMData;
 import github.rainbowmori.rainbowapi.object.ui.button.MenuButton;
 import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
@@ -15,28 +15,28 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P>{
 
     private final MenuButton<?>[] buttons;
 
-    public MenuHolder(PlayerData playerData, P plugin, InventoryType type, String title, MenuButton<?>[] buttons) {
-        super(playerData, plugin, type, title);
+    public MenuHolder(RMData RMData, P plugin, InventoryType type, String title, MenuButton<?>[] buttons) {
+        super(RMData, plugin, type, title);
         this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[type.getDefaultSize()]);
     }
 
-    public MenuHolder(PlayerData playerData, P plugin, int size, String title, MenuButton<?>[] buttons) {
-        super(playerData, plugin, size, title);
+    public MenuHolder(RMData RMData, P plugin, int size, String title, MenuButton<?>[] buttons) {
+        super(RMData, plugin, size, title);
         this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[size]);
     }
 
-    public MenuHolder(PlayerData playerData, P plugin, InventoryType type, MenuButton<?>[] buttons) {
-        super(playerData, plugin, type);
+    public MenuHolder(RMData RMData, P plugin, InventoryType type, MenuButton<?>[] buttons) {
+        super(RMData, plugin, type);
         this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[type.getDefaultSize()]);
     }
 
-    public MenuHolder(PlayerData playerData, P plugin, int size, MenuButton<?>[] buttons) {
-        super(playerData, plugin, size);
+    public MenuHolder(RMData RMData, P plugin, int size, MenuButton<?>[] buttons) {
+        super(RMData, plugin, size);
         this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[size]);
     }
 
-    public MenuHolder(PlayerData playerData, P plugin, Inventory inventory, MenuButton<?>[] buttons) {
-        super(playerData, plugin, inventory);
+    public MenuHolder(RMData RMData, P plugin, Inventory inventory, MenuButton<?>[] buttons) {
+        super(RMData, plugin, inventory);
         this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[inventory.getSize()]);
     }
 

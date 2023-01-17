@@ -8,16 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class PlayerData {
-    public static final Map<Player, PlayerData> playerData = new HashMap<>();
+public class RMData {
+    public static final Map<Player, RMData> playerData = new HashMap<>();
 
-    public static PlayerData getData(Player player) {
+    public static RMData getData(Player player) {
         return playerData.get(player);
     }
 
     private final Player player;
 
-    public PlayerData(Player player) {
+    public RMData(Player player) {
         this.player = player;
         playerData.put(player, this);
     }
