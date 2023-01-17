@@ -12,7 +12,7 @@ public class ConsoleAction extends MenuCommandAction {
 
     @Override
     public void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
-        if (event.getWhoClicked() instanceof Player player) Util.console(player, getCommand());
+        if (event.getWhoClicked() instanceof Player player) Util.consoleCommand(player, getCommand());
     }
 
     @Override

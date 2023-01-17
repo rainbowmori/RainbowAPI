@@ -12,9 +12,16 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class Util {
+
+    private static final Logger log = Logger.getLogger("[RMLOG]");
+    public static void log(Object object) {
+        log.log(Level.INFO,RainbowAPI.getPlugin().getName() + " | " + object);
+    }
 
     public static void send(UUID uuid, Object str) {
         send(Bukkit.getPlayer(uuid), str);
@@ -58,19 +65,19 @@ public class Util {
         return MiniMessage.miniMessage().serialize(str);
     }
 
-    public static void console(String command) {
+    public static void consoleCommand(String command) {
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
     }
 
-    public static void console(Player player, String command) {
-        console(Placeholder(player, command));
+    public static void consoleCommand(Player player, String command) {
+        consoleCommand(Placeholder(player, command));
     }
 
-    public static void execute(Player player, String command) {
-        execute(player, command, player);
+    public static void executeCommand(Player player, String command) {
+        executeCommand(player, command, player);
     }
 
-    public static void execute(Player execute, String command, Player player) {
+    public static void executeCommand(Player execute, String command, Player player) {
         if (player.isOp()) execute.performCommand(Placeholder(player, command));
         else {
             try {

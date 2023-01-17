@@ -12,7 +12,7 @@ public class OPCommandAction extends MenuCommandAction {
 
     @Override
     public void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
-        if (event.getWhoClicked() instanceof Player player) Util.execute(player, getCommand());
+        if (event.getWhoClicked() instanceof Player player) Util.executeCommand(player, getCommand());
     }
 
     @Override

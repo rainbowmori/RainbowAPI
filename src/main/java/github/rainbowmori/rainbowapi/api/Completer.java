@@ -13,10 +13,9 @@ public abstract class Completer implements TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender,
                                                @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        int length = args.length;
         List<String> tab = returned(sender, command, label, args);
         return args[args.length - 1].isEmpty() ? tab : tab.stream().filter(s -> s.toLowerCase().
-                startsWith(args[length - 1].toLowerCase())).collect(Collectors.toList());
+                startsWith(args[args.length - 1].toLowerCase())).collect(Collectors.toList());
     }
 
     public abstract List<String> returned(@NotNull CommandSender sender,
