@@ -8,6 +8,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class JoinQuitEvents implements Listener {
 
+    private static final JoinQuitEvents INSTANCE = new JoinQuitEvents();
+
+    public static JoinQuitEvents getInstance() {
+        return INSTANCE;
+    }
+
     @EventHandler
     public void Join(PlayerJoinEvent e) {
         new RMData(e.getPlayer());
