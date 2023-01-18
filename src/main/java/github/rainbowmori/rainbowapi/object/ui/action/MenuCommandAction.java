@@ -1,6 +1,6 @@
 package github.rainbowmori.rainbowapi.object.ui.action;
 
-public class MenuCommandAction implements MenuAction {
+abstract class MenuCommandAction implements MenuAction {
 
     private final String command;
 

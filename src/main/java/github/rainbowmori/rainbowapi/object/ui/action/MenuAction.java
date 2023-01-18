@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 public interface MenuAction {
     default void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
-
     }
 
     static MenuAction createAction(String consumer) {
@@ -18,7 +17,7 @@ public interface MenuAction {
         return switch (args[0]) {
             case "chat" -> new ChatAction(collect(args));
             case "close" -> new CloseAction();
-            case "console" -> new ConsoleAction(collect(args));
+            case "console" -> new ConsoleCommandAction(collect(args));
             case "op" -> new OPCommandAction(collect(args));
             case "permission" -> new PermissionAction(args[1],createAction(
                     Arrays.stream(args, 2, args.length).collect(Collectors.joining(" "))));

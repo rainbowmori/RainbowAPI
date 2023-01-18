@@ -5,8 +5,8 @@ import github.rainbowmori.rainbowapi.util.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class ConsoleAction extends MenuCommandAction {
-    public ConsoleAction(String command) {
+public class ConsoleCommandAction extends MenuCommandAction {
+    public ConsoleCommandAction(String command) {
         super(command);
     }
 
