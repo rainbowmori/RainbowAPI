@@ -30,6 +30,10 @@ public class PlayerInput {
         this.predicates = Objects.requireNonNullElse(predicates, new HashMap<>());
     }
 
+    public void test() {
+        System.out.println(data);
+    }
+
     public void add(String str) {
         if (str.equals("cancel")) {
             if(cancelable) {
