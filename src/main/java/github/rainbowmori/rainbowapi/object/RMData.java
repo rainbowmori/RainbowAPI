@@ -1,5 +1,6 @@
 package github.rainbowmori.rainbowapi.object;
 
+import github.rainbowmori.rainbowapi.object.playerinput.PlayerInput;
 import github.rainbowmori.rainbowapi.util.Util;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
