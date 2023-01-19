@@ -9,7 +9,7 @@ public class SingleInput extends PlayerInput{
 
     private final Consumer<String> consumer;
 
-    public SingleInput(@NotNull RMData rmData, boolean cancelable,@NotNull Consumer<String> consumer) throws Exception {
+    public SingleInput(@NotNull RMData rmData, boolean cancelable,@NotNull Consumer<String> consumer) {
         super(rmData, 1, cancelable);
         this.consumer = consumer;
     }

@@ -17,14 +17,14 @@ public class MultiInput extends PlayerInput {
     private final Consumer<List<String>> consumer;
 
 
-    public MultiInput(@NotNull RMData rmData, int getInput, boolean cancelable, Consumer<List<String>> consumer) throws Exception {
+    public MultiInput(@NotNull RMData rmData, int getInput, boolean cancelable, Consumer<List<String>> consumer) {
         super(rmData, getInput, cancelable);
         this.consumer = consumer;
         this.predicates = new HashMap<>();
     }
 
     public MultiInput(@NotNull RMData rmData, int getInput, boolean cancelable,
-                      @NotNull Consumer<List<String>> consumer,@NotNull String[] predicates) throws Exception {
+                      @NotNull Consumer<List<String>> consumer,@NotNull String[] predicates) {
         super(rmData, getInput, cancelable);
         this.consumer = consumer;
         this.predicates = new HashMap<>() {{
@@ -36,7 +36,7 @@ public class MultiInput extends PlayerInput {
     }
 
     public MultiInput(@NotNull RMData rmData, int getInput, boolean cancelable,
-                     @NotNull Consumer<List<String>> consumer, @NotNull Map<Integer, Consumer<String>> predicates) throws Exception {
+                     @NotNull Consumer<List<String>> consumer, @NotNull Map<Integer, Consumer<String>> predicates) {
         super(rmData, getInput, cancelable);
         this.consumer = consumer;
         this.predicates = predicates;
