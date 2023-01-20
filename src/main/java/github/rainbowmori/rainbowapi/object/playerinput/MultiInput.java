@@ -17,15 +17,15 @@ public class MultiInput extends PlayerInput {
     private final Consumer<List<String>> consumer;
 
 
-    public MultiInput(@NotNull RMData rmData, int getInput, boolean cancelable, Consumer<List<String>> consumer) {
-        super(rmData, getInput, cancelable);
+    public MultiInput(String message,@NotNull RMData rmData, int getInput, boolean cancelable, Consumer<List<String>> consumer) {
+        super(message,rmData, getInput, cancelable);
         this.consumer = consumer;
         this.predicates = new HashMap<>();
     }
 
-    public MultiInput(@NotNull RMData rmData, int getInput, boolean cancelable,
+    public MultiInput(String message,@NotNull RMData rmData, int getInput, boolean cancelable,
                       @NotNull Consumer<List<String>> consumer,@NotNull String[] predicates) {
-        super(rmData, getInput, cancelable);
+        super(message,rmData, getInput, cancelable);
         this.consumer = consumer;
         this.predicates = new HashMap<>() {{
             for (int i = 0; i < getInput; i++) {
@@ -35,9 +35,9 @@ public class MultiInput extends PlayerInput {
         }};
     }
 
-    public MultiInput(@NotNull RMData rmData, int getInput, boolean cancelable,
+    public MultiInput(String message,@NotNull RMData rmData, int getInput, boolean cancelable,
                      @NotNull Consumer<List<String>> consumer, @NotNull Map<Integer, Consumer<String>> predicates) {
-        super(rmData, getInput, cancelable);
+        super(message,rmData, getInput, cancelable);
         this.consumer = consumer;
         this.predicates = predicates;
     }
@@ -46,6 +46,9 @@ public class MultiInput extends PlayerInput {
     public void get(String text) {
         texts.add(text);
         Optional.ofNullable(predicates.get(texts.size())).ifPresent(c -> c.accept(text));
-        if (texts.size() == getInput) consumer.accept(texts);
+        if (texts.size() == getInput) {
+            consumer.accept(texts);
+            cleared();
+        }
     }
 }

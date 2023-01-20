@@ -11,11 +11,6 @@ import java.util.logging.Level;
 
 public abstract class PlayerInput {
 
-    /*
-    playerInputをextendしてそれを工夫して
-    入力するたびにclearInputとsetInputとかをすればいいと思う
-     */
-
     protected final RMData data;
     protected final int getInput;
 
@@ -23,9 +18,11 @@ public abstract class PlayerInput {
 
     protected final boolean cancelable;
 
-    public PlayerInput(@NotNull RMData rmData, int getInput, boolean cancelable) {
-        if (getInput <= 0) RainbowAPI.getPlugin().getLogger().log(Level.WARNING, "getInputは1以上ではなければなりません");
-        else rmData.setPlayerInput(this);
+    public PlayerInput(String message,@NotNull RMData rmData, int getInput, boolean cancelable) {
+        if (getInput > 0) {
+            rmData.setPlayerInput(this);
+            Util.send(rmData.getPlayer(),message);
+        } else RainbowAPI.getPlugin().getLogger().log(Level.WARNING, "getInputは1以上ではなければなりません");
 
         this.data = rmData;
         this.getInput = getInput;
