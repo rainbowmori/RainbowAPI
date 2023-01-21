@@ -3,6 +3,7 @@ package github.rainbowmori.rainbowapi;
 import com.google.gson.Gson;
 import github.rainbowmori.rainbowapi.listener.JoinQuitEvents;
 import github.rainbowmori.rainbowapi.listener.PlayerChatEvent;
+import github.rainbowmori.rainbowapi.object.playerinput.SingleInput;
 import github.rainbowmori.rainbowapi.object.ui.GuiListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
