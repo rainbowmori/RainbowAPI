@@ -116,7 +116,7 @@ public class JsonAPI {
                 new File(plugin.getDataFolder() + path).mkdir();
             if (!file.exists() || new BufferedReader(new FileReader(file)).readLine() == null) {
                 file.createNewFile();
-                RainbowAPI.getPlugin().getLogger().info(name + "に{}を入力しています");
+                plugin.getLogger().info(name + "に{}を入力しています");
                 FileWriter writer = new FileWriter(file);
                 writer.write("{}");
                 writer.close();
@@ -128,7 +128,7 @@ public class JsonAPI {
     }
 
     public final void Remove() {
-        if (file.delete()) RainbowAPI.getPlugin().getLogger().info(name + "を削除しました");;
+        if (file.delete()) plugin.getLogger().info(name + "を削除しました");;
     }
 
     public final void Save() {

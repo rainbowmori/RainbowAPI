@@ -1,5 +1,0 @@
-name: RainbowAPI
-version: '${version}'
-main: github.rainbowmori.rainbowapi.RainbowAPI
-api-version: 1.19
-prefix: RainbowAPI

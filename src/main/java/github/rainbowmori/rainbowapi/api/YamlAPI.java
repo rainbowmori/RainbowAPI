@@ -1,6 +1,5 @@
 package github.rainbowmori.rainbowapi.api;
 
-import github.rainbowmori.rainbowapi.RainbowAPI;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -42,7 +41,7 @@ public class YamlAPI {
 
     public final void Remove() {
         if (file.delete()) {
-            RainbowAPI.getPlugin().getLogger().info(name + "を削除しました");
+            plugin.getLogger().info(name + "を削除しました");
         }
     }
 

@@ -1,7 +1,7 @@
 package github.rainbowmori.rainbowapi.object.ui.action;
 
+import github.rainbowmori.rainbowapi.RainbowAPI;
 import github.rainbowmori.rainbowapi.object.ui.gui.MenuHolder;
-import github.rainbowmori.rainbowapi.util.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -12,7 +12,7 @@ public class ConsoleCommandAction extends MenuCommandAction {
 
     @Override
     public void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
-        if (event.getWhoClicked() instanceof Player player) Util.consoleCommand(player, getCommand());
+        if (event.getWhoClicked() instanceof Player player) RainbowAPI.apis.get(menu.getPlugin()).mcUtil.consoleCommand(getCommand());
     }
 
     @Override

@@ -2,14 +2,15 @@ package github.rainbowmori.rainbowapi.object.ui.gui;
 
 import github.rainbowmori.rainbowapi.object.RMData;
 import github.rainbowmori.rainbowapi.object.ui.button.MenuButton;
-import org.bukkit.event.inventory.*;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Objects;
 import java.util.Optional;
 
-public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P>{
+public class MenuHolder<P extends Plugin> extends GuiHolder<P>{
 
     protected boolean canceled = true;
 

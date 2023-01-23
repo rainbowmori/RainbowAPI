@@ -6,12 +6,12 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public abstract class GuiHolder<P extends JavaPlugin> implements InventoryHolder {
+public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
 
     protected final RMData RMData;
 
