@@ -1,0 +1,5 @@
+name: RainbowAPI
+version: '${version}'
+api-version: 1.19
+main: github.rainbowmori.rainbowapi.RMP
+prefix: RainbowAPI

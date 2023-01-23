@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class RainbowAPI {
+public final class RainbowAPI{
 
     public static final Map<Plugin, RainbowAPI> apis = new HashMap<>();
 
@@ -26,7 +26,7 @@ public final class RainbowAPI {
 
     public final McUtil mcUtil;
 
-    public RainbowAPI(final JavaPlugin plugin,final String prefix) {
+    public RainbowAPI(final JavaPlugin plugin, final String prefix) {
         this.plugin = plugin;
         this.prefix = prefix;
         manager.registerEvents(GuiListener.getInstance(), plugin);
