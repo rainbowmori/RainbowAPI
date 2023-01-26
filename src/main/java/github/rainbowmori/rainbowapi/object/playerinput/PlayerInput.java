@@ -12,12 +12,20 @@ public class PlayerInput implements ConversationAbandonedListener {
 
     private final ConversationFactory factory;
     public PlayerInput(Plugin plugin, String prefix, boolean cancelable, Prompt prompt) {
-        var factory = new ConversationFactory(plugin).withPrefix(context -> prefix + " ").withFirstPrompt(prompt).
+        var factory = new ConversationFactory(plugin).withPrefix(context -> prefix).withFirstPrompt(prompt).
                 withLocalEcho(false);
         if(cancelable) factory.withEscapeSequence("cancel");
         factory.addConversationAbandonedListener(this).thatExcludesNonPlayersWithMessage("プレイヤーしか入力できません");
         this.factory = factory;
         this.plugin = plugin;
+    }
+
+    public PlayerInput(Plugin plugin, boolean cancelable, Prompt prompt) {
+        this(plugin, RainbowAPI.apis.get(plugin).prefix, cancelable, prompt);
+    }
+
+    public PlayerInput(Plugin plugin, boolean cancelable, Prompt prompt,int timeout) {
+        this(plugin, RainbowAPI.apis.get(plugin).prefix, cancelable, prompt,timeout);
     }
 
     public PlayerInput(Plugin plugin, String prefix, boolean cancelable, Prompt prompt,int timeout) {
