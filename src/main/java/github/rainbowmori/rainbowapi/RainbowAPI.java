@@ -28,7 +28,7 @@ public final class RainbowAPI{
 
     public RainbowAPI(final JavaPlugin plugin, final String prefix) {
         this.plugin = plugin;
-        this.prefix = prefix;
+        this.prefix = prefix + "<r>";
         manager.registerEvents(GuiListener.getInstance(), plugin);
         manager.registerEvents(JoinQuitEvents.getInstance(), plugin);
         mcUtil = new McUtil(this);
