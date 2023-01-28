@@ -8,21 +8,30 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
+import java.util.function.BiPredicate;
 
 public class PlayerBlockInput {
     public static final Map<Player, PlayerBlockInput> inputMap = new HashMap<>();
 
     private final Plugin plugin;
 
+    private final String success;
+
+    private final String message;
+    private final String error;
+
     private final RainbowAPI rainbowAPI;
 
-    private final BiConsumer<RainbowAPI,BlockBreakEvent> consumer;
+    private final BiPredicate<RainbowAPI,BlockBreakEvent> predicate;
 
-    public PlayerBlockInput(Player player, Plugin plugin,String message, BiConsumer<RainbowAPI,BlockBreakEvent> consumer) {
+    public PlayerBlockInput(Player player, Plugin plugin,String message,
+                            String success,String error, BiPredicate<RainbowAPI,BlockBreakEvent> predicate) {
         this.plugin = plugin;
+        this.success = success;
+        this.message = message;
+        this.error = error;
         this.rainbowAPI = RainbowAPI.apis.get(plugin);
-        this.consumer = consumer;
+        this.predicate = predicate;
         if (inputMap.containsKey(player)) rainbowAPI.mcUtil.send(player, "<red>すでにブロック入力中です");
         else {
             rainbowAPI.mcUtil.send(player,message);
@@ -30,7 +39,14 @@ public class PlayerBlockInput {
         }
     }
     public void build(BlockBreakEvent e) {
-        consumer.accept(rainbowAPI,e);
+        Player p = e.getPlayer();
+        if (predicate.test(rainbowAPI, e)) {
+            rainbowAPI.mcUtil.send(p, success);
+            inputMap.remove(p);
+        } else {
+            rainbowAPI.mcUtil.send(p, "<red>" + error);
+            rainbowAPI.mcUtil.send(p, message);
+        }
     }
 
     public static boolean isInputted(Player player) {
