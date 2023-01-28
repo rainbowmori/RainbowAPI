@@ -1,17 +1,18 @@
 package github.rainbowmori.rainbowapi.object.playerinput;
 
 import github.rainbowmori.rainbowapi.RainbowAPI;
+import github.rainbowmori.rainbowapi.util.Util;
 import org.bukkit.conversations.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-public class PlayerInput implements ConversationAbandonedListener {
+public class PlayerChatInput implements ConversationAbandonedListener {
 
     private final Plugin plugin;
 
     private final ConversationFactory factory;
-    public PlayerInput(Plugin plugin, String prefix, boolean cancelable, Prompt prompt) {
+    public PlayerChatInput(Plugin plugin, String prefix, boolean cancelable, Prompt prompt) {
         var factory = new ConversationFactory(plugin).withPrefix(context -> prefix).withFirstPrompt(prompt).
                 withLocalEcho(false);
         if(cancelable) factory.withEscapeSequence("cancel");
@@ -20,21 +21,21 @@ public class PlayerInput implements ConversationAbandonedListener {
         this.plugin = plugin;
     }
 
-    public PlayerInput(Plugin plugin, boolean cancelable, Prompt prompt) {
+    public PlayerChatInput(Plugin plugin, boolean cancelable, Prompt prompt) {
         this(plugin, RainbowAPI.apis.get(plugin).prefix, cancelable, prompt);
     }
 
-    public PlayerInput(Plugin plugin, boolean cancelable, Prompt prompt,int timeout) {
+    public PlayerChatInput(Plugin plugin, boolean cancelable, Prompt prompt, int timeout) {
         this(plugin, RainbowAPI.apis.get(plugin).prefix, cancelable, prompt,timeout);
     }
 
-    public PlayerInput(Plugin plugin, String prefix, boolean cancelable, Prompt prompt,int timeout) {
+    public PlayerChatInput(Plugin plugin, String prefix, boolean cancelable, Prompt prompt, int timeout) {
         this(plugin, prefix, cancelable, prompt);
         this.factory.withTimeout(timeout);
     }
 
     public void build(Player player) {
-        if(isInputted(plugin,player)) throw new RuntimeException("入力中なのにまた入力のメゾットを使用しています player = " + player.getName());
+        if(isInputted(player)) throw new RuntimeException("入力中なのにまた入力のメゾットを使用しています player = " + player.getName());
         else factory.buildConversation(player).begin();
     }
 
@@ -43,9 +44,9 @@ public class PlayerInput implements ConversationAbandonedListener {
         if(!abandonedEvent.gracefulExit()) abandonedEvent.getContext().getForWhom().sendRawMessage("入力をキャンセルしました");
     }
 
-    public static boolean isInputted(Plugin plugin,Player player) {
+    public static boolean isInputted(Player player) {
         if (player.isConversing()) {
-            RainbowAPI.apis.get(plugin).mcUtil.send(player, "<red>現在入力中です");
+            Util.sendRM(player,"<red>現在入力中です");
             return true;
         }
         return false;
