@@ -3,7 +3,7 @@ package github.rainbowmori.rainbowapi.object.playerinput;
 import github.rainbowmori.rainbowapi.RainbowAPI;
 import github.rainbowmori.rainbowapi.util.Util;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
@@ -17,9 +17,9 @@ public class PlayerBlockInput {
 
     private final RainbowAPI rainbowAPI;
 
-    private final BiConsumer<RainbowAPI,BlockDamageEvent> consumer;
+    private final BiConsumer<RainbowAPI,BlockBreakEvent> consumer;
 
-    public PlayerBlockInput(Player player, Plugin plugin,String message, BiConsumer<RainbowAPI,BlockDamageEvent> consumer) {
+    public PlayerBlockInput(Player player, Plugin plugin,String message, BiConsumer<RainbowAPI,BlockBreakEvent> consumer) {
         this.plugin = plugin;
         this.rainbowAPI = RainbowAPI.apis.get(plugin);
         this.consumer = consumer;
@@ -29,7 +29,7 @@ public class PlayerBlockInput {
             inputMap.put(player, this);
         }
     }
-    public void build(BlockDamageEvent e) {
+    public void build(BlockBreakEvent e) {
         consumer.accept(rainbowAPI,e);
     }
 

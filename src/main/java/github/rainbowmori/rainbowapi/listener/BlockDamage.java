@@ -4,7 +4,7 @@ import github.rainbowmori.rainbowapi.object.playerinput.PlayerBlockInput;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockBreakEvent;
 
 public class BlockDamage implements Listener {
 
@@ -15,7 +15,7 @@ public class BlockDamage implements Listener {
     }
 
     @EventHandler
-    public void damage(BlockDamageEvent e) {
+    public void damage(BlockBreakEvent e) {
         Player p = e.getPlayer();
         if (PlayerBlockInput.inputMap.containsKey(p)) PlayerBlockInput.inputMap.get(p).build(e);
     }

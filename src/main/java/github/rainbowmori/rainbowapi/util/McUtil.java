@@ -28,7 +28,7 @@ public class McUtil {
     }
 
     public void send(Player player, Object str) {
-        if (player != null) player.sendMessage(api.prefix + str);
+        if (player != null) player.sendMessage(Util.mm(api.prefix + str));
     }
 
     public void title(UUID uuid, Object title, Object subtitle) {
