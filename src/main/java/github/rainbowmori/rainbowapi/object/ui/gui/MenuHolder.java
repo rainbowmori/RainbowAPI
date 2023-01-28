@@ -10,11 +10,10 @@ import org.bukkit.plugin.Plugin;
 import java.util.Objects;
 import java.util.Optional;
 
-public class MenuHolder<P extends Plugin> extends GuiHolder<P>{
-
-    protected boolean canceled = true;
+public class MenuHolder<P extends Plugin> extends GuiHolder<P> {
 
     private final MenuButton<?>[] buttons;
+    protected boolean canceled = true;
 
     public MenuHolder(RMData RMData, P plugin, InventoryType type, String title, MenuButton<?>[] buttons) {
         super(RMData, plugin, type, title);

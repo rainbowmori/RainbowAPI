@@ -17,9 +17,8 @@ import java.util.*;
 public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
 
     protected final HashMap<GUIClickType, MenuAction> actions = new HashMap<>();
-    protected ItemStack stack;
-
     private final WeakHashMap<MH, Set<Integer>> inventoriesContainingMe = new WeakHashMap<>();
+    protected ItemStack stack;
 
     protected ItemButton() {
     }
@@ -65,7 +64,7 @@ public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
 
     @Override
     public void onClick(MH holder, InventoryClickEvent event) {
-        getAction(GUIClickType.ALL).ifPresentOrElse(action -> action.onClick(holder,event),() -> {
+        getAction(GUIClickType.ALL).ifPresentOrElse(action -> action.onClick(holder, event), () -> {
             if (!GuiListener.clickCancelable(event))
                 getAction(GUIClickType.valueOf(event.getClick().name())).ifPresent(action -> action.onClick(holder, event));
         });

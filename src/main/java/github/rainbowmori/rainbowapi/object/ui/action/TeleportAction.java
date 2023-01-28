@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class TeleportAction implements MenuAction{
+public class TeleportAction implements MenuAction {
 
     private final Location location;
 
@@ -18,7 +18,7 @@ public class TeleportAction implements MenuAction{
     @Override
     public void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
         HumanEntity player = event.getWhoClicked();
-        Bukkit.getScheduler().runTask(menu.getPlugin(),() -> player.teleport(getTo()));
+        Bukkit.getScheduler().runTask(menu.getPlugin(), () -> player.teleport(getTo()));
     }
 
     public Location getTo() {

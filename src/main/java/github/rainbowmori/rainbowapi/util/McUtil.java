@@ -13,14 +13,14 @@ import java.util.logging.Logger;
 
 public class McUtil {
     private final RainbowAPI api;
+    private final Logger log = Logger.getLogger("[RMLOG]");
 
     public McUtil(RainbowAPI api) {
         this.api = api;
     }
-    private final Logger log = Logger.getLogger("[RMLOG]");
 
     public void log(Object object) {
-        log.log(Level.INFO,api.plugin.getName() + " | " + object);
+        log.log(Level.INFO, api.plugin.getName() + " | " + object);
     }
 
     public void send(UUID uuid, Object str) {

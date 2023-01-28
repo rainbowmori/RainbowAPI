@@ -13,19 +13,19 @@ import java.util.function.BiPredicate;
 public class PlayerBlockInput {
     public static final Map<Player, PlayerBlockInput> inputMap = new HashMap<>();
 
-    private final Plugin plugin;
+    public final Plugin plugin;
 
-    private final String success;
+    public final String success;
 
-    private final String message;
-    private final String error;
+    public final String message;
+    public final String error;
 
-    private final RainbowAPI rainbowAPI;
+    public final RainbowAPI rainbowAPI;
 
-    private final BiPredicate<RainbowAPI,BlockBreakEvent> predicate;
+    public final BiPredicate<PlayerBlockInput, BlockBreakEvent> predicate;
 
-    public PlayerBlockInput(Player player, Plugin plugin,String message,
-                            String success,String error, BiPredicate<RainbowAPI,BlockBreakEvent> predicate) {
+    public PlayerBlockInput(Player player, Plugin plugin, String message,
+                            String success, String error, BiPredicate<PlayerBlockInput, BlockBreakEvent> predicate) {
         this.plugin = plugin;
         this.success = success;
         this.message = message;
@@ -34,24 +34,25 @@ public class PlayerBlockInput {
         this.predicate = predicate;
         if (inputMap.containsKey(player)) rainbowAPI.mcUtil.send(player, "<red>すでにブロック入力中です");
         else {
-            rainbowAPI.mcUtil.send(player,message);
+            rainbowAPI.mcUtil.send(player, message);
             inputMap.put(player, this);
         }
     }
+
+    public static boolean isInputted(Player player) {
+        if (inputMap.containsKey(player)) return false;
+        Util.sendRM(player, "<red>現在入力中です");
+        return true;
+    }
+
     public void build(BlockBreakEvent e) {
         Player p = e.getPlayer();
-        if (predicate.test(rainbowAPI, e)) {
+        if (predicate.test(this, e)) {
             rainbowAPI.mcUtil.send(p, success);
             inputMap.remove(p);
         } else {
             rainbowAPI.mcUtil.send(p, "<red>" + error);
             rainbowAPI.mcUtil.send(p, message);
         }
-    }
-
-    public static boolean isInputted(Player player) {
-        if (inputMap.containsKey(player)) return false;
-        Util.sendRM(player,"<red>現在入力中です");
-        return true;
     }
 }

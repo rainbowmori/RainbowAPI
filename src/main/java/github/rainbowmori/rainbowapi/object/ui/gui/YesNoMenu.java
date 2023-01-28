@@ -20,7 +20,7 @@ public class YesNoMenu<P extends Plugin> extends MenuHolder<P> {
     protected Consumer<InventoryClickEvent> yesAction, noAction;
 
     public YesNoMenu(github.rainbowmori.rainbowapi.object.RMData data, P plugin, String question, Consumer<InventoryClickEvent> yesAction, Consumer<InventoryClickEvent> noAction) {
-        super(data, plugin, Bukkit.createInventory(null, InventoryType.HOPPER, Util.mm(question)),null);
+        super(data, plugin, Bukkit.createInventory(null, InventoryType.HOPPER, Util.mm(question)), null);
         this.yesAction = yesAction;
         this.noAction = noAction;
         setupButtons();

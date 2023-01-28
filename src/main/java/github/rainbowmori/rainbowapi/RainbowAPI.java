@@ -12,7 +12,7 @@ import org.bukkit.plugin.PluginManager;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class RainbowAPI{
+public final class RainbowAPI {
 
     public static final Map<Plugin, RainbowAPI> apis = new HashMap<>();
 
@@ -30,7 +30,7 @@ public final class RainbowAPI{
         this.plugin = plugin;
         this.prefix = prefix + "<reset>";
         manager.registerEvents(GuiListener.getInstance(), plugin);
-        manager.registerEvents(BlockDamage.getInstance(),plugin);
+        manager.registerEvents(BlockDamage.getInstance(), plugin);
         manager.registerEvents(JoinQuitEvents.getInstance(), plugin);
         mcUtil = new McUtil(this);
         apis.put(plugin, this);

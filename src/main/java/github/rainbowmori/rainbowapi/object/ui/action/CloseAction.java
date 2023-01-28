@@ -8,7 +8,7 @@ public class CloseAction implements MenuAction {
 
     @Override
     public final void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
-        Bukkit.getScheduler().runTask(menu.getPlugin(),event.getView()::close);
+        Bukkit.getScheduler().runTask(menu.getPlugin(), event.getView()::close);
     }
 
     @Override

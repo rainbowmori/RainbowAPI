@@ -20,7 +20,7 @@ public class JsonAPI {
     public JsonObject json;
 
     public JsonAPI(Plugin plugin, String name) {
-        this(plugin,name,"");
+        this(plugin, name, "");
     }
 
     public JsonAPI(Plugin plugin, String name, String path) {
@@ -30,6 +30,10 @@ public class JsonAPI {
         this.plugin = plugin;
         file = new File(plugin.getDataFolder() + this.path, this.name);
         Created();
+    }
+
+    private static String lastValue(List<Object> list) {
+        return list.get(list.size() - 1).toString();
     }
 
     public final void ReCreate() {
@@ -47,7 +51,7 @@ public class JsonAPI {
     }
 
     public final boolean hasElement(@NotNull Object... keys) {
-        return get(Arrays.stream(keys).toList()).has(keys[keys.length-1].toString());
+        return get(Arrays.stream(keys).toList()).has(keys[keys.length - 1].toString());
     }
 
     public final boolean containsElement(Object object, @NotNull Object... keys) {
@@ -90,10 +94,6 @@ public class JsonAPI {
         array.add(convertElement(object));
     }
 
-    private static String lastValue(List<Object> list) {
-        return list.get(list.size() - 1).toString();
-    }
-
     private JsonObject get(@NotNull List<Object> paths) {
         JsonObject jsonObject = json;
         if (paths.size() == 1) return jsonObject;
@@ -128,7 +128,7 @@ public class JsonAPI {
     }
 
     public final void Remove() {
-        if (file.delete()) plugin.getLogger().info(name + "を削除しました");;
+        if (file.delete()) plugin.getLogger().info(name + "を削除しました");
     }
 
     public final void Save() {

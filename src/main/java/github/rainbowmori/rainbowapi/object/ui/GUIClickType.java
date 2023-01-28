@@ -6,5 +6,5 @@ public enum GUIClickType {
     SHIFT_RIGHT,
     LEFT,
     SHIFT_LEFT,
-    DOUBLE_CLICK;
+    DOUBLE_CLICK
 }

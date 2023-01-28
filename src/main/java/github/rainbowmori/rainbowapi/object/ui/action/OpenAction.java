@@ -14,7 +14,7 @@ public class OpenAction implements MenuAction {
     private final BiFunction<MenuHolder<?>, InventoryClickEvent, Inventory> redirect;
 
     protected OpenAction(Supplier<Inventory> redirect) {
-        this(((menu,e) -> redirect.get()));
+        this(((menu, e) -> redirect.get()));
     }
 
     public OpenAction(BiFunction<MenuHolder<?>, InventoryClickEvent, Inventory> redirect) {
@@ -22,13 +22,13 @@ public class OpenAction implements MenuAction {
     }
 
     @Override
-    public void onClick(MenuHolder<?> menu,InventoryClickEvent event) {
+    public void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
         Bukkit.getScheduler().runTask(menu.getPlugin(), () -> {
             event.getView().close();
             HumanEntity player = event.getWhoClicked();
             Inventory to = to(menu, event);
             if (to != null) player.openInventory(to);
-        } );
+        });
     }
 
     public final Inventory to(MenuHolder<?> menu, InventoryClickEvent event) {

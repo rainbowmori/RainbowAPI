@@ -49,6 +49,17 @@ public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
         this.inventory = Objects.requireNonNull(inventory, "Inventory cannot be null");
     }
 
+    protected static Inventory getClickedInventory(InventoryClickEvent event) {
+        return getClickedInventory(event.getRawSlot(), event.getView());
+    }
+
+    protected static Inventory getClickedInventory(int rawSlot, InventoryView view) {
+        if (rawSlot < 0) return null;
+        Inventory topInventory = view.getTopInventory();
+        if (rawSlot < topInventory.getSize()) return topInventory;
+        return view.getBottomInventory();
+    }
+
     public void open() {
         RMData.getPlayer().openInventory(getInventory());
     }
@@ -72,16 +83,5 @@ public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
     }
 
     public void onDrag(InventoryDragEvent event) {
-    }
-
-    protected static Inventory getClickedInventory(InventoryClickEvent event) {
-        return getClickedInventory(event.getRawSlot(), event.getView());
-    }
-
-    protected static Inventory getClickedInventory(int rawSlot, InventoryView view) {
-        if (rawSlot < 0) return null;
-        Inventory topInventory = view.getTopInventory();
-        if (rawSlot < topInventory.getSize()) return topInventory;
-        return view.getBottomInventory();
     }
 }

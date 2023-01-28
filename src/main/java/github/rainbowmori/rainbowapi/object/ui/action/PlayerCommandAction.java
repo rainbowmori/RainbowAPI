@@ -4,7 +4,7 @@ import github.rainbowmori.rainbowapi.object.ui.gui.MenuHolder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class PlayerCommandAction extends MenuCommandAction{
+public class PlayerCommandAction extends MenuCommandAction {
     public PlayerCommandAction(String command) {
         super(command);
     }

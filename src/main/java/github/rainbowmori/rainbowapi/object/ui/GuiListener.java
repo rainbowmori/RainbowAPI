@@ -64,7 +64,7 @@ public class GuiListener implements Listener {
             gui.onDrag(event);
         });
     }
-    
+
     @EventHandler(priority = EventPriority.HIGH)
     public void onInventoryClose(InventoryCloseEvent event) {
         onGuiInventoryEvent(event, gui -> gui.onClose(event));

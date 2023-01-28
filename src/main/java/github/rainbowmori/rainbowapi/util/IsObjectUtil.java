@@ -3,7 +3,6 @@ package github.rainbowmori.rainbowapi.util;
 import net.kyori.adventure.text.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 public class IsObjectUtil {
     public static boolean IsComponent(Object is) {

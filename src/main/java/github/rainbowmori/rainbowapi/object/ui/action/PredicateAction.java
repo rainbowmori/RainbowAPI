@@ -9,9 +9,9 @@ import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 
 public class PredicateAction implements MenuAction {
-    protected MenuAction delegate;
     private final BiPredicate<MenuHolder<?>, InventoryClickEvent> predicate;
     private final BiConsumer<MenuHolder<?>, InventoryClickEvent> predicateFailedCallback;
+    protected MenuAction delegate;
 
     public PredicateAction(MenuAction delegate, BiPredicate<MenuHolder<?>, InventoryClickEvent> predicate) {
         this(delegate, predicate, null);

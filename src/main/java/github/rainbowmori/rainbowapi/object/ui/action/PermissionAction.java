@@ -9,13 +9,13 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class PermissionAction extends PredicateAction{
+public class PermissionAction extends PredicateAction {
 
-    private String permission;
     private final Consumer<? super HumanEntity> noPermissionCallback;
+    private String permission;
 
     public PermissionAction(String permission, MenuAction action) {
-        this(permission, action,null);
+        this(permission, action, null);
     }
 
     public PermissionAction(String permission, MenuAction action, Consumer<? super HumanEntity> noPermissionCallback) {
@@ -23,6 +23,7 @@ public class PermissionAction extends PredicateAction{
         this.permission = Objects.requireNonNull(permission, "Permission cannot be null");
         this.noPermissionCallback = noPermissionCallback;
     }
+
     public final String getPermission() {
         return permission;
     }
@@ -42,7 +43,7 @@ public class PermissionAction extends PredicateAction{
 
     @Override
     public String toString() {
-        if(delegate.toString() == null) return null;
+        if (delegate.toString() == null) return null;
         return "permission " + permission + " " + delegate.toString();
     }
 }

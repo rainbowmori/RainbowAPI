@@ -96,6 +96,7 @@ public class ItemBuilder {
     public ItemBuilder addAttributes(Multimap<Attribute, AttributeModifier> attributeModifiers) {
         return attributeModifiers.entries().stream().reduce(this, (itemBuilder, entry) -> itemBuilder.addAttribute(entry.getKey(), entry.getValue()), (first, second) -> second);
     }
+
     @SafeVarargs
     public final ItemBuilder addAttributes(Map.Entry<Attribute, AttributeModifier>... attributeModifiers) {
         ItemBuilder result = this;
@@ -104,6 +105,7 @@ public class ItemBuilder {
         }
         return result;
     }
+
     public ItemBuilder customModelData(Integer customModelData) {
         return changeMeta(meta -> meta.setCustomModelData(customModelData));
     }
@@ -164,6 +166,7 @@ public class ItemBuilder {
     public ItemBuilder persistentData(NamespacedKey key, PersistentDataContainer[] value) {
         return persistentData(key, PersistentDataType.TAG_CONTAINER_ARRAY, value);
     }
+
     @Deprecated
     public <T, Z> ItemBuilder tag(NamespacedKey key, ItemTagType<T, Z> type, Z value) {
         return changeMeta(meta -> meta.getCustomTagContainer().setCustomTag(key, type, value));

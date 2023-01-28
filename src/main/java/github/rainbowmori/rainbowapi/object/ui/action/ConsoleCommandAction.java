@@ -12,7 +12,8 @@ public class ConsoleCommandAction extends MenuCommandAction {
 
     @Override
     public void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
-        if (event.getWhoClicked() instanceof Player player) RainbowAPI.apis.get(menu.getPlugin()).mcUtil.consoleCommand(getCommand());
+        if (event.getWhoClicked() instanceof Player player)
+            RainbowAPI.apis.get(menu.getPlugin()).mcUtil.consoleCommand(getCommand());
     }
 
     @Override
