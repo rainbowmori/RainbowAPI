@@ -28,7 +28,7 @@ public final class RainbowAPI{
 
     public RainbowAPI(final Plugin plugin, final String prefix) {
         this.plugin = plugin;
-        this.prefix = prefix + "<r>";
+        this.prefix = prefix + "<reset>";
         manager.registerEvents(GuiListener.getInstance(), plugin);
         manager.registerEvents(BlockDamage.getInstance(),plugin);
         manager.registerEvents(JoinQuitEvents.getInstance(), plugin);
