@@ -9,15 +9,16 @@ import org.bukkit.plugin.Plugin;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiPredicate;
+import java.util.function.Function;
 
 public class PlayerBlockInput {
     public static final Map<Player, PlayerBlockInput> inputMap = new HashMap<>();
 
     public final Plugin plugin;
 
-    public final String success;
-
     public final String message;
+
+    public final Function<PlayerBlockInput,String> success;
     public final String error;
 
     public final RainbowAPI rainbowAPI;
@@ -26,6 +27,11 @@ public class PlayerBlockInput {
 
     public PlayerBlockInput(Player player, Plugin plugin, String message,
                             String success, String error, BiPredicate<PlayerBlockInput, BlockBreakEvent> predicate) {
+        this(player, plugin, message, playerBlockInput -> success, error, predicate);
+    }
+
+    public PlayerBlockInput(Player player, Plugin plugin, String message,
+                            Function<PlayerBlockInput,String> success, String error, BiPredicate<PlayerBlockInput, BlockBreakEvent> predicate) {
         this.plugin = plugin;
         this.success = success;
         this.message = message;
