@@ -34,5 +34,6 @@ public final class RainbowAPI {
         manager.registerEvents(JoinQuitEvents.getInstance(), plugin);
         mcUtil = new McUtil(this);
         apis.put(plugin, this);
+
     }
 }

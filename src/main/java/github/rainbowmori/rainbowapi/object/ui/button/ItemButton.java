@@ -1,6 +1,6 @@
 package github.rainbowmori.rainbowapi.object.ui.button;
 
-import github.rainbowmori.rainbowapi.object.ui.GUIClickType;
+import github.rainbowmori.rainbowapi.object.ItemClickType;
 import github.rainbowmori.rainbowapi.object.ui.GuiListener;
 import github.rainbowmori.rainbowapi.object.ui.action.MenuAction;
 import github.rainbowmori.rainbowapi.object.ui.gui.MenuHolder;
@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
 
-    protected final HashMap<GUIClickType, MenuAction> actions = new HashMap<>();
+    protected final HashMap<ItemClickType, MenuAction> actions = new HashMap<>();
     private final WeakHashMap<MH, Set<Integer>> inventoriesContainingMe = new WeakHashMap<>();
     protected ItemStack stack;
 
@@ -53,20 +53,20 @@ public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
         return true;
     }
 
-    public final MenuButton<?> setAction(GUIClickType clickType, MenuAction action) {
+    public final MenuButton<?> setAction(ItemClickType clickType, MenuAction action) {
         actions.put(clickType, action);
         return this;
     }
 
-    public final Optional<MenuAction> getAction(GUIClickType clickType) {
+    public final Optional<MenuAction> getAction(ItemClickType clickType) {
         return Optional.ofNullable(actions.get(clickType));
     }
 
     @Override
     public void onClick(MH holder, InventoryClickEvent event) {
-        getAction(GUIClickType.ALL).ifPresentOrElse(action -> action.onClick(holder, event), () -> {
+        getAction(ItemClickType.ALL).ifPresentOrElse(action -> action.onClick(holder, event), () -> {
             if (!GuiListener.clickCancelable(event))
-                getAction(GUIClickType.valueOf(event.getClick().name())).ifPresent(action -> action.onClick(holder, event));
+                getAction(ItemClickType.valueOf(event.getClick().name())).ifPresent(action -> action.onClick(holder, event));
         });
     }
 }
