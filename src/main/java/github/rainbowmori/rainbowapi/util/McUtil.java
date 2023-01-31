@@ -1,7 +1,6 @@
 package github.rainbowmori.rainbowapi.util;
 
 import github.rainbowmori.rainbowapi.RainbowAPI;
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -59,9 +58,5 @@ public class McUtil {
                 execute.setOp(false);
             }
         }
-    }
-
-    public String Placeholder(Player player, String text) {
-        return PlaceholderAPI.setPlaceholders(player, text);
     }
 }
