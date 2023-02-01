@@ -18,7 +18,7 @@ public class PlayerBlockInput {
 
     public final String message;
 
-    public final Function<PlayerBlockInput,String> success;
+    public final Function<BlockBreakEvent,String> success;
     public final String error;
 
     public final RainbowAPI rainbowAPI;
@@ -27,11 +27,11 @@ public class PlayerBlockInput {
 
     public PlayerBlockInput(Player player, Plugin plugin, String message,
                             String success, String error, BiPredicate<PlayerBlockInput, BlockBreakEvent> predicate) {
-        this(player, plugin, message, playerBlockInput -> success, error, predicate);
+        this(player, plugin, message, blockBreakEvent -> success, error, predicate);
     }
 
     public PlayerBlockInput(Player player, Plugin plugin, String message,
-                            Function<PlayerBlockInput,String> success, String error, BiPredicate<PlayerBlockInput, BlockBreakEvent> predicate) {
+                            Function<BlockBreakEvent,String> success, String error, BiPredicate<PlayerBlockInput, BlockBreakEvent> predicate) {
         this.plugin = plugin;
         this.success = success;
         this.message = message;
