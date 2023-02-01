@@ -53,6 +53,7 @@ public class PlayerBlockInput {
 
     public void build(BlockBreakEvent e) {
         Player p = e.getPlayer();
+        e.setCancelled(true);
         if (predicate.test(this, e)) {
             rainbowAPI.mcUtil.send(p, success.apply(e));
             inputMap.remove(p);
