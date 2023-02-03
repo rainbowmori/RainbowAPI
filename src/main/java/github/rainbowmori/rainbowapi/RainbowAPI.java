@@ -12,6 +12,10 @@ import org.bukkit.plugin.PluginManager;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * このclass
+ */
+
 public final class RainbowAPI {
 
     public static final Map<Plugin, RainbowAPI> apis = new HashMap<>();

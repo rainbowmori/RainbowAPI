@@ -9,11 +9,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-/**
- * A button with an icon.
- *
- * @param <MH> the type of the menu
- */
 public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
 
     protected final HashMap<ItemClickType, MenuAction> actions = new HashMap<>();
