@@ -13,7 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * このclass
+ * APIのmain class
+ * 使い方は{@link #RainbowAPI(Plugin, String)}
  */
 
 public final class RainbowAPI {
@@ -30,6 +31,12 @@ public final class RainbowAPI {
 
     public final McUtil mcUtil;
 
+    /**
+     * プラグインとメッセージにつくprefixです
+     * @param plugin　あなたのプラグイン
+     * @param prefix　message prefix
+     */
+
     public RainbowAPI(final Plugin plugin, final String prefix) {
         this.plugin = plugin;
         this.prefix = prefix + "<reset>";
@@ -38,6 +45,5 @@ public final class RainbowAPI {
         manager.registerEvents(JoinQuitEvents.getInstance(), plugin);
         mcUtil = new McUtil(this);
         apis.put(plugin, this);
-
     }
 }
