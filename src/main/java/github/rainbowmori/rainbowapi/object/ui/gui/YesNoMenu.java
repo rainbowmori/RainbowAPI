@@ -19,17 +19,36 @@ public class YesNoMenu<P extends Plugin> extends MenuHolder<P> {
 
     protected Consumer<InventoryClickEvent> yesAction, noAction;
 
+    /**
+     * YesNoMenuを作成
+     * @param data RMData
+     * @param plugin your plugin
+     * @param question inventory title
+     * @param yesAction action clicked yes
+     * @param noAction action clicked no
+     */
+
     public YesNoMenu(github.rainbowmori.rainbowapi.object.RMData data, P plugin, String question, Consumer<InventoryClickEvent> yesAction, Consumer<InventoryClickEvent> noAction) {
-        super(data, plugin, Bukkit.createInventory(null, InventoryType.HOPPER, Util.mm(question)), null);
+        super(data, plugin, Bukkit.createInventory(null, InventoryType.HOPPER, Util.mm(question)));
         this.yesAction = yesAction;
         this.noAction = noAction;
         setupButtons();
     }
 
+    /**
+     * yes and no button setup
+     */
+
     protected void setupButtons() {
         setButton(0, makeButton(true));
         setButton(getInventory().getSize() - 1, makeButton(false));
     }
+
+    /**
+     * yes or no button make
+     * @param yesOrNo yes or no boolean
+     * @return yes or no button
+     */
 
     protected MenuButton<YesNoMenu<P>> makeButton(boolean yesOrNo) {
         ItemStack stack = yesOrNo ? YES_STACK : NO_STACK;

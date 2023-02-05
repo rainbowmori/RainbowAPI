@@ -7,39 +7,85 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.IntStream;
+
+/**
+ * MenuButtonがあるGUI
+ * @param <P> あなたのプラグイン
+ */
 
 public class MenuHolder<P extends Plugin> extends GuiHolder<P> {
 
     private final MenuButton<?>[] buttons;
     protected boolean canceled = true;
 
-    public MenuHolder(RMData RMData, P plugin, InventoryType type, String title, MenuButton<?>[] buttons) {
+    /**
+     * InventoryTypeとtitleを設定して使用します
+     * @param RMData 指定するプレイヤーデータ {@link RMData}
+     * @param plugin あなたのプラグイン
+     * @param type {@link InventoryType}
+     * @param title inventory title
+     */
+
+    public MenuHolder(RMData RMData, P plugin, InventoryType type, String title) {
         super(RMData, plugin, type, title);
-        this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[type.getDefaultSize()]);
+        this.buttons = new MenuButton[type.getDefaultSize()];
     }
 
-    public MenuHolder(RMData RMData, P plugin, int size, String title, MenuButton<?>[] buttons) {
+    /**
+     * チェストのようなインベントリーを作成しますスロットの数とタイトルです
+     * @param RMData 指定するプレイヤーデータ {@link RMData}
+     * @param plugin あなたのプラグイン
+     * @param size inventory size
+     * @param title inventory title
+     */
+
+    public MenuHolder(RMData RMData, P plugin, int size, String title) {
         super(RMData, plugin, size, title);
-        this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[size]);
+        this.buttons = new MenuButton[size];
     }
 
-    public MenuHolder(RMData RMData, P plugin, InventoryType type, MenuButton<?>[] buttons) {
+    /**
+     * inventory typeだけを設定して使用します
+     * @param RMData 指定するプレイヤーデータ {@link RMData}
+     * @param plugin あなたのプラグイン
+     * @param type {@link InventoryType}
+     */
+
+    public MenuHolder(RMData RMData, P plugin, InventoryType type) {
         super(RMData, plugin, type);
-        this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[type.getDefaultSize()]);
+        this.buttons = new MenuButton[type.getDefaultSize()];
     }
 
-    public MenuHolder(RMData RMData, P plugin, int size, MenuButton<?>[] buttons) {
+    /**
+     * チェストのスロットサイズだけを設定して使用します
+     * @param RMData 指定するプレイヤーデータ {@link RMData}
+     * @param plugin あなたのプラグイン
+     * @param size inventory size
+     */
+
+    public MenuHolder(RMData RMData, P plugin, int size) {
         super(RMData, plugin, size);
-        this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[size]);
+        this.buttons = new MenuButton[size];
     }
 
-    public MenuHolder(RMData RMData, P plugin, Inventory inventory, MenuButton<?>[] buttons) {
+    /**
+     * すでに作成されているinventoryを設定して使用します
+     * @param RMData 指定するプレイヤーデータ {@link RMData}
+     * @param plugin あなたのプラグイン
+     * @param inventory {@link org.bukkit.Bukkit#createInventory}
+     */
+
+    public MenuHolder(RMData RMData, P plugin, Inventory inventory) {
         super(RMData, plugin, inventory);
-        this.buttons = Objects.requireNonNullElse(buttons, new MenuButton[inventory.getSize()]);
+        this.buttons = new MenuButton[inventory.getSize()];
     }
 
+    /**
+     * this inventory click method
+     * @param event このinventoryをクリックしたeventです
+     */
 
     @Override
     public void onClick(InventoryClickEvent event) {
@@ -49,21 +95,45 @@ public class MenuHolder<P extends Plugin> extends GuiHolder<P> {
         getButtonOptionally(event.getSlot()).ifPresent((MenuButton button) -> button.onClick(this, event));
     }
 
+    /**
+     * get button of slot
+     * @param slot 取得したいスロット
+     * @return 取得したボタン
+     */
+
     public MenuButton<?> getButton(int slot) {
         if (slot < 0 || slot >= getInventory().getSize()) return null;
 
         return this.buttons[slot];
     }
 
+    /**
+     * get button of optional
+     * @param slot 取得したいスロット
+     * @return 取得したボタン
+     */
+
     public Optional<MenuButton<?>> getButtonOptionally(int slot) {
         return Optional.ofNullable(getButton(slot));
     }
+
+    /**
+     * put the button in the slot
+     * @param slot slot
+     * @param button button
+     */
 
     public void setButton(int slot, MenuButton<?> button) {
         if (!unsetButton(slot) || button == null || !((MenuButton) button).onAdd(this, slot)) return;
         getInventory().setItem(slot, button.getIcon());
         this.buttons[slot] = button;
     }
+
+    /**
+     * remove the button in the slot
+     * @param slot slot
+     * @return 消えたかどうか
+     */
 
     public boolean unsetButton(int slot) {
         MenuButton<?> menuButton = this.buttons[slot];
@@ -74,9 +144,11 @@ public class MenuHolder<P extends Plugin> extends GuiHolder<P> {
         return true;
     }
 
+    /**
+     * すべてのボタンを消す
+     */
+
     public void clearButtons() {
-        for (int i = 0; i < getInventory().getSize(); i++) {
-            unsetButton(i);
-        }
+        IntStream.range(0, getInventory().getSize()).forEach(this::unsetButton);
     }
 }

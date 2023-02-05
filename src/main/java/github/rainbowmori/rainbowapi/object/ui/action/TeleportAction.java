@@ -16,7 +16,7 @@ public class TeleportAction implements MenuAction {
     }
 
     @Override
-    public void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
+    public final void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
         HumanEntity player = event.getWhoClicked();
         Bukkit.getScheduler().runTask(menu.getPlugin(), () -> player.teleport(getTo()));
     }

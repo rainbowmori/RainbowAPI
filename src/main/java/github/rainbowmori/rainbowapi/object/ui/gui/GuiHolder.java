@@ -22,7 +22,7 @@ import java.util.Objects;
  * InventoryClickEvent と InventoryDragEvent はデフォルトでキャンセルされるように設定されていますが
  * {@code event.setCanceled(false)} を使用してサブクラスでキャンセルを取り消すことができます。
  * </p>
- * ボタン付きのメニューだけが必要な場合は、{@link MenuHolder} が適切な候補です。
+ * ボタン付きのメニューが必要な場合は、{@link MenuHolder} が適切な候補です。
  *
  * @param <P>あなたのプラグインです
  * @see MenuHolder

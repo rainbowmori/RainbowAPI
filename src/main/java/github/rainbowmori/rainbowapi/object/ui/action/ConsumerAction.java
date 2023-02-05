@@ -13,7 +13,7 @@ public class ConsumerAction implements MenuAction {
     }
 
     @Override
-    public void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
+    public final void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
         consumer.accept(menu, event);
     }
 }

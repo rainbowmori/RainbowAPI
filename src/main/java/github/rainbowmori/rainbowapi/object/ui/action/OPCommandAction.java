@@ -11,7 +11,7 @@ public class OPCommandAction extends MenuCommandAction {
     }
 
     @Override
-    public void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
+    public final void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
         if (event.getWhoClicked() instanceof Player player)
             RainbowAPI.apis.get(menu.getPlugin()).mcUtil.executeCommand(player, getCommand());
     }

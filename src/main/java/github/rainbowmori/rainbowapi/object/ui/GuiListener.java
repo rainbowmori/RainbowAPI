@@ -18,10 +18,7 @@ public class GuiListener implements Listener {
         return INSTANCE;
     }
 
-    public static boolean clickCancelable(InventoryClickEvent event) {
-        ClickType type = event.getClick();
-        return !type.isLeftClick() && !type.isRightClick() || type.isCreativeAction();
-    }
+    private GuiListener() {}
 
     public static GuiHolder<?> getHolder(Inventory inventory) {
         InventoryHolder holder = inventory.getHolder();
@@ -37,7 +34,7 @@ public class GuiListener implements Listener {
         return getHolder(inventory) != null;
     }
 
-    private void onGuiInventoryEvent(InventoryEvent event, Consumer<GuiHolder> action) {
+    private void onGuiInventoryEvent(InventoryEvent event, Consumer<GuiHolder<?>> action) {
         GuiHolder<?> guiHolder = getHolder(event.getInventory());
 
         if (guiHolder != null && guiHolder.getPlugin().isEnabled()) {

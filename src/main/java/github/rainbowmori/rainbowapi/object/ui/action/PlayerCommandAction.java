@@ -10,7 +10,7 @@ public class PlayerCommandAction extends MenuCommandAction {
     }
 
     @Override
-    public void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
+    public final void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
         if (event.getWhoClicked() instanceof Player player) player.performCommand(getCommand());
     }
 

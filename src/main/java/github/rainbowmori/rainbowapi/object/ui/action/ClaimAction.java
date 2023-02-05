@@ -20,7 +20,7 @@ public class ClaimAction implements MenuAction{
 
 
     @Override
-    public void onClick(MenuHolder<?> menuHolder, InventoryClickEvent event) {
+    public final void onClick(MenuHolder<?> menuHolder, InventoryClickEvent event) {
         ItemStack clickedItem = event.getCurrentItem();
         HumanEntity player = event.getWhoClicked();
 

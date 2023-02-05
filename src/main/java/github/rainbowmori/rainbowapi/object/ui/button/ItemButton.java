@@ -1,7 +1,6 @@
 package github.rainbowmori.rainbowapi.object.ui.button;
 
 import github.rainbowmori.rainbowapi.object.ItemClickType;
-import github.rainbowmori.rainbowapi.object.ui.GuiListener;
 import github.rainbowmori.rainbowapi.object.ui.action.MenuAction;
 import github.rainbowmori.rainbowapi.object.ui.gui.MenuHolder;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -60,7 +59,7 @@ public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
     @Override
     public void onClick(MH holder, InventoryClickEvent event) {
         getAction(ItemClickType.ALL).ifPresentOrElse(action -> action.onClick(holder, event), () -> {
-            if (!GuiListener.clickCancelable(event))
+            if (ItemClickType.isItemClickType(event.getClick()))
                 getAction(ItemClickType.valueOf(event.getClick().name())).ifPresent(action -> action.onClick(holder, event));
         });
     }

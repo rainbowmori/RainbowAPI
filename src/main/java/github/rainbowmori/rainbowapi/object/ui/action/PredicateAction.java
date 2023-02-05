@@ -25,7 +25,7 @@ public class PredicateAction implements MenuAction {
     }
 
     @Override
-    public void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
+    public final void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
         if (getPredicate().test(menu, event)) {
             getDelegate().onClick(menu, event);
         } else {

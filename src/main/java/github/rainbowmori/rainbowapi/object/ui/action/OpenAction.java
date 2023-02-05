@@ -22,7 +22,7 @@ public class OpenAction implements MenuAction {
     }
 
     @Override
-    public void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
+    public final void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
         Bukkit.getScheduler().runTask(menu.getPlugin(), () -> {
             event.getView().close();
             HumanEntity player = event.getWhoClicked();

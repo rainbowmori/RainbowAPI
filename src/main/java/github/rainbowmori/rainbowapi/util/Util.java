@@ -15,9 +15,6 @@ import java.util.stream.Collectors;
 
 public class Util {
 
-    /**
-     * prefix
-     */
     public static final String RM_Prefix = "<gray>[<red>RM<gray>] ";
 
     /**
@@ -57,6 +54,12 @@ public class Util {
     public static List<Component> ListMM(List<?> list) {
         return list.stream().map(Util::mm).collect(Collectors.toList());
     }
+
+    /**
+     * {@link Component}をStringに変換
+     * @param str 変換したいコンポーネント
+     * @return 変換されたString
+     */
 
     public static String serialize(Component str) {
         return MiniMessage.miniMessage().serialize(str);
