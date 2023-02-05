@@ -43,7 +43,6 @@ public class PermissionAction extends PredicateAction {
 
     @Override
     public String toString() {
-        if (delegate.toString() == null) return null;
         return "permission " + permission + " " + delegate.toString();
     }
 }

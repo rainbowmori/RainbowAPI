@@ -34,9 +34,4 @@ public class OpenAction implements MenuAction {
     public final Inventory to(MenuHolder<?> menu, InventoryClickEvent event) {
         return redirect.apply(menu, event);
     }
-
-    @Override
-    public String toString() {
-        return null;
-    }
 }

@@ -44,9 +44,4 @@ public class PredicateAction implements MenuAction {
     protected Optional<BiConsumer<MenuHolder<?>, InventoryClickEvent>> getPredicateFailedCallback() {
         return Optional.ofNullable(predicateFailedCallback);
     }
-
-    @Override
-    public String toString() {
-        return null;
-    }
 }

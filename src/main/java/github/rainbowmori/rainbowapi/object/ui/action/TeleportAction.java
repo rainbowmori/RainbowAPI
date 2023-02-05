@@ -1,7 +1,7 @@
 package github.rainbowmori.rainbowapi.object.ui.action;
 
+import github.rainbowmori.rainbowapi.RainbowAPI;
 import github.rainbowmori.rainbowapi.object.ui.gui.MenuHolder;
-import github.rainbowmori.rainbowapi.util.JsonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.HumanEntity;
@@ -27,7 +27,7 @@ public class TeleportAction implements MenuAction {
 
     @Override
     public String toString() {
-        return "teleport " + JsonUtil.encodeLocation(location);
+        return "teleport " + RainbowAPI.gson.toJson(location);
     }
 
 }
