@@ -25,15 +25,14 @@ public class YesNoMenu<P extends Plugin> extends MenuHolder<P> {
 
     /**
      * YesNoMenuを作成
-     * @param data RMData
      * @param plugin your plugin
      * @param question inventory title
      * @param yesAction action clicked yes
      * @param noAction action clicked no
      */
 
-    public YesNoMenu(github.rainbowmori.rainbowapi.object.RMData data, P plugin, String question, Consumer<Player> yesAction, Consumer<Player> noAction) {
-        super(data, plugin, Bukkit.createInventory(null, InventoryType.HOPPER, Util.mm(question)));
+    public YesNoMenu(P plugin, String question, Consumer<Player> yesAction, Consumer<Player> noAction) {
+        super(plugin, Bukkit.createInventory(null, InventoryType.HOPPER, Util.mm(question)));
         this.yesAction = yesAction;
         this.noAction = noAction;
         setupButtons();

@@ -1,8 +1,8 @@
 package github.rainbowmori.rainbowapi.object.ui.gui;
 
-import github.rainbowmori.rainbowapi.object.RMData;
 import github.rainbowmori.rainbowapi.object.ui.GuiListener;
 import github.rainbowmori.rainbowapi.util.Util;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -29,22 +29,18 @@ import java.util.Objects;
  * @see MenuHolder
  */
 public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
-    protected final RMData RMData;
-
     private final Inventory inventory;
 
     private final P plugin;
 
     /**
      * InventoryTypeとtitleを設定して使用します
-     * @param RMData 指定するプレイヤーデータ {@link RMData}
      * @param plugin あなたのプラグイン
      * @param type {@link InventoryType}
      * @param title inventory title
      */
 
-    public GuiHolder(RMData RMData, P plugin, InventoryType type, String title) {
-        this.RMData = RMData;
+    public GuiHolder(P plugin, InventoryType type, String title) {
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, type, Util.mm(title));
         GuiListener.registerGui(this, inventory);
@@ -52,14 +48,12 @@ public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
 
     /**
      * チェストのようなインベントリーを作成しますスロットの数とタイトルです
-     * @param RMData 指定するプレイヤーデータ {@link RMData}
      * @param plugin あなたのプラグイン
      * @param size inventory size
      * @param title inventory title
      */
 
-    public GuiHolder(RMData RMData, P plugin, int size, String title) {
-        this.RMData = RMData;
+    public GuiHolder( P plugin, int size, String title) {
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, size, Util.mm(title));
         GuiListener.registerGui(this, inventory);
@@ -67,13 +61,11 @@ public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
 
     /**
      * inventory typeだけを設定して使用します
-     * @param RMData 指定するプレイヤーデータ {@link RMData}
      * @param plugin あなたのプラグイン
      * @param type {@link InventoryType}
      */
 
-    public GuiHolder(RMData RMData, P plugin, InventoryType type) {
-        this.RMData = RMData;
+    public GuiHolder( P plugin, InventoryType type) {
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, type);
         GuiListener.registerGui(this, inventory);
@@ -81,13 +73,11 @@ public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
 
     /**
      * チェストのスロットサイズだけを設定して使用します
-     * @param RMData 指定するプレイヤーデータ {@link RMData}
      * @param plugin あなたのプラグイン
      * @param size inventory size
      */
 
-    public GuiHolder(RMData RMData, P plugin, int size) {
-        this.RMData = RMData;
+    public GuiHolder( P plugin, int size) {
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, size);
         GuiListener.registerGui(this, inventory);
@@ -95,13 +85,11 @@ public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
 
     /**
      * すでに作成されているinventoryを設定して使用します
-     * @param RMData 指定するプレイヤーデータ {@link RMData}
      * @param plugin あなたのプラグイン
      * @param inventory {@link org.bukkit.Bukkit#createInventory}
      */
 
-    public GuiHolder(RMData RMData, P plugin, Inventory inventory) {
-        this.RMData = RMData;
+    public GuiHolder( P plugin, Inventory inventory) {
         this.plugin = Objects.requireNonNull(plugin, "Plugin cannot be null");
         this.inventory = Objects.requireNonNull(inventory, "Inventory cannot be null");
         GuiListener.registerGui(this, inventory);
@@ -133,10 +121,11 @@ public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
 
     /**
      * プレイヤーにinventoryを開きます
+     * @param player open inventory to player
      */
 
-    public void open() {
-        RMData.getPlayer().openInventory(getInventory());
+    public void open(Player player) {
+        player.openInventory(getInventory());
     }
 
     /**

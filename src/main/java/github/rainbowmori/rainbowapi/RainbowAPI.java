@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import github.rainbowmori.rainbowapi.api.serializer.ItemStackSerializer;
 import github.rainbowmori.rainbowapi.api.serializer.LocationSerializer;
 import github.rainbowmori.rainbowapi.listener.BlockDamage;
-import github.rainbowmori.rainbowapi.listener.JoinQuitEvents;
 import github.rainbowmori.rainbowapi.object.ui.GuiListener;
 import github.rainbowmori.rainbowapi.util.McUtil;
 import org.bukkit.Bukkit;
@@ -49,7 +48,6 @@ public final class RainbowAPI {
         this.prefix = prefix + "<reset>";
         manager.registerEvents(GuiListener.getInstance(), plugin);
         manager.registerEvents(BlockDamage.getInstance(), plugin);
-        manager.registerEvents(JoinQuitEvents.getInstance(), plugin);
         mcUtil = new McUtil(this);
         apis.put(plugin, this);
     }

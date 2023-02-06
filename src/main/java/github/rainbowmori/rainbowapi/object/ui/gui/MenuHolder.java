@@ -1,6 +1,5 @@
 package github.rainbowmori.rainbowapi.object.ui.gui;
 
-import github.rainbowmori.rainbowapi.object.RMData;
 import github.rainbowmori.rainbowapi.object.ui.button.MenuButton;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -22,63 +21,58 @@ public class MenuHolder<P extends Plugin> extends GuiHolder<P> {
 
     /**
      * InventoryTypeとtitleを設定して使用します
-     * @param RMData 指定するプレイヤーデータ {@link RMData}
      * @param plugin あなたのプラグイン
      * @param type {@link InventoryType}
      * @param title inventory title
      */
 
-    public MenuHolder(RMData RMData, P plugin, InventoryType type, String title) {
-        super(RMData, plugin, type, title);
+    public MenuHolder(P plugin, InventoryType type, String title) {
+        super(plugin, type, title);
         this.buttons = new MenuButton[type.getDefaultSize()];
     }
 
     /**
      * チェストのようなインベントリーを作成しますスロットの数とタイトルです
-     * @param RMData 指定するプレイヤーデータ {@link RMData}
      * @param plugin あなたのプラグイン
      * @param size inventory size
      * @param title inventory title
      */
 
-    public MenuHolder(RMData RMData, P plugin, int size, String title) {
-        super(RMData, plugin, size, title);
+    public MenuHolder(P plugin, int size, String title) {
+        super(plugin, size, title);
         this.buttons = new MenuButton[size];
     }
 
     /**
      * inventory typeだけを設定して使用します
-     * @param RMData 指定するプレイヤーデータ {@link RMData}
      * @param plugin あなたのプラグイン
      * @param type {@link InventoryType}
      */
 
-    public MenuHolder(RMData RMData, P plugin, InventoryType type) {
-        super(RMData, plugin, type);
+    public MenuHolder(P plugin, InventoryType type) {
+        super(plugin, type);
         this.buttons = new MenuButton[type.getDefaultSize()];
     }
 
     /**
      * チェストのスロットサイズだけを設定して使用します
-     * @param RMData 指定するプレイヤーデータ {@link RMData}
      * @param plugin あなたのプラグイン
      * @param size inventory size
      */
 
-    public MenuHolder(RMData RMData, P plugin, int size) {
-        super(RMData, plugin, size);
+    public MenuHolder(P plugin, int size) {
+        super(plugin, size);
         this.buttons = new MenuButton[size];
     }
 
     /**
      * すでに作成されているinventoryを設定して使用します
-     * @param RMData 指定するプレイヤーデータ {@link RMData}
      * @param plugin あなたのプラグイン
      * @param inventory {@link org.bukkit.Bukkit#createInventory}
      */
 
-    public MenuHolder(RMData RMData, P plugin, Inventory inventory) {
-        super(RMData, plugin, inventory);
+    public MenuHolder(P plugin, Inventory inventory) {
+        super(plugin, inventory);
         this.buttons = new MenuButton[inventory.getSize()];
     }
 

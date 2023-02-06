@@ -41,8 +41,8 @@ public class GetItemMenu<P extends Plugin> extends MenuHolder<P>{
     protected Consumer<ItemStack> putItemAction;
     protected Consumer<Player> cancelAction;
 
-    public GetItemMenu(github.rainbowmori.rainbowapi.object.RMData RMData, P plugin, String question, Consumer<ItemStack> putItemAction, Consumer<Player> cancelAction) {
-        super(RMData, plugin, Bukkit.createInventory(null, InventoryType.HOPPER, Util.mm(question)));
+    public GetItemMenu(P plugin, String question, Consumer<ItemStack> putItemAction, Consumer<Player> cancelAction) {
+        super(plugin, Bukkit.createInventory(null, InventoryType.HOPPER, Util.mm(question)));
         this.putItemAction = putItemAction;
         this.cancelAction = cancelAction;
         setUpButton();
