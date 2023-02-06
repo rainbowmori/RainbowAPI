@@ -1,5 +1,6 @@
 package github.rainbowmori.rainbowapi.object.ui.gui;
 
+import github.rainbowmori.rainbowapi.object.ui.GuiListener;
 import github.rainbowmori.rainbowapi.object.ui.button.ItemButton;
 import github.rainbowmori.rainbowapi.object.ui.button.MenuButton;
 import github.rainbowmori.rainbowapi.util.ItemBuilder;
@@ -20,9 +21,8 @@ import org.bukkit.plugin.Plugin;
 import java.util.function.Consumer;
 
 public class GetItemMenu<P extends Plugin> extends MenuHolder<P>{
-
     protected static final ItemStack YES_STACK = new ItemBuilder(Material.LIME_CONCRETE).name("<green>アイテムを置きました").build();
-    protected static final ItemStack TO_RIGHT_STACK = new ItemBuilder(Material.LIME_CONCRETE).name("<blue>右にアイテムを置いてください").changeMeta((Consumer<BannerMeta>) itemMeta -> {
+    protected static final ItemStack TO_RIGHT_STACK = new ItemBuilder(Material.WHITE_BANNER).name("<blue>右にアイテムを置いてください").changeMeta((Consumer<BannerMeta>) itemMeta -> {
         itemMeta.addPattern(new Pattern(DyeColor.BLACK, PatternType.STRIPE_RIGHT));
         itemMeta.addPattern(new Pattern(DyeColor.BLACK, PatternType.STRIPE_MIDDLE));
         itemMeta.addPattern(new Pattern(DyeColor.WHITE, PatternType.HALF_HORIZONTAL));
@@ -58,6 +58,12 @@ public class GetItemMenu<P extends Plugin> extends MenuHolder<P>{
         getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
             if(cancelAction != null) cancelAction.accept(((Player) event.getPlayer()));
         });
+    }
+
+    @Override
+    public void onClick(InventoryClickEvent event) {
+        if (!GuiListener.isGuiRegistered(getClickedInventory(event)) || event.getSlot() == 2) return;
+        super.onClick(event);
     }
 
     protected MenuButton<GetItemMenu<P>> makeYesButton() {
