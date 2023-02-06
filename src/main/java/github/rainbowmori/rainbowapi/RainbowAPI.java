@@ -28,7 +28,7 @@ public final class RainbowAPI {
 
     public static final PluginManager manager = Bukkit.getServer().getPluginManager();
 
-    public static final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().
+    public static final Gson gson = new GsonBuilder().
             registerTypeAdapter(ItemStack.class, new ItemStackSerializer()).
             registerTypeAdapter(Location.class, new LocationSerializer()).create();
 

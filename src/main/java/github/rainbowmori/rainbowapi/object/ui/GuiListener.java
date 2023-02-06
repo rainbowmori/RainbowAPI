@@ -49,9 +49,7 @@ public class GuiListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event) {
-        onGuiInventoryEvent(event, gui -> {
-            gui.onClick(event);
-        });
+        onGuiInventoryEvent(event, gui -> gui.onClick(event));
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
