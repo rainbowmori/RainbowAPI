@@ -1,6 +1,7 @@
 package github.rainbowmori.rainbowapi;
 
 import github.rainbowmori.rainbowapi.object.RMData;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -11,14 +12,13 @@ public class RMHome extends JavaPlugin {
     private static RMHome plugin;
 
     @Override
-    public void onDisable() {
+    public void onEnable() {
         plugin = this;
-        plugin.getServer().getOnlinePlayers().forEach(RMData::new);
+        Bukkit.getOnlinePlayers().forEach(RMData::new);
     }
 
     @Override
-    public void onEnable() {
-
+    public void onDisable() {
     }
 
     public static RMHome getPlugin() {

@@ -16,10 +16,12 @@ import org.bukkit.plugin.Plugin;
 import java.util.function.Consumer;
 
 public class YesNoMenu<P extends Plugin> extends MenuHolder<P> {
-    private static final ItemStack YES_STACK = new ItemBuilder(Material.LIME_CONCRETE).name("はい - 続ける").build();
-    private static final ItemStack NO_STACK = new ItemBuilder(Material.RED_CONCRETE).name("いいえ - キャンセル").build();
+    private static final ItemStack YES_STACK = new ItemBuilder(Material.LIME_CONCRETE).name("Yes - continue").build();
+    private static final ItemStack NO_STACK = new ItemBuilder(Material.RED_CONCRETE).name("No - cancel").build();
 
     protected Consumer<Player> yesAction, noAction;
+
+    private boolean end = false;
 
     /**
      * YesNoMenuを作成
@@ -44,7 +46,7 @@ public class YesNoMenu<P extends Plugin> extends MenuHolder<P> {
 
     @Override
     public void onClose(InventoryCloseEvent event) {
-        getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
+        if (!end) getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
             if(noAction != null) noAction.accept(((Player) event.getPlayer()));
         });
     }
@@ -71,6 +73,7 @@ public class YesNoMenu<P extends Plugin> extends MenuHolder<P> {
         return new ItemButton<>(stack) {
             @Override
             public void onClick(YesNoMenu<P> holder, InventoryClickEvent event) {
+                end = true;
                 getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
                     event.getView().close();
                     if (action != null) {

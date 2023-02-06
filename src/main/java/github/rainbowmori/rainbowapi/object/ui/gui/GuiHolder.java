@@ -1,6 +1,7 @@
 package github.rainbowmori.rainbowapi.object.ui.gui;
 
 import github.rainbowmori.rainbowapi.object.RMData;
+import github.rainbowmori.rainbowapi.object.ui.GuiListener;
 import github.rainbowmori.rainbowapi.util.Util;
 import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
@@ -28,7 +29,6 @@ import java.util.Objects;
  * @see MenuHolder
  */
 public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
-
     protected final RMData RMData;
 
     private final Inventory inventory;
@@ -47,6 +47,7 @@ public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
         this.RMData = RMData;
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, type, Util.mm(title));
+        GuiListener.registerGui(this, inventory);
     }
 
     /**
@@ -61,6 +62,7 @@ public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
         this.RMData = RMData;
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, size, Util.mm(title));
+        GuiListener.registerGui(this, inventory);
     }
 
     /**
@@ -74,6 +76,7 @@ public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
         this.RMData = RMData;
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, type);
+        GuiListener.registerGui(this, inventory);
     }
 
     /**
@@ -87,6 +90,7 @@ public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
         this.RMData = RMData;
         this.plugin = plugin;
         this.inventory = plugin.getServer().createInventory(this, size);
+        GuiListener.registerGui(this, inventory);
     }
 
     /**
@@ -100,6 +104,7 @@ public abstract class GuiHolder<P extends Plugin> implements InventoryHolder {
         this.RMData = RMData;
         this.plugin = Objects.requireNonNull(plugin, "Plugin cannot be null");
         this.inventory = Objects.requireNonNull(inventory, "Inventory cannot be null");
+        GuiListener.registerGui(this, inventory);
     }
 
     /**

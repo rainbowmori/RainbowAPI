@@ -8,6 +8,8 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
+import java.lang.ref.WeakReference;
+import java.util.WeakHashMap;
 import java.util.function.Consumer;
 
 public class GuiListener implements Listener {
@@ -20,10 +22,22 @@ public class GuiListener implements Listener {
 
     private GuiListener() {}
 
+    private static final WeakHashMap<Inventory, WeakReference<GuiHolder<?>>> guiInventories = new WeakHashMap<>();
+
+    public static boolean registerGui(GuiHolder<?> holder, Inventory inventory) {
+        if (holder == inventory.getHolder()) return true;
+
+        return guiInventories.putIfAbsent(inventory, new WeakReference<>(holder)) == null;
+    }
+
     public static GuiHolder<?> getHolder(Inventory inventory) {
+        if(inventory == null) return null;
         InventoryHolder holder = inventory.getHolder();
-        if (holder instanceof GuiHolder) return (GuiHolder<?>) holder;
-        return null;
+        if (holder instanceof GuiHolder<?>) return (GuiHolder<?>) holder;
+
+        WeakReference<GuiHolder<?>> reference = guiInventories.get(inventory);
+        if (reference == null) return null;
+        return reference.get();
     }
 
     public static boolean isGuiRegistered(GuiHolder<?> holder, Inventory inventory) {
@@ -34,7 +48,7 @@ public class GuiListener implements Listener {
         return getHolder(inventory) != null;
     }
 
-    private void onGuiInventoryEvent(InventoryEvent event, Consumer<GuiHolder<?>> action) {
+    private static void onGuiInventoryEvent(InventoryEvent event, Consumer<GuiHolder<?>> action) {
         GuiHolder<?> guiHolder = getHolder(event.getInventory());
 
         if (guiHolder != null && guiHolder.getPlugin().isEnabled()) {

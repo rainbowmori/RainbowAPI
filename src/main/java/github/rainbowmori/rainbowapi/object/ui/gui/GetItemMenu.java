@@ -36,6 +36,8 @@ public class GetItemMenu<P extends Plugin> extends MenuHolder<P>{
     }).build();
     protected static final ItemStack NO_STACK = new ItemBuilder(Material.RED_CONCRETE).name("<red>キャンセルします").build();
 
+    private boolean end = false;
+
     protected Consumer<ItemStack> putItemAction;
     protected Consumer<Player> cancelAction;
 
@@ -55,7 +57,7 @@ public class GetItemMenu<P extends Plugin> extends MenuHolder<P>{
 
     @Override
     public void onClose(InventoryCloseEvent event) {
-        getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
+        if(!end) getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
             if(cancelAction != null) cancelAction.accept(((Player) event.getPlayer()));
         });
     }
@@ -70,6 +72,7 @@ public class GetItemMenu<P extends Plugin> extends MenuHolder<P>{
         return new ItemButton<>(YES_STACK) {
             @Override
             public void onClick(GetItemMenu<P> holder, InventoryClickEvent event) {
+                end = true;
                 getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
                     event.getView().close();
                     if(putItemAction != null) putItemAction.accept(holder.getInventory().getItem(2));
@@ -79,9 +82,10 @@ public class GetItemMenu<P extends Plugin> extends MenuHolder<P>{
     }
 
     protected MenuButton<GetItemMenu<P>> makeNoButton() {
-        return new ItemButton<>(YES_STACK) {
+        return new ItemButton<>(NO_STACK) {
             @Override
             public void onClick(GetItemMenu<P> holder, InventoryClickEvent event) {
+                end = true;
                 getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
                     event.getView().close();
                     if(cancelAction != null) cancelAction.accept(((Player) event.getWhoClicked()));
