@@ -2,7 +2,6 @@ package github.rainbowmori.rainbowapi.object.ui.action;
 
 import github.rainbowmori.rainbowapi.RainbowAPI;
 import github.rainbowmori.rainbowapi.object.ui.gui.MenuHolder;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -18,7 +17,7 @@ public class TeleportAction implements MenuAction {
     @Override
     public final void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
         HumanEntity player = event.getWhoClicked();
-        Bukkit.getScheduler().runTask(menu.getPlugin(), () -> player.teleport(getTo()));
+        menu.getPlugin().getServer().getScheduler().runTask(menu.getPlugin(), () -> player.teleport(getTo()));
     }
 
     public Location getTo() {

@@ -46,12 +46,12 @@ public class MultiActionButton<MH extends MenuHolder<?>> implements MenuButton<M
         return true;
     }
 
-    public final MenuButton<?> addAction(ItemClickType clickType, MenuAction action) {
+    protected final MenuButton<?> addAction(ItemClickType clickType, MenuAction action) {
         actions.computeIfAbsent(clickType,type -> new ArrayList<>()).add(action);
         return this;
     }
 
-    public final Optional<List<MenuAction>> getAction(ItemClickType clickType) {
+    protected final Optional<List<MenuAction>> getAction(ItemClickType clickType) {
         return Optional.ofNullable(actions.get(clickType));
     }
 

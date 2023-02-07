@@ -1,7 +1,6 @@
 package github.rainbowmori.rainbowapi.object.ui.action;
 
 import github.rainbowmori.rainbowapi.object.ui.gui.MenuHolder;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -23,7 +22,7 @@ public class OpenAction implements MenuAction {
 
     @Override
     public final void onClick(MenuHolder<?> menu, InventoryClickEvent event) {
-        Bukkit.getScheduler().runTask(menu.getPlugin(), () -> {
+        menu.getPlugin().getServer().getScheduler().runTask(menu.getPlugin(), () -> {
             event.getView().close();
             HumanEntity player = event.getWhoClicked();
             Inventory to = to(menu, event);

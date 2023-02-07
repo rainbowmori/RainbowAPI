@@ -1,4 +1,4 @@
-package github.rainbowmori.rainbowapi.manager;
+package github.rainbowmori.rainbowapi.object;
 
 public enum ChatEnum {
     NOT_MATERIAL("<red>そのマテリアルはありません"),
