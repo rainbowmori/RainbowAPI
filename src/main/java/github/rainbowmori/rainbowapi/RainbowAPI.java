@@ -10,20 +10,20 @@ import github.rainbowmori.rainbowapi.util.McUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * APIのmain class
- * 使い方は{@link #RainbowAPI(Plugin, String)}
+ * 使い方は{@link #RainbowAPI(JavaPlugin, String)}
  */
 
 public final class RainbowAPI {
 
-    public static final Map<Plugin, RainbowAPI> apis = new HashMap<>();
+    public static final Map<JavaPlugin, RainbowAPI> apis = new HashMap<>();
 
     public static final PluginManager manager = Bukkit.getServer().getPluginManager();
 
@@ -33,7 +33,7 @@ public final class RainbowAPI {
 
     public final String prefix;
 
-    public final Plugin plugin;
+    public final JavaPlugin plugin;
 
     public final McUtil mcUtil;
 
@@ -43,7 +43,7 @@ public final class RainbowAPI {
      * @param prefix　message prefix
      */
 
-    public RainbowAPI(final Plugin plugin, final String prefix) {
+    public RainbowAPI(final JavaPlugin plugin, final String prefix) {
         this.plugin = plugin;
         this.prefix = prefix + "<reset>";
         manager.registerEvents(GuiListener.getInstance(), plugin);

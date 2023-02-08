@@ -5,6 +5,7 @@ import github.rainbowmori.rainbowapi.util.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,12 +26,12 @@ public class PlayerBlockInput {
 
     public final BiPredicate<PlayerBlockInput, BlockBreakEvent> predicate;
 
-    public PlayerBlockInput(Player player, Plugin plugin, String message,
+    public PlayerBlockInput(Player player, JavaPlugin plugin, String message,
                             String success, String error, BiPredicate<PlayerBlockInput, BlockBreakEvent> predicate) {
         this(player, plugin, message, blockBreakEvent -> success, error, predicate);
     }
 
-    public PlayerBlockInput(Player player, Plugin plugin, String message,
+    public PlayerBlockInput(Player player, JavaPlugin plugin, String message,
                             Function<BlockBreakEvent,String> success, String error, BiPredicate<PlayerBlockInput, BlockBreakEvent> predicate) {
         this.plugin = plugin;
         this.success = success;

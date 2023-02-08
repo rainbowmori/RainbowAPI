@@ -4,7 +4,7 @@ import github.rainbowmori.rainbowapi.object.ui.button.MenuButton;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
  * @param <P> あなたのプラグイン
  */
 
-public class MenuHolder<P extends Plugin> extends GuiHolder<P> {
+public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
 
     private final MenuButton<?>[] buttons;
     protected boolean canceled = true;

@@ -11,11 +11,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.function.Consumer;
 
-public class YesNoMenu<P extends Plugin> extends MenuHolder<P> {
+public class YesNoMenu<P extends JavaPlugin> extends MenuHolder<P> {
     private static final ItemStack YES_STACK = new ItemBuilder(Material.LIME_CONCRETE).name("Yes - continue").build();
     private static final ItemStack NO_STACK = new ItemBuilder(Material.RED_CONCRETE).name("No - cancel").build();
 

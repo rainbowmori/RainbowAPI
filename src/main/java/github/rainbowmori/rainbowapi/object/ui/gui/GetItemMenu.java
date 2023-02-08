@@ -16,11 +16,11 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.function.Consumer;
 
-public class GetItemMenu<P extends Plugin> extends MenuHolder<P>{
+public class GetItemMenu<P extends JavaPlugin> extends MenuHolder<P>{
     protected static final ItemStack YES_STACK = new ItemBuilder(Material.LIME_CONCRETE).name("<green>アイテムを置きました").build();
     protected static final ItemStack TO_RIGHT_STACK = new ItemBuilder(Material.WHITE_BANNER).name("<blue>右にアイテムを置いてください").changeMeta((Consumer<BannerMeta>) itemMeta -> {
         itemMeta.addPattern(new Pattern(DyeColor.BLACK, PatternType.STRIPE_RIGHT));
