@@ -47,7 +47,7 @@ public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
         return true;
     }
 
-    protected final MenuButton<?> addAction(ItemClickType clickType, MenuAction action) {
+    protected final MenuButton<?> setAction(ItemClickType clickType, MenuAction action) {
         actions.put(clickType, action);
         return this;
     }
