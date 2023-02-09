@@ -66,10 +66,26 @@ public class ItemBuilder {
     }
 
     public ItemBuilder addLore(Object line) {
-        List<Component> lore = itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore() ?
-                new ArrayList<>(Objects.requireNonNull(itemStack.getItemMeta().lore())) : new ArrayList<>();
+        List<Component> lore = getLore();
         lore.add(Util.mm(line));
         return lore(lore);
+    }
+
+    public ItemBuilder setLore(int line,Object str) {
+        List<Component> lore = getLore();
+        lore.set(line, Util.mm(line));
+        return lore(lore);
+    }
+
+    public ItemBuilder removeLore(int line) {
+        List<Component> lore = getLore();
+        lore.remove(line);
+        return lore(lore);
+    }
+
+    public List<Component> getLore() {
+        return itemStack.hasItemMeta() && itemStack.getItemMeta().hasLore() ?
+                new ArrayList<>(Objects.requireNonNull(itemStack.getItemMeta().lore())) : new ArrayList<>();
     }
 
     public ItemBuilder unbreakable(boolean unbreakable) {

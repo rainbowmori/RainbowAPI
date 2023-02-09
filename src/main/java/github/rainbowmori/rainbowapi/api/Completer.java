@@ -19,19 +19,4 @@ public abstract class Completer implements TabCompleter {
     }
 
     public abstract List<String> returned(@NotNull CommandSender sender, @NotNull String[] args);
-
-    //predicateでエラーの場合にtabにエラーを表示する,かなり大規模になるから後で作る？多分内容忘れる
-    /*
-    * 
-    *
-    *
-    *
-    *
-    *
-    *
-    *
-    *
-    *
-    *
-    * */
 }

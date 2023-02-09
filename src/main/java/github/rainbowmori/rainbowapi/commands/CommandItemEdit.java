@@ -1,4 +1,4 @@
-package github.rainbowmori.rainbowapi.command;
+package github.rainbowmori.rainbowapi.commands;
 
 import github.rainbowmori.rainbowapi.RMHome;
 import github.rainbowmori.rainbowapi.object.ChatEnum;
@@ -10,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,16 +34,43 @@ public class CommandItemEdit implements CommandExecutor {
             mcUtil.send(p,"<red>機能を入力してください");
             return true;
         }
-        ItemBuilder itemBuilder = new ItemBuilder(p.getInventory().getItemInMainHand());
+        ItemStack itemInMainHand = p.getInventory().getItemInMainHand();
+        ItemBuilder itemBuilder = new ItemBuilder(itemInMainHand);
         switch (args[0]) {
             case "rename" -> {
                 if (checkArg(p, args, 1, "<red>変えたい名前を入力してください")) return true;
                 itemBuilder.name(args[0]);
             }
-            case "name" -> {
-
-            }
             case "lore" -> {
+                if(checkArg(p,args,1,"<red>add | set [line num] | remove これらの機能を使ってください")) return true;
+                switch (args[0]) {
+                    case "add" -> {
+                        if (checkArg(p,args,2,"<red>loreに追加したい文字を入力してください")) return true;
+                        itemBuilder.addLore(args[1]);
+                    }
+                    case "set" -> {
+                        int i = IsObjectUtil.IsInt(args[1])-1;
+                        if (itemBuilder.getLore().size()< i) {
+                            mcUtil.send(p,"<red>loreの行はそんなにありません");
+                            return true;
+                        }
+                        if(checkArg(p,args,3,"<red>セットしたい文字を入力してください")) return true;
+                        itemBuilder.setLore(i - 1, args[2]);
+                    }
+                    case "remove" -> {
+                        if (checkArg(p,args,2,"<red>削除したいloreのラインを入力してください(上が1で始まります)")) return true;
+                        int i = IsObjectUtil.IsInt(args[1])-1;
+                        if (itemBuilder.getLore().size()< i) {
+                            mcUtil.send(p,"<red>loreの行はそんなにありません");
+                            return true;
+                        }
+                        itemBuilder.removeLore(i - 1);
+                    }
+                    default -> {
+                        mcUtil.send(p,"<red>入力ミスです");
+                        return true;
+                    }
+                }
 
             }
             case "type" -> {
@@ -66,10 +94,11 @@ public class CommandItemEdit implements CommandExecutor {
                     return true;
                 }
                 itemBuilder.changeMeta((Consumer< Damageable >) consumer ->
-                        consumer.setDamage(p.getInventory().getItemInMainHand().getMaxItemUseDuration() - i));
+                        consumer.setDamage(itemInMainHand.getMaxItemUseDuration() - i));
 
             }
             default -> {
+                mcUtil.send(p,"<red>入力ミスです");
                 return true;
             }
         }
