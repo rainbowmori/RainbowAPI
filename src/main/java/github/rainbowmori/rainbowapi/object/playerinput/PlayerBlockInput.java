@@ -1,7 +1,7 @@
 package github.rainbowmori.rainbowapi.object.playerinput;
 
+import github.rainbowmori.rainbowapi.RMHome;
 import github.rainbowmori.rainbowapi.RainbowAPI;
-import github.rainbowmori.rainbowapi.util.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.Plugin;
@@ -48,7 +48,7 @@ public class PlayerBlockInput {
 
     public static boolean isInputted(Player player) {
         if (inputMap.containsKey(player)) return false;
-        Util.sendRM(player, "<red>現在入力中です");
+        RMHome.getRainbowAPI().mcUtil.send(player, "<red>現在入力中です");
         return true;
     }
 

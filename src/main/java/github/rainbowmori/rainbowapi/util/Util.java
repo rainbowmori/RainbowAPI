@@ -2,11 +2,8 @@ package github.rainbowmori.rainbowapi.util;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -15,31 +12,7 @@ import java.util.stream.Collectors;
 
 public class Util {
 
-    public static final String RM_Prefix = "<gray>[<red>RM<gray>] ";
-
-    /**
-     * プレイヤーにメッセージを送る
-     * @param uuid player uuid
-     * @param str message
-     */
-    public static void sendRM(UUID uuid, Object str) {
-        sendRM(Bukkit.getPlayer(uuid), str);
-    }
-
-    /**
-     * プレイヤーにメッセージを送る
-     * @param player player
-     * @param str message
-     */
-    public static void sendRM(Player player, Object str) {
-        if (player != null) player.sendMessage(RM_Prefix + str);
-    }
-
-    /**
-     * オブジェクトをComponentに変更する
-     * @param str 変更するオブジェクト
-     * @return {@link Component}
-     */
+    public static final McUtil util = new McUtil();
 
     public static Component mm(Object str) {
         return IsObjectUtil.IsComponent(str) ? ((Component) str) : MiniMessage.miniMessage().deserialize(String.valueOf(str));

@@ -22,7 +22,7 @@ public abstract class Completer implements TabCompleter {
 
     //predicateでエラーの場合にtabにエラーを表示する,かなり大規模になるから後で作る？多分内容忘れる
     /*
-    * サイゼでやろう
+    * 
     *
     *
     *

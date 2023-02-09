@@ -1,7 +1,7 @@
 package github.rainbowmori.rainbowapi.object.playerinput;
 
+import github.rainbowmori.rainbowapi.RMHome;
 import github.rainbowmori.rainbowapi.RainbowAPI;
-import github.rainbowmori.rainbowapi.util.Util;
 import org.bukkit.conversations.ConversationAbandonedEvent;
 import org.bukkit.conversations.ConversationAbandonedListener;
 import org.bukkit.conversations.ConversationFactory;
@@ -40,7 +40,7 @@ public class PlayerChatInput implements ConversationAbandonedListener {
 
     public static boolean isInputted(Player player) {
         if (player.isConversing()) {
-            Util.sendRM(player, "<red>現在入力中です");
+            RMHome.getRainbowAPI().mcUtil.send(player, "<red>現在入力中です");
             return true;
         }
         return false;
