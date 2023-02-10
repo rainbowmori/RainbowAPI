@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Command implements CommandExecutor {
 
-    private final List<Argument> arguments = new ArrayList<>();
+    private final List<Argument<?>> arguments = new ArrayList<>();
 
     private final String commandName;
 
@@ -18,13 +18,22 @@ public class Command implements CommandExecutor {
         this.commandName = commandName;
     }
 
-    public Command then(Argument argument) {
+    public Command addArgment(Argument<?> argument) {
         arguments.add(argument);
         return this;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        return false;
+        arguments.forEach(argument -> {
+            if (argument.isArgMatch(args[0])) {
+
+            }
+        });
+        return true;
     }
+
+    /*
+    CommandAPIみたいなのを作りたいけどちょっと後にしよう https://github.com/JorelAli/CommandAPI
+     */
 }

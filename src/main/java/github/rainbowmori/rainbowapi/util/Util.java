@@ -1,5 +1,6 @@
 package github.rainbowmori.rainbowapi.util;
 
+import github.rainbowmori.rainbowapi.RMHome;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Util {
 
-    public static final McUtil util = new McUtil();
+    public static final McUtil util = RMHome.getRainbowAPI().mcUtil;
 
     public static Component mm(Object str) {
         return IsObjectUtil.IsComponent(str) ? ((Component) str) : MiniMessage.miniMessage().deserialize(String.valueOf(str));

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class CommandItemEdit implements CommandExecutor {
     private static final McUtil mcUtil = RMHome.getRainbowAPI().mcUtil;
 
-    private static final Set<String> materials = Arrays.stream(Material.values()).map(Enum::name).collect(Collectors.toSet());
+    public static final Set<String> materials = Arrays.stream(Material.values()).map(Enum::name).collect(Collectors.toSet());
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {

@@ -1,19 +1,44 @@
 package github.rainbowmori.rainbowapi.object.command.argument;
 
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiConsumer;
 
-public abstract class Argument {
-    private final List<Argument> arguments = new ArrayList<>();
+public abstract class Argument<T extends Argument<T>> implements CommandExecutor {
+    protected final List<Argument<?>> Args = new ArrayList<>();
 
-    public Argument then(Argument argument) {
-        arguments.add(argument);
-        return this;
+    protected BiConsumer<CommandSender,String[]> execute;
+
+    public T addArgment(Argument<?>... args) {
+        Args.addAll(List.of(args));
+        return (T) this;
     }
 
-    public abstract Argument execute(CommandSender sender, String[] args);
+    public abstract boolean isArgMatch(String matched);
+
+    public T setExecute(BiConsumer<CommandSender, String[]> execute) {
+        this.execute = execute;
+        return (T) this;
+    }
+
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        for (Argument<?> argument : Args) {
+            if (argument.isArgMatch(args[0])) {
+                argument.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
+                return true;
+            }
+        }
+        execute.accept(sender,args);
+        return true;
+    }
+
     /*
     CommandAPIみたいなのをいつか作ろうこれはかなり面倒だ
     new CommandTree("betterbossbar")

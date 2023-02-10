@@ -10,6 +10,7 @@ import github.rainbowmori.rainbowapi.util.McUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,7 +24,7 @@ import java.util.Map;
 
 public final class RainbowAPI {
 
-    public static final Map<JavaPlugin, RainbowAPI> apis = new HashMap<>();
+    public static final Map<Plugin, RainbowAPI> apis = new HashMap<>();
 
     public static final PluginManager manager = Bukkit.getServer().getPluginManager();
 

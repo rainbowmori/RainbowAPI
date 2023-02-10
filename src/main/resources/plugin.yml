@@ -3,3 +3,6 @@ version: '${version}'
 api-version: 1.19
 main: github.rainbowmori.rainbowapi.RMHome
 prefix: RainbowAPI
+commands:
+  ie:
+    description: item edit command

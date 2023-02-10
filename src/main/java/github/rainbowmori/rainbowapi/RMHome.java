@@ -1,5 +1,8 @@
 package github.rainbowmori.rainbowapi;
 
+import github.rainbowmori.rainbowapi.commands.CommandItemEdit;
+import github.rainbowmori.rainbowapi.commands.CompleterItemEdit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -15,6 +18,9 @@ public class RMHome extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         rainbowAPI = new RainbowAPI(this,"<gray>[<red>RM<gray>] ");
+        PluginCommand ie = getCommand("ie");
+        ie.setExecutor(new CommandItemEdit());
+        ie.setTabCompleter(new CompleterItemEdit());
     }
 
     @Override
