@@ -120,9 +120,13 @@ public abstract class GuiHolder<P extends JavaPlugin> implements InventoryHolder
      */
 
     protected static Inventory getClickedInventory(int rawSlot, InventoryView view) {
-        if (rawSlot < 0) return null;
+        if (rawSlot < 0) {
+            return null;
+        }
         Inventory topInventory = view.getTopInventory();
-        if (rawSlot < topInventory.getSize()) return topInventory;
+        if (rawSlot < topInventory.getSize()) {
+            return topInventory;
+        }
         return view.getBottomInventory();
     }
 

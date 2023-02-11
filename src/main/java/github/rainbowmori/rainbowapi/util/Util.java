@@ -21,6 +21,7 @@ public class Util {
 
     /**
      * listの内容をComponentに変換
+     *
      * @param list 変換したいlist
      * @return List<Component>
      */
@@ -31,6 +32,7 @@ public class Util {
 
     /**
      * {@link Component}をStringに変換
+     *
      * @param str 変換したいコンポーネント
      * @return 変換されたString
      */

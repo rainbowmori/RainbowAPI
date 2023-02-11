@@ -32,7 +32,7 @@ public class PermissionAction extends PredicateAction {
         this.permission = permission;
     }
 
-     @Override
+    @Override
     protected Optional<BiConsumer<MenuHolder<?>, InventoryClickEvent>> getPredicateFailedCallback() {
         return getNoPermissionCallback().map(consumer -> (menuHolder, event) -> consumer.accept(event.getWhoClicked()));
     }

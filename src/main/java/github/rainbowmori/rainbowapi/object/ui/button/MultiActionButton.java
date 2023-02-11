@@ -40,14 +40,16 @@ public class MultiActionButton<MH extends MenuHolder<?>> implements MenuButton<M
         Set<Integer> slots = inventoriesContainingMe.get(menuHolder);
         if (slots != null) {
             boolean result = slots.remove(slot);
-            if (slots.isEmpty()) inventoriesContainingMe.remove(menuHolder);
+            if (slots.isEmpty()) {
+                inventoriesContainingMe.remove(menuHolder);
+            }
             return result;
         }
         return true;
     }
 
     protected final MenuButton<?> addAction(ItemClickType clickType, MenuAction action) {
-        actions.computeIfAbsent(clickType,type -> new ArrayList<>()).add(action);
+        actions.computeIfAbsent(clickType, type -> new ArrayList<>()).add(action);
         return this;
     }
 
@@ -57,10 +59,11 @@ public class MultiActionButton<MH extends MenuHolder<?>> implements MenuButton<M
 
     @Override
     public void onClick(MH holder, InventoryClickEvent event) {
-        getAction(ItemClickType.ALL).ifPresentOrElse(actions -> actions.forEach(menuAction -> onClick(holder,event)), () -> {
-            if (ItemClickType.isItemClickType(event.getClick()))
+        getAction(ItemClickType.ALL).ifPresentOrElse(actions -> actions.forEach(menuAction -> onClick(holder, event)), () -> {
+            if (ItemClickType.isItemClickType(event.getClick())) {
                 getAction(ItemClickType.valueOf(event.getClick().name())).
-                        ifPresent(actions -> actions.forEach(menuAction -> onClick(holder,event)));
+                        ifPresent(actions -> actions.forEach(menuAction -> onClick(holder, event)));
+            }
         });
     }
 }

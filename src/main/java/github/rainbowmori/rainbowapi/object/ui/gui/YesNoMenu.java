@@ -25,10 +25,11 @@ public class YesNoMenu<P extends JavaPlugin> extends MenuHolder<P> {
 
     /**
      * YesNoMenuを作成
-     * @param plugin your plugin
-     * @param question inventory title
+     *
+     * @param plugin    your plugin
+     * @param question  inventory title
      * @param yesAction action clicked yes
-     * @param noAction action clicked no
+     * @param noAction  action clicked no
      */
 
     public YesNoMenu(P plugin, String question, Consumer<Player> yesAction, Consumer<Player> noAction) {
@@ -40,14 +41,19 @@ public class YesNoMenu<P extends JavaPlugin> extends MenuHolder<P> {
 
     /**
      * 閉じたときにnoActionを実行
+     *
      * @param event このinventoryを閉じたeventです
      */
 
     @Override
     public void onClose(InventoryCloseEvent event) {
-        if (!end) getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
-            if(noAction != null) noAction.accept(((Player) event.getPlayer()));
-        });
+        if (!end) {
+            getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
+                if (noAction != null) {
+                    noAction.accept(((Player) event.getPlayer()));
+                }
+            });
+        }
     }
 
     /**
@@ -61,6 +67,7 @@ public class YesNoMenu<P extends JavaPlugin> extends MenuHolder<P> {
 
     /**
      * yes or no button make
+     *
      * @param yesOrNo yes or no boolean
      * @return yes or no button
      */

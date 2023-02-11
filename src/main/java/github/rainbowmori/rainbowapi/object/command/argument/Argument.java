@@ -31,17 +31,16 @@ public abstract class Argument<T extends Argument<T>> implements CommandExecutor
 
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 0) {
-            if (execute == null) sender.sendMessage(Util.mm("<red>引数を間違えているかこの後に引数を入力する必要があります"));
-            else execute.onCommand(sender, command, label, args);
-            return true;
-        }
-        if (args.length == 1) {
-            Args.get(0).onCommand(sender, command, label, args);
+            if (execute == null) {
+                sender.sendMessage(Util.mm("<red>引数を間違えているかこの後に引数を入力する必要があります"));
+            } else {
+                execute.onCommand(sender, command, label, args);
+            }
             return true;
         }
         for (Argument<?> argument : Args) {
             if (argument.isArgMatch(args[0])) {
-                argument.onCommand(sender, command, label, Arrays.copyOfRange(args, 1,args.length));
+                argument.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
                 return true;
             }
         }

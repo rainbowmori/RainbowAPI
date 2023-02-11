@@ -89,17 +89,23 @@ public class JsonAPI {
     public final void writeArray(Object object, @NotNull List<Object> paths) {
         JsonObject jsonObject = get(paths);
         String lastPath = lastValue(paths);
-        if (!jsonObject.has(lastPath)) jsonObject.add(lastPath, new JsonArray());
+        if (!jsonObject.has(lastPath)) {
+            jsonObject.add(lastPath, new JsonArray());
+        }
         JsonArray array = jsonObject.getAsJsonArray(lastPath);
         array.add(convertElement(object));
     }
 
     private JsonObject get(@NotNull List<Object> paths) {
         JsonObject jsonObject = json;
-        if (paths.size() == 1) return jsonObject;
+        if (paths.size() == 1) {
+            return jsonObject;
+        }
         for (int i = 0; i < paths.size() - 1; i++) {
             String key = paths.get(i).toString();
-            if (!jsonObject.has(key)) jsonObject.add(key, new JsonObject());
+            if (!jsonObject.has(key)) {
+                jsonObject.add(key, new JsonObject());
+            }
             jsonObject = jsonObject.getAsJsonObject(key);
         }
         return jsonObject;
@@ -112,8 +118,9 @@ public class JsonAPI {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public final void Created() {
         try {
-            if (!new File(plugin.getDataFolder() + path).exists())
+            if (!new File(plugin.getDataFolder() + path).exists()) {
                 new File(plugin.getDataFolder() + path).mkdir();
+            }
             if (!file.exists() || new BufferedReader(new FileReader(file)).readLine() == null) {
                 file.createNewFile();
                 plugin.getLogger().info(name + "に{}を入力しています");
@@ -128,7 +135,9 @@ public class JsonAPI {
     }
 
     public final void Remove() {
-        if (file.delete()) plugin.getLogger().info(name + "を削除しました");
+        if (file.delete()) {
+            plugin.getLogger().info(name + "を削除しました");
+        }
     }
 
     public final void Save() {

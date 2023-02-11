@@ -20,7 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.function.Consumer;
 
-public class GetItemMenu<P extends JavaPlugin> extends MenuHolder<P>{
+public class GetItemMenu<P extends JavaPlugin> extends MenuHolder<P> {
     protected static final ItemStack YES_STACK = new ItemBuilder(Material.LIME_CONCRETE).name("<green>アイテムを置きました").build();
     protected static final ItemStack TO_RIGHT_STACK = new ItemBuilder(Material.WHITE_BANNER).name("<blue>右にアイテムを置いてください").changeMeta((Consumer<BannerMeta>) itemMeta -> {
         itemMeta.addPattern(new Pattern(DyeColor.BLACK, PatternType.STRIPE_RIGHT));
@@ -35,11 +35,9 @@ public class GetItemMenu<P extends JavaPlugin> extends MenuHolder<P>{
         itemMeta.addPattern(new Pattern(DyeColor.WHITE, PatternType.CURLY_BORDER));
     }).build();
     protected static final ItemStack NO_STACK = new ItemBuilder(Material.RED_CONCRETE).name("<red>キャンセルします").build();
-
-    private boolean end = false;
-
     protected Consumer<ItemStack> putItemAction;
     protected Consumer<Player> cancelAction;
+    private boolean end = false;
 
     public GetItemMenu(P plugin, String question, Consumer<ItemStack> putItemAction, Consumer<Player> cancelAction) {
         super(plugin, Bukkit.createInventory(null, InventoryType.HOPPER, Util.mm(question)));
@@ -49,22 +47,28 @@ public class GetItemMenu<P extends JavaPlugin> extends MenuHolder<P>{
     }
 
     private void setUpButton() {
-        setButton(0,makeYesButton());
-        setButton(1,new ItemButton<GetItemMenu<P>>(TO_RIGHT_STACK));
-        setButton(3,new ItemButton<GetItemMenu<P>>(TO_LEFT_STACK));
-        setButton(4,makeNoButton());
+        setButton(0, makeYesButton());
+        setButton(1, new ItemButton<GetItemMenu<P>>(TO_RIGHT_STACK));
+        setButton(3, new ItemButton<GetItemMenu<P>>(TO_LEFT_STACK));
+        setButton(4, makeNoButton());
     }
 
     @Override
     public void onClose(InventoryCloseEvent event) {
-        if(!end) getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
-            if(cancelAction != null) cancelAction.accept(((Player) event.getPlayer()));
-        });
+        if (!end) {
+            getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
+                if (cancelAction != null) {
+                    cancelAction.accept(((Player) event.getPlayer()));
+                }
+            });
+        }
     }
 
     @Override
     public void onClick(InventoryClickEvent event) {
-        if (!GuiListener.isGuiRegistered(getClickedInventory(event)) || event.getSlot() == 2) return;
+        if (!GuiListener.isGuiRegistered(getClickedInventory(event)) || event.getSlot() == 2) {
+            return;
+        }
         super.onClick(event);
     }
 
@@ -75,7 +79,9 @@ public class GetItemMenu<P extends JavaPlugin> extends MenuHolder<P>{
                 end = true;
                 getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
                     event.getView().close();
-                    if(putItemAction != null) putItemAction.accept(holder.getInventory().getItem(2));
+                    if (putItemAction != null) {
+                        putItemAction.accept(holder.getInventory().getItem(2));
+                    }
                 });
             }
         };
@@ -88,7 +94,9 @@ public class GetItemMenu<P extends JavaPlugin> extends MenuHolder<P>{
                 end = true;
                 getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
                     event.getView().close();
-                    if(cancelAction != null) cancelAction.accept(((Player) event.getWhoClicked()));
+                    if (cancelAction != null) {
+                        cancelAction.accept(((Player) event.getWhoClicked()));
+                    }
                 });
             }
         };

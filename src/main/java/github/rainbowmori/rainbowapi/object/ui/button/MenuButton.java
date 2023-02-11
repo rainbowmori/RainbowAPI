@@ -6,7 +6,8 @@ import org.bukkit.inventory.ItemStack;
 
 public interface MenuButton<MH extends MenuHolder<?>> {
 
-    default void onClick(MH holder, InventoryClickEvent event) {}
+    default void onClick(MH holder, InventoryClickEvent event) {
+    }
 
     default ItemStack getIcon() {
         return null;

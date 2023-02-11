@@ -40,8 +40,9 @@ public final class RainbowAPI {
 
     /**
      * プラグインとメッセージにつくprefixです
-     * @param plugin　あなたのプラグイン
-     * @param prefix　message prefix
+     *
+     * @param plugin 　あなたのプラグイン
+     * @param prefix 　message prefix
      */
 
     public RainbowAPI(final JavaPlugin plugin, final String prefix) {

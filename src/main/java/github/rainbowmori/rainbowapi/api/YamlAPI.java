@@ -48,9 +48,12 @@ public class YamlAPI {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public final void Created() {
         try {
-            if (!new File(plugin.getDataFolder() + path).exists())
+            if (!new File(plugin.getDataFolder() + path).exists()) {
                 new File(plugin.getDataFolder() + path).mkdir();
-            if (!file.exists()) file.createNewFile();
+            }
+            if (!file.exists()) {
+                file.createNewFile();
+            }
             Load();
         } catch (IOException exception) {
             exception.printStackTrace();

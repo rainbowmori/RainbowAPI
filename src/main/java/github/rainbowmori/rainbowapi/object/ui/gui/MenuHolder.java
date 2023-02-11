@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 
 /**
  * MenuButtonがあるGUI
+ *
  * @param <P> あなたのプラグイン
  */
 
@@ -21,9 +22,10 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
 
     /**
      * InventoryTypeとtitleを設定して使用します
+     *
      * @param plugin あなたのプラグイン
-     * @param type {@link InventoryType}
-     * @param title inventory title
+     * @param type   {@link InventoryType}
+     * @param title  inventory title
      */
 
     public MenuHolder(P plugin, InventoryType type, String title) {
@@ -33,9 +35,10 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
 
     /**
      * チェストのようなインベントリーを作成しますスロットの数とタイトルです
+     *
      * @param plugin あなたのプラグイン
-     * @param size inventory size
-     * @param title inventory title
+     * @param size   inventory size
+     * @param title  inventory title
      */
 
     public MenuHolder(P plugin, int size, String title) {
@@ -45,8 +48,9 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
 
     /**
      * inventory typeだけを設定して使用します
+     *
      * @param plugin あなたのプラグイン
-     * @param type {@link InventoryType}
+     * @param type   {@link InventoryType}
      */
 
     public MenuHolder(P plugin, InventoryType type) {
@@ -56,8 +60,9 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
 
     /**
      * チェストのスロットサイズだけを設定して使用します
+     *
      * @param plugin あなたのプラグイン
-     * @param size inventory size
+     * @param size   inventory size
      */
 
     public MenuHolder(P plugin, int size) {
@@ -67,7 +72,8 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
 
     /**
      * すでに作成されているinventoryを設定して使用します
-     * @param plugin あなたのプラグイン
+     *
+     * @param plugin    あなたのプラグイン
      * @param inventory {@link org.bukkit.Bukkit#createInventory}
      */
 
@@ -78,6 +84,7 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
 
     /**
      * this inventory click method
+     *
      * @param event このinventoryをクリックしたeventです
      */
 
@@ -85,24 +92,30 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
     public void onClick(InventoryClickEvent event) {
         event.setCancelled(canceled);
         Inventory clickedInventory = getClickedInventory(event);
-        if (clickedInventory == null) return;
+        if (clickedInventory == null) {
+            return;
+        }
         getButtonOptionally(event.getSlot()).ifPresent((MenuButton button) -> button.onClick(this, event));
     }
 
     /**
      * get button of slot
+     *
      * @param slot 取得したいスロット
      * @return 取得したボタン
      */
 
     public MenuButton<?> getButton(int slot) {
-        if (slot < 0 || slot >= getInventory().getSize()) return null;
+        if (slot < 0 || slot >= getInventory().getSize()) {
+            return null;
+        }
 
         return this.buttons[slot];
     }
 
     /**
      * get button of optional
+     *
      * @param slot 取得したいスロット
      * @return 取得したボタン
      */
@@ -113,26 +126,34 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
 
     /**
      * put the button in the slot
-     * @param slot slot
+     *
+     * @param slot   slot
      * @param button button
      */
 
     public void setButton(int slot, MenuButton<?> button) {
-        if (!unsetButton(slot) || button == null || !((MenuButton) button).onAdd(this, slot)) return;
+        if (!unsetButton(slot) || button == null || !((MenuButton) button).onAdd(this, slot)) {
+            return;
+        }
         getInventory().setItem(slot, button.getIcon());
         this.buttons[slot] = button;
     }
 
     /**
      * remove the button in the slot
+     *
      * @param slot slot
      * @return 消えたかどうか
      */
 
     public boolean unsetButton(int slot) {
         MenuButton<?> menuButton = this.buttons[slot];
-        if (menuButton == null) return true;
-        if (!((MenuButton) menuButton).onRemove(this, slot)) return false;
+        if (menuButton == null) {
+            return true;
+        }
+        if (!((MenuButton) menuButton).onRemove(this, slot)) {
+            return false;
+        }
         this.buttons[slot] = null;
         getInventory().setItem(slot, null);
         return true;

@@ -71,7 +71,7 @@ public class ItemBuilder {
         return lore(lore);
     }
 
-    public ItemBuilder setLore(int line,Object str) {
+    public ItemBuilder setLore(int line, Object str) {
         List<Component> lore = getLore();
         lore.set(line, Util.mm(line));
         return lore(lore);

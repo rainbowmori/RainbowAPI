@@ -19,7 +19,7 @@ public class PlayerBlockInput {
 
     public final String message;
 
-    public final Function<BlockBreakEvent,String> success;
+    public final Function<BlockBreakEvent, String> success;
     public final String error;
 
     public final RainbowAPI rainbowAPI;
@@ -32,22 +32,25 @@ public class PlayerBlockInput {
     }
 
     public PlayerBlockInput(Player player, JavaPlugin plugin, String message,
-                            Function<BlockBreakEvent,String> success, String error, BiPredicate<PlayerBlockInput, BlockBreakEvent> predicate) {
+                            Function<BlockBreakEvent, String> success, String error, BiPredicate<PlayerBlockInput, BlockBreakEvent> predicate) {
         this.plugin = plugin;
         this.success = success;
         this.message = message;
         this.error = error;
         this.rainbowAPI = RainbowAPI.apis.get(plugin);
         this.predicate = predicate;
-        if (inputMap.containsKey(player)) rainbowAPI.mcUtil.send(player, "<red>すでにブロック入力中です");
-        else {
+        if (inputMap.containsKey(player)) {
+            rainbowAPI.mcUtil.send(player, "<red>すでにブロック入力中です");
+        } else {
             rainbowAPI.mcUtil.send(player, message);
             inputMap.put(player, this);
         }
     }
 
     public static boolean isInputted(Player player) {
-        if (inputMap.containsKey(player)) return false;
+        if (inputMap.containsKey(player)) {
+            return false;
+        }
         RMHome.getRainbowAPI().mcUtil.send(player, "<red>現在入力中です");
         return true;
     }

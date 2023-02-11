@@ -26,7 +26,9 @@ public class OpenAction implements MenuAction {
             event.getView().close();
             HumanEntity player = event.getWhoClicked();
             Inventory to = to(menu, event);
-            if (to != null) player.openInventory(to);
+            if (to != null) {
+                player.openInventory(to);
+            }
         });
     }
 

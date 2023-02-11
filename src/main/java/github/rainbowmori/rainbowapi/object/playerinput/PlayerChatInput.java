@@ -19,7 +19,9 @@ public class PlayerChatInput implements ConversationAbandonedListener {
     public PlayerChatInput(JavaPlugin plugin, String prefix, boolean cancelable, Prompt prompt) {
         var factory = new ConversationFactory(plugin).withPrefix(context -> prefix).withFirstPrompt(prompt).
                 withLocalEcho(false);
-        if (cancelable) factory.withEscapeSequence("cancel");
+        if (cancelable) {
+            factory.withEscapeSequence("cancel");
+        }
         factory.addConversationAbandonedListener(this).thatExcludesNonPlayersWithMessage("プレイヤーしか入力できません");
         this.factory = factory;
         this.plugin = plugin;
@@ -47,13 +49,17 @@ public class PlayerChatInput implements ConversationAbandonedListener {
     }
 
     public void build(Player player) {
-        if (isInputted(player))
+        if (isInputted(player)) {
             throw new RuntimeException("入力中なのにまた入力のメゾットを使用しています player = " + player.getName());
-        else factory.buildConversation(player).begin();
+        } else {
+            factory.buildConversation(player).begin();
+        }
     }
 
     @Override
     public void conversationAbandoned(@NotNull ConversationAbandonedEvent abandonedEvent) {
-        if (!abandonedEvent.gracefulExit()) abandonedEvent.getContext().getForWhom().sendRawMessage("入力をキャンセルしました");
+        if (!abandonedEvent.gracefulExit()) {
+            abandonedEvent.getContext().getForWhom().sendRawMessage("入力をキャンセルしました");
+        }
     }
 }

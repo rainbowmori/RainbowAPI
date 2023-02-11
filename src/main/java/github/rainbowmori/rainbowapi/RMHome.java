@@ -16,10 +16,18 @@ public class RMHome extends JavaPlugin {
 
     private static RainbowAPI rainbowAPI;
 
+    public static RMHome getPlugin() {
+        return plugin;
+    }
+
+    public static RainbowAPI getRainbowAPI() {
+        return rainbowAPI;
+    }
+
     @Override
     public void onEnable() {
         plugin = this;
-        rainbowAPI = new RainbowAPI(this,"<gray>[<red>RM<gray>] ");
+        rainbowAPI = new RainbowAPI(this, "<gray>[<red>RM<gray>] ");
         PluginCommand ie = getCommand("ie");
         ie.setExecutor(new CommandItemEdit());
         ie.setTabCompleter(new CompleterItemEdit());
@@ -31,13 +39,5 @@ public class RMHome extends JavaPlugin {
 
     @Override
     public void onDisable() {
-    }
-
-    public static RMHome getPlugin() {
-        return plugin;
-    }
-
-    public static RainbowAPI getRainbowAPI() {
-        return rainbowAPI;
     }
 }

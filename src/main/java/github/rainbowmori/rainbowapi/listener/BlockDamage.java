@@ -15,9 +15,11 @@ public class BlockDamage implements Listener {
         return INSTANCE;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void damage(BlockBreakEvent e) {
         Player p = e.getPlayer();
-        if (PlayerBlockInput.inputMap.containsKey(p)) PlayerBlockInput.inputMap.get(p).build(e);
+        if (PlayerBlockInput.inputMap.containsKey(p)) {
+            PlayerBlockInput.inputMap.get(p).build(e);
+        }
     }
 }

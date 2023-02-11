@@ -41,7 +41,9 @@ public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
         Set<Integer> slots = inventoriesContainingMe.get(menuHolder);
         if (slots != null) {
             boolean result = slots.remove(slot);
-            if (slots.isEmpty()) inventoriesContainingMe.remove(menuHolder);
+            if (slots.isEmpty()) {
+                inventoriesContainingMe.remove(menuHolder);
+            }
             return result;
         }
         return true;
@@ -59,8 +61,9 @@ public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
     @Override
     public void onClick(MH holder, InventoryClickEvent event) {
         getAction(ItemClickType.ALL).ifPresentOrElse(action -> action.onClick(holder, event), () -> {
-            if (ItemClickType.isItemClickType(event.getClick()))
+            if (ItemClickType.isItemClickType(event.getClick())) {
                 getAction(ItemClickType.valueOf(event.getClick().name())).ifPresent(action -> action.onClick(holder, event));
+            }
         });
     }
 }

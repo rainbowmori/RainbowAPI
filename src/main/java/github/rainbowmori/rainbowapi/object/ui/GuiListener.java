@@ -15,28 +15,36 @@ import java.util.function.Consumer;
 public class GuiListener implements Listener {
 
     private static final GuiListener INSTANCE = new GuiListener();
+    private static final WeakHashMap<Inventory, WeakReference<GuiHolder<?>>> guiInventories = new WeakHashMap<>();
+
+    private GuiListener() {
+    }
 
     public static GuiListener getInstance() {
         return INSTANCE;
     }
 
-    private GuiListener() {}
-
-    private static final WeakHashMap<Inventory, WeakReference<GuiHolder<?>>> guiInventories = new WeakHashMap<>();
-
     public static boolean registerGui(GuiHolder<?> holder, Inventory inventory) {
-        if (holder == inventory.getHolder()) return true;
+        if (holder == inventory.getHolder()) {
+            return true;
+        }
 
         return guiInventories.putIfAbsent(inventory, new WeakReference<>(holder)) == null;
     }
 
     public static GuiHolder<?> getHolder(Inventory inventory) {
-        if(inventory == null) return null;
+        if (inventory == null) {
+            return null;
+        }
         InventoryHolder holder = inventory.getHolder();
-        if (holder instanceof GuiHolder<?>) return (GuiHolder<?>) holder;
+        if (holder instanceof GuiHolder<?>) {
+            return (GuiHolder<?>) holder;
+        }
 
         WeakReference<GuiHolder<?>> reference = guiInventories.get(inventory);
-        if (reference == null) return null;
+        if (reference == null) {
+            return null;
+        }
         return reference.get();
     }
 
