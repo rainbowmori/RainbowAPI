@@ -1,7 +1,6 @@
 package github.rainbowmori.rainbowapi.commands;
 
 import github.rainbowmori.rainbowapi.RMHome;
-import github.rainbowmori.rainbowapi.object.ChatEnum;
 import github.rainbowmori.rainbowapi.util.IsObjectUtil;
 import github.rainbowmori.rainbowapi.util.ItemBuilder;
 import github.rainbowmori.rainbowapi.util.McUtil;
@@ -27,7 +26,7 @@ public class CommandItemEdit implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player p)) {
-            sender.sendMessage(ChatEnum.NOT_PLAYER.text);
+            sender.sendMessage("<red>このコマンドはプレイヤーしか使えません");
             return true;
         }
         if (args.length == 0) {

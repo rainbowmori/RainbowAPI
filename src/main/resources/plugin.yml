@@ -6,3 +6,5 @@ prefix: RainbowAPI
 commands:
   ie:
     description: item edit command
+  test:
+    description: test
