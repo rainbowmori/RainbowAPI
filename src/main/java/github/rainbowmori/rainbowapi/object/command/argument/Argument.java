@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class Argument<T extends Argument<T>> implements TabCompleter, CommandExecutor {
+public abstract class Argument<T extends Argument<T>>  implements TabCompleter, CommandExecutor {
     protected final List<Argument<?>> Args = new ArrayList<>();
 
     protected final List<IExecutorTyped> executors = new ArrayList<>();

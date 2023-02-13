@@ -9,14 +9,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class Completer implements TabCompleter {
+public interface Completer extends TabCompleter {
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender,
-                                                @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    @Nullable
+    default List<String> onTabComplete(@NotNull CommandSender sender,
+                                       @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> tab = returned(sender, args);
         return args[args.length - 1].isEmpty() ? tab : tab.stream().filter(s -> s.toLowerCase().
                 startsWith(args[args.length - 1].toLowerCase())).collect(Collectors.toList());
     }
 
-    public abstract List<String> returned(@NotNull CommandSender sender, @NotNull String[] args);
+    List<String> returned(@NotNull CommandSender sender, @NotNull String[] args);
 }

@@ -4,7 +4,6 @@ package github.rainbowmori.rainbowapi.object.command.executor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-@FunctionalInterface
 public interface Executor<T extends CommandSender> extends IExecutorTyped {
 
     @Override
