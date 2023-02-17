@@ -65,15 +65,22 @@ public class ItemBuilder {
         return lore(Arrays.asList(lore));
     }
 
-    public ItemBuilder addLore(Object line) {
+    public ItemBuilder addLore(Object str) {
         List<Component> lore = getLore();
-        lore.add(Util.mm(line));
+        lore.add(Util.mm(str));
         return lore(lore);
     }
 
     public ItemBuilder setLore(int line, Object str) {
         List<Component> lore = getLore();
-        lore.set(line, Util.mm(line));
+        if (lore.size() < line-1) {
+            int i = lore.size()+1;
+            while (i <= line) {
+                lore.set(i, Util.mm(""));
+                i++;
+            }
+        }
+        lore.set(line, Util.mm(str));
         return lore(lore);
     }
 

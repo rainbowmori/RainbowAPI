@@ -1,5 +1,0 @@
-Command rm = new Command("rm");
-        rm.addArgument(new ArgumentString("test1").addPlayerExecutors((sender, command, label, args) -> sender.sendMessage(Util.mm("<red>teteetete"))));
-        rm.addArgument(new ArgumentString("test2").addConsoleExecutors((sender, command, label, args) -> sender.sendMessage(Util.mm("<red>teteetete"))));
-        rm.addArgument(new ArgumentString("lore").addArgument(new ArgumentString("set").addExecutors((player, command, label, args) -> player.sendMessage("true"))));
-        rm.register(this);
