@@ -1,32 +1,27 @@
 package github.rainbowmori.rainbowapi;
 
 import com.mojang.brigadier.Command;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import github.rainbowmori.rainbowapi.object.command.PluginBrigadierCommand;
+import github.rainbowmori.rainbowapi.object.command.CommandTree;
+import github.rainbowmori.rainbowapi.object.command.arguments.IntegerArgument;
+import github.rainbowmori.rainbowapi.object.command.arguments.LiteralArgument;
 import github.rainbowmori.rainbowapi.util.ItemBuilder;
 import github.rainbowmori.rainbowapi.util.Util;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
-import net.minecraft.commands.arguments.blocks.BlockStateArgument;
-import net.minecraft.data.registries.VanillaRegistries;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.function.Consumer;
 import java.util.function.Function;
-
-import static net.minecraft.commands.Commands.argument;
-import static net.minecraft.commands.Commands.literal;
+import java.util.logging.Logger;
 
 /**
  * RainbowAPI Plugin の main class
  */
 public class RMHome extends JavaPlugin {
+
+    private static Logger log;
 
     private static RMHome plugin;
 
@@ -40,9 +35,30 @@ public class RMHome extends JavaPlugin {
         return rainbowAPI;
     }
 
+    public static void logInfo(String message) {
+        getLog().info(message);
+    }
+
+    public static void logNormal(String message) {
+        getLog().info(message);
+    }
+
+    public static void logWarning(String message) {
+        getLog().warning(message);
+    }
+
+    public static void logError(String message) {
+        getLog().severe(message);
+    }
+
+    public static Logger getLog() {
+        return log;
+    }
+
     @Override
     public void onEnable() {
         plugin = this;
+        log = getLogger();
         rainbowAPI = new RainbowAPI(this, "<gray>[<red>RM<gray>] ");
         commandRegister();
     }
@@ -52,48 +68,28 @@ public class RMHome extends JavaPlugin {
     }
 
     private void commandRegister() {
-        PluginBrigadierCommand.registerPluginBrigadierCommand(this, "ie",
-            literal -> literal
-                .then(literal("rename")
-                    .then(argument("arg", StringArgumentType.string())
-                        .executes(ctx -> itemEdit(ctx, builder -> builder.name(StringArgumentType.getString(ctx, "arg"))))))
-                .then(literal("type")
-                    .then(argument("material", BlockStateArgument.block(Commands.createValidationContext(VanillaRegistries.createLookup())))
-                        .executes(ctx -> itemEdit(ctx, builder -> builder.type(BlockStateArgument.getBlock(ctx, "material").getState().getBukkitMaterial())))))
-                .then(literal("amount")
-                    .then(argument("size", IntegerArgumentType.integer(1, 127))
-                        .executes(ctx -> itemEdit(ctx, builder -> builder.amount(IntegerArgumentType.getInteger(ctx, "size"))))))
-                .then(literal("durability")
-                    .then(argument("size", IntegerArgumentType.integer(1))
-                        .executes(ctx -> itemEdit(ctx, builder -> {
-                            int max = builder.build().getMaxItemUseDuration();
-                            int size = IntegerArgumentType.getInteger(ctx, "size");
-                            if (size > max) {
-                                ctx.getSource().getBukkitSender().sendMessage(Util.mm("<red>アイテムの最大耐久値より以下にしてください"));
-                                return builder;
-                            }
-                            return builder.changeMeta((Consumer<Damageable>) consumer ->
-                                consumer.setDamage(max - size));
-                        }))))
-                .then(literal("lore")
-                    .then(literal("add")
-                        .then(argument("arg", StringArgumentType.string())
-                            .executes(ctx -> itemEdit(ctx, builder -> builder.addLore(StringArgumentType.getString(ctx, "arg")))))))
-                .then(literal("set")
-                    .then(argument("size", IntegerArgumentType.integer(1))
-                        .then(argument("arg", StringArgumentType.string())
-                            .executes(ctx -> itemEdit(ctx, builder -> builder.setLore(
-                                IntegerArgumentType.getInteger(ctx, "size") - 1, StringArgumentType.getString(ctx, "arg")))))))
-                .then(literal("remove")
-                    .then(argument("size", IntegerArgumentType.integer(1))
-                        .executes(ctx -> itemEdit(ctx, builder -> {
-                            int size = IntegerArgumentType.getInteger(ctx, "size") - 1;
-                            if (size > builder.getLore().size()) {
-                                ctx.getSource().getBukkitSender().sendMessage(Util.mm("<red>アイテムのloreの行以下にしてください"));
-                                return builder;
-                            }
-                            return builder.removeLore(size);
-                        })))));
+        new CommandTree("tested").then(new LiteralArgument("show").then(new IntegerArgument("int",1,5).
+            executesPlayer((sender, args) -> {
+            sender.sendMessage("showed");
+        }).executesConsole((sender, args) -> {
+            sender.sendMessage("is console");
+        }))).register(plugin);
+//        PluginBrigadierCommand.registerPluginBrigadierCommand(this, "ie", literal -> literal.then(literal("rename").then(argument("arg", StringArgumentType.string()).executes(ctx -> itemEdit(ctx, builder -> builder.name(StringArgumentType.getString(ctx, "arg")))))).then(literal("type").then(argument("material", BlockStateArgument.block(Commands.createValidationContext(VanillaRegistries.createLookup()))).executes(ctx -> itemEdit(ctx, builder -> builder.type(BlockStateArgument.getBlock(ctx, "material").getState().getBukkitMaterial()))))).then(literal("amount").then(argument("size", IntegerArgumentType.integer(1, 127)).executes(ctx -> itemEdit(ctx, builder -> builder.amount(IntegerArgumentType.getInteger(ctx, "size")))))).then(literal("durability").then(argument("size", IntegerArgumentType.integer(1)).executes(ctx -> itemEdit(ctx, builder -> {
+//            int max = builder.build().getMaxItemUseDuration();
+//            int size = IntegerArgumentType.getInteger(ctx, "size");
+//            if (size > max) {
+//                ctx.getSource().getBukkitSender().sendMessage(Util.mm("<red>アイテムの最大耐久値より以下にしてください"));
+//                return builder;
+//            }
+//            return builder.changeMeta((Consumer<Damageable>) consumer -> consumer.setDamage(max - size));
+//        })))).then(literal("lore").then(literal("add").then(argument("arg", StringArgumentType.string()).executes(ctx -> itemEdit(ctx, builder -> builder.addLore(StringArgumentType.getString(ctx, "arg"))))))).then(literal("set").then(argument("size", IntegerArgumentType.integer(1)).then(argument("arg", StringArgumentType.string()).executes(ctx -> itemEdit(ctx, builder -> builder.setLore(IntegerArgumentType.getInteger(ctx, "size") - 1, StringArgumentType.getString(ctx, "arg"))))))).then(literal("remove").then(argument("size", IntegerArgumentType.integer(1)).executes(ctx -> itemEdit(ctx, builder -> {
+//            int size = IntegerArgumentType.getInteger(ctx, "size") - 1;
+//            if (size > builder.getLore().size()) {
+//                ctx.getSource().getBukkitSender().sendMessage(Util.mm("<red>アイテムのloreの行以下にしてください"));
+//                return builder;
+//            }
+//            return builder.removeLore(size);
+//        })))));
     }
 
     private Player onlyPlayer(CommandContext<CommandSourceStack> context) {

@@ -1,4 +1,4 @@
-package github.rainbowmori.rainbowapi.commands;
+package github.rainbowmori.rainbowapi.command;
 
 import github.rainbowmori.rainbowapi.RMHome;
 import github.rainbowmori.rainbowapi.util.IsObjectUtil;
