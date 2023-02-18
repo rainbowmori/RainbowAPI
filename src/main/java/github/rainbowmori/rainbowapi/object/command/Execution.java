@@ -10,7 +10,7 @@ import java.util.List;
 record Execution(List<Argument<?>> arguments, CommandAPIExecutor<? extends CommandSender> executor) {
 
 	public void register(Plugin plugin, CommandMetaData meta) {
-		CommandAPICommand command = new CommandAPICommand(plugin,meta).withArguments(arguments);
+		CommandAPICommand command = new CommandAPICommand(meta).withArguments(arguments);
 		command.setExecutor(executor);
 		command.register(plugin);
 	}

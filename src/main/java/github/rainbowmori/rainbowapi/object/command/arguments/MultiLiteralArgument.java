@@ -3,6 +3,8 @@ package github.rainbowmori.rainbowapi.object.command.arguments;
 import com.mojang.brigadier.context.CommandContext;
 import github.rainbowmori.rainbowapi.object.command.exceptions.BadLiteralException;
 
+import java.util.List;
+
 public class MultiLiteralArgument extends Argument<String> {
 
 	private final String[] literals;
@@ -16,6 +18,10 @@ public class MultiLiteralArgument extends Argument<String> {
 			throw new BadLiteralException(false);
 		}
 		this.literals = literals;
+	}
+
+	public MultiLiteralArgument(final List<String> literals) {
+		this(literals.toArray(String[]::new));
 	}
 
 	@Override

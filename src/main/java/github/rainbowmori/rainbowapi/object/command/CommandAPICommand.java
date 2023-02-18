@@ -18,17 +18,13 @@ public class CommandAPICommand extends ExecutableCommand<CommandAPICommand> {
 	private List<CommandAPICommand> subcommands = new ArrayList<>();
 	private boolean isConverted;
 
-	private final Plugin plugin;
-
-	public CommandAPICommand(Plugin plugin, String commandName) {
+	public CommandAPICommand(String commandName) {
 		super(commandName);
-		this.plugin = plugin;
 		this.isConverted = false;
 	}
 
-	protected CommandAPICommand(Plugin plugin,CommandMetaData metaData) {
+	protected CommandAPICommand(CommandMetaData metaData) {
 		super(metaData);
-		this.plugin = plugin;
 		this.isConverted = false;
 	}
 
@@ -66,15 +62,6 @@ public class CommandAPICommand extends ExecutableCommand<CommandAPICommand> {
 
 	public void setSubcommands(List<CommandAPICommand> subcommands) {
 		this.subcommands = subcommands;
-	}
-
-	public boolean isConverted() {
-		return isConverted;
-	}
-
-	CommandAPICommand setConverted(boolean isConverted) {
-		this.isConverted = isConverted;
-		return this;
 	}
 
 	private static void flatten(Plugin plugin,CommandAPICommand rootCommand, List<Argument<?>> prevArguments, CommandAPICommand subcommand) {
@@ -135,14 +122,10 @@ public class CommandAPICommand extends ExecutableCommand<CommandAPICommand> {
 	}
 
 	public CommandAPICommand copy() {
-		CommandAPICommand command = new CommandAPICommand(this.plugin,new CommandMetaData(this.meta));
+		CommandAPICommand command = new CommandAPICommand(new CommandMetaData(this.meta));
 		command.args = new ArrayList<>(this.args);
 		command.subcommands = new ArrayList<>(this.subcommands);
 		command.isConverted = this.isConverted;
 		return command;
-	}
-
-	public Plugin getPlugin() {
-		return plugin;
 	}
 }
