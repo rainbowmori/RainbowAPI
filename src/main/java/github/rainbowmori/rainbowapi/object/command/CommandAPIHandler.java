@@ -37,6 +37,7 @@ import github.rainbowmori.rainbowapi.object.command.arguments.Argument;
 import github.rainbowmori.rainbowapi.object.command.arguments.ArgumentSuggestions;
 import github.rainbowmori.rainbowapi.object.command.arguments.LiteralArgument;
 import github.rainbowmori.rainbowapi.object.command.arguments.MultiLiteralArgument;
+import github.rainbowmori.rainbowapi.util.McUtil;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
@@ -51,6 +52,8 @@ import java.lang.invoke.VarHandle;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
+
 
 
 public class CommandAPIHandler {
@@ -58,7 +61,6 @@ public class CommandAPIHandler {
 	private final static VarHandle COMMANDNODE_CHILDREN;
 	private final static VarHandle COMMANDNODE_LITERALS;
 	private final static VarHandle COMMANDNODE_ARGUMENTS;
-	private final static VarHandle COMMANDCONTEXT_ARGUMENTS;
 	private static final MinecraftServer MINECRAFT_SERVER;
 	private static final CommandDispatcher<CommandSourceStack> DISPATCHER;
 	private static CommandAPIHandler instance;
@@ -68,19 +70,16 @@ public class CommandAPIHandler {
 		VarHandle commandNodeChildren = null;
 		VarHandle commandNodeLiterals = null;
 		VarHandle commandNodeArguments = null;
-		VarHandle commandContextArguments = null;
 		try {
 			commandNodeChildren = MethodHandles.privateLookupIn(CommandNode.class, MethodHandles.lookup()).findVarHandle(CommandNode.class, "children", Map.class);
 			commandNodeLiterals = MethodHandles.privateLookupIn(CommandNode.class, MethodHandles.lookup()).findVarHandle(CommandNode.class, "literals", Map.class);
 			commandNodeArguments = MethodHandles.privateLookupIn(CommandNode.class, MethodHandles.lookup()).findVarHandle(CommandNode.class, "arguments", Map.class);
-			commandContextArguments = MethodHandles.privateLookupIn(CommandContext.class, MethodHandles.lookup()).findVarHandle(CommandContext.class, "arguments", Map.class);
 		} catch (ReflectiveOperationException e) {
 			e.printStackTrace();
 		}
 		COMMANDNODE_CHILDREN = commandNodeChildren;
 		COMMANDNODE_LITERALS = commandNodeLiterals;
 		COMMANDNODE_ARGUMENTS = commandNodeArguments;
-		COMMANDCONTEXT_ARGUMENTS = commandContextArguments;
 	}
 	final TreeMap<String, CommandPermission> PERMISSIONS_TO_FIX = new TreeMap<>();
 	final List<RegisteredCommand> registeredCommands;
@@ -97,13 +96,13 @@ public class CommandAPIHandler {
 	}
 
 	void unregisterted(String commandName, boolean force) {
-		RMHome.getRainbowAPI().mcUtil.logInfo("Unregistering command /" + commandName);
-
+		logInfo("Unregistering command /" + commandName);
 		Map<String, CommandNode<?>> commandNodeChildren = (Map<String, CommandNode<?>>) COMMANDNODE_CHILDREN.get(DISPATCHER.getRoot());
 
 		if (force) {
 			for (String key : new HashSet<>(commandNodeChildren.keySet())) {
 				if (key.contains(":") && key.split(":")[1].equalsIgnoreCase(commandName)) {
+					DISPATCHER.getRoot().removeCommand(key);
 					commandNodeChildren.remove(key);
 				}
 			}
@@ -112,10 +111,11 @@ public class CommandAPIHandler {
 		commandNodeChildren.remove(commandName);
 		((Map<String, CommandNode<?>>) COMMANDNODE_LITERALS.get(DISPATCHER.getRoot())).remove(commandName);
 		((Map<String, CommandNode<?>>) COMMANDNODE_ARGUMENTS.get(DISPATCHER.getRoot())).remove(commandName);
+		((CraftServer) Bukkit.getServer()).syncCommands();
 	}
 
 	public static void unregister(String command) {
-		CommandAPIHandler.getInstance().unregisterted(command, false);
+		CommandAPIHandler.getInstance().unregisterted(command, true);
 	}
 
 
@@ -245,7 +245,7 @@ public class CommandAPIHandler {
 						builder2.append(arg[0]).append("<").append(arg[1]).append("> ");
 					}
 
-					RMHome.getRainbowAPI().mcUtil.logError("""
+					logError("""
 						Failed to register command:
 
 						  %s %s
@@ -305,7 +305,7 @@ public class CommandAPIHandler {
 			for (Argument<?> arg : args) {
 				if (!(arg instanceof LiteralArgument)) {
 					if (argumentNames.contains(arg.getNodeName())) {
-						RMHome.getRainbowAPI().mcUtil.logError("""
+						logError("""
 							Failed to register command:
 
 							  %s %s
@@ -345,11 +345,11 @@ public class CommandAPIHandler {
 		{
 			final PluginCommand pluginCommand = Bukkit.getPluginCommand(commandName);
 			if (pluginCommand != null) {
-				RMHome.getRainbowAPI().mcUtil.logWarning("Plugin command /%s is registered by Bukkit (%s). Did you forget to remove this from your plugin.yml file?".formatted(commandName, pluginCommand.getPlugin().getName()));
+				logWarning("Plugin command /%s is registered by Bukkit (%s). Did you forget to remove this from your plugin.yml file?".formatted(commandName, pluginCommand.getPlugin().getName()));
 			}
 		}
 
-		RMHome.getRainbowAPI().mcUtil.logInfo("Registering command /" + commandName + " " + humanReadableCommandArgSyntax);
+		logInfo("Registering command /" + commandName + " " + humanReadableCommandArgSyntax);
 
 		Command<CommandSourceStack> command = generateCommand(args, executor);
 
@@ -358,7 +358,7 @@ public class CommandAPIHandler {
 			resultantNode = DISPATCHER.register(getLiteralArgumentBuilder(commandName).requires(generatePermissions(commandName, permission, requirements)).executes(command));
 
 			for (String alias : aliases) {
-				RMHome.getRainbowAPI().mcUtil.logInfo("Registering alias /" + alias + " -> " + resultantNode.getName());
+				logInfo("Registering alias /" + alias + " -> " + resultantNode.getName());
 				DISPATCHER.register(getLiteralArgumentBuilder(alias).requires(generatePermissions(alias, permission, requirements)).executes(command));
 			}
 		} else {
@@ -368,7 +368,7 @@ public class CommandAPIHandler {
 
 			for (String alias : aliases) {
 
-				RMHome.getRainbowAPI().mcUtil.logInfo("Registering alias /" + alias + " -> " + resultantNode.getName());
+				logInfo("Registering alias /" + alias + " -> " + resultantNode.getName());
 
 				DISPATCHER.register(getLiteralArgumentBuilder(alias).requires(generatePermissions(alias, permission, requirements)).then(commandArguments));
 			}
@@ -481,6 +481,24 @@ public class CommandAPIHandler {
 			}
 		}
 
+	}
+
+	public static final Logger log = Logger.getLogger("CommandAPI");
+
+	public static void logInfo(String message) {
+		log.info(message);
+	}
+
+	public static void logNormal(String message) {
+		log.info(message);
+	}
+
+	public static void logWarning(String message) {
+		log.warning(message);
+	}
+
+	public static void logError(String message) {
+		log.severe(message);
 	}
 
 }

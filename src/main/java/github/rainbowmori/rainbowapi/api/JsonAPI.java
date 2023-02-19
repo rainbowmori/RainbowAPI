@@ -3,6 +3,7 @@ package github.rainbowmori.rainbowapi.api;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import github.rainbowmori.rainbowapi.RainbowAPI;
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +47,7 @@ public class JsonAPI {
     public final JsonObject getObject(@NotNull List<Object> paths) {
         JsonObject obj = get(paths);
         String last = lastValue(paths);
-        return obj.has(last) ? obj.getAsJsonObject(last) : new JsonObject();
+        return obj != null && obj.has(last) ? obj.getAsJsonObject(last) : new JsonObject();
     }
 
     public final boolean hasElement(@NotNull Object... keys) {
@@ -102,6 +103,7 @@ public class JsonAPI {
         }
         for (int i = 0; i < paths.size() - 1; i++) {
             String key = paths.get(i).toString();
+            System.out.println(key);
             if (!jsonObject.has(key)) {
                 jsonObject.add(key, new JsonObject());
             }
@@ -111,25 +113,29 @@ public class JsonAPI {
     }
 
     public final JsonElement convertElement(Object obj) {
-        return obj instanceof JsonElement ? ((JsonElement) obj) : RainbowAPI.gson.fromJson(String.valueOf(obj), JsonElement.class);
+        return obj instanceof JsonElement ? ((JsonElement) obj) : JsonParser.parseString(RainbowAPI.gson.toJson(obj));
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public final void Created() {
         try {
-            if (!new File(api.plugin.getDataFolder() + path).exists()) {
-                new File(api.plugin.getDataFolder() + path).mkdir();
+            File directory = new File(api.plugin.getDataFolder() + path);
+            if (!directory.exists()) {
+                api.mcUtil.logInfo(api.plugin.getDataFolder() + path + "/" + name + "ファイルを作成しました");
+                directory.mkdir();
             }
             if (!file.exists() || new BufferedReader(new FileReader(file)).readLine() == null) {
                 file.createNewFile();
                 api.mcUtil.logInfo(name + "に{}を入力しています");
-                FileWriter writer = new FileWriter(file);
-                writer.write("{}");
-                writer.close();
+                RainbowAPI.gson.toJson("{}", new FileWriter(file));
             }
             json = RainbowAPI.gson.fromJson(new JsonReader(new FileReader(file)), JsonObject.class);
         } catch (IOException exception) {
             exception.printStackTrace();
+        }finally {
+            if (json == null) {
+                json = new JsonObject();
+            }
         }
     }
 
@@ -140,13 +146,10 @@ public class JsonAPI {
     }
 
     public final void Save() {
-        try {
-            FileWriter writer = new FileWriter(file);
+        try (Writer writer = new FileWriter(file)) {
             RainbowAPI.gson.toJson(json, writer);
-            writer.flush();
-            writer.close();
-        } catch (IOException exception) {
-            exception.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
