@@ -23,12 +23,11 @@ repositories {
 afterEvaluate {
     publishing {
         publications {
-            create<MavenPublication>("mavenJava") {
+            create<MavenPublication>("maven") {
                 from(components["java"])
-                artifact(tasks["sourcesJar"])
-                group = project.group
-                version = project.version.toString()
-                artifactId = project.name
+                artifact(tasks.reobfJar) {
+                    classifier = ""
+                }
             }
         }
     }
@@ -47,8 +46,8 @@ java {
 }
 
 tasks {
-    val sourcesJar by creating(Jar::class) {
-        archiveClassifier.set(rootProject.name)
+    assemble {
+        dependsOn(reobfJar)
     }
     compileJava {
         options.encoding = Charsets.UTF_8.name()
