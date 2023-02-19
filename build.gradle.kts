@@ -14,18 +14,16 @@ repositories {
     maven(url = "https://libraries.minecraft.net")
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                group = "github.rainbowmori"
-                version = "1.0.0"
-                description = "Rainbow API"
-            }
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            group = "github.rainbowmori"
+            version = "1.0.0"
+            artifactId = "RainbowAPI"
+            description = "Rainbow API"
         }
     }
 }
-
 
 dependencies {
     paperweight.paperDevBundle("1.19.3-R0.1-SNAPSHOT")
@@ -53,7 +51,7 @@ tasks {
     processResources {
         filteringCharset = Charsets.UTF_8.name()
     }
-    build {
+    build{
         dependsOn(copied)
     }
 }
