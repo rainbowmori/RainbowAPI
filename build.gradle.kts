@@ -26,6 +26,7 @@ publishing {
     }
 }
 
+
 dependencies {
     paperweight.paperDevBundle("1.19.3-R0.1-SNAPSHOT")
     compileOnly("com.mojang:brigadier:1.0.18")
@@ -73,7 +74,7 @@ bukkit {
 
     authors = listOf("rainbowmori")
     prefix = "RainbowAPI"
-    load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
+    load = BukkitPluginDescription.PluginLoadOrder.STARTUP
 
 //    commands {
 //        test {
