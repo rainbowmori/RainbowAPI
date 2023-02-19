@@ -15,16 +15,14 @@ public class CommandAPICommand extends ExecutableCommand<CommandAPICommand> {
 
     private List<Argument<?>> args = new ArrayList<>();
     private List<CommandAPICommand> subcommands = new ArrayList<>();
-    private boolean isConverted;
+
 
     public CommandAPICommand(String commandName) {
         super(commandName);
-        this.isConverted = false;
     }
 
     protected CommandAPICommand(CommandMetaData metaData) {
         super(metaData);
-        this.isConverted = false;
     }
 
     private static void flatten(CommandAPICommand rootCommand, List<Argument<?>> prevArguments, CommandAPICommand subcommand) {
@@ -105,7 +103,7 @@ public class CommandAPICommand extends ExecutableCommand<CommandAPICommand> {
             }
 
             if (executor.hasAnyExecutors()) {
-                CommandAPIHandler.getInstance().register(meta, argumentsArr, executor, isConverted);
+                CommandAPIHandler.getInstance().register(meta, argumentsArr, executor);
             }
 
             for (CommandAPICommand subcommand : new ArrayList<>(this.subcommands)) {
@@ -120,7 +118,6 @@ public class CommandAPICommand extends ExecutableCommand<CommandAPICommand> {
         CommandAPICommand command = new CommandAPICommand(new CommandMetaData(this.meta));
         command.args = new ArrayList<>(this.args);
         command.subcommands = new ArrayList<>(this.subcommands);
-        command.isConverted = this.isConverted;
         return command;
     }
 }

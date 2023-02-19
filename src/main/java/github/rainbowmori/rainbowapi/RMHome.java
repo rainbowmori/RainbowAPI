@@ -1,6 +1,7 @@
 package github.rainbowmori.rainbowapi;
 
 import github.rainbowmori.rainbowapi.command.CommandItemEdit;
+import github.rainbowmori.rainbowapi.object.command.CommandAPIHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -30,5 +31,6 @@ public class RMHome extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        CommandAPIHandler.unregister("ie");
     }
 }

@@ -3,6 +3,8 @@ package github.rainbowmori.rainbowapi.util;
 import github.rainbowmori.rainbowapi.RMHome;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 
 import java.util.List;
 import java.util.stream.Collectors;
