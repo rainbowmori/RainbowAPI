@@ -259,6 +259,10 @@ public class CommandAPIHandler {
         return outer;
     }
 
+    public static void unregister(String commandName) {
+        DISPATCHER.getRoot().removeCommand(commandName);
+    }
+
 
     void register(CommandMetaData meta, final Argument<?>[] args, CommandAPIExecutor<? extends CommandSender> executor, boolean converted) throws CommandSyntaxException, IOException {
 
