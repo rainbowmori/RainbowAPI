@@ -9,11 +9,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
 public class PlayerBlockInput {
-    public static final Map<Player, PlayerBlockInput> inputMap = new HashMap<>();
+    public static final Map<UUID, PlayerBlockInput> inputMap = new HashMap<>();
 
     public final Plugin plugin;
 
@@ -39,16 +40,16 @@ public class PlayerBlockInput {
         this.error = error;
         this.rainbowAPI = RainbowAPI.apis.get(plugin);
         this.predicate = predicate;
-        if (inputMap.containsKey(player)) {
+        if (inputMap.containsKey(player.getUniqueId())) {
             rainbowAPI.mcUtil.send(player, "<red>すでにブロック入力中です");
         } else {
             rainbowAPI.mcUtil.send(player, message);
-            inputMap.put(player, this);
+            inputMap.put(player.getUniqueId(), this);
         }
     }
 
     public static boolean isInputted(Player player) {
-        if (inputMap.containsKey(player)) {
+        if (inputMap.containsKey(player.getUniqueId())) {
             return false;
         }
         RMHome.getRainbowAPI().mcUtil.send(player, "<red>現在入力中です");

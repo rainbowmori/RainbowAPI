@@ -1,10 +1,7 @@
 package github.rainbowmori.rainbowapi.command;
 
 import github.rainbowmori.rainbowapi.object.command.CommandTree;
-import github.rainbowmori.rainbowapi.object.command.arguments.IntegerArgument;
-import github.rainbowmori.rainbowapi.object.command.arguments.LiteralArgument;
-import github.rainbowmori.rainbowapi.object.command.arguments.MultiLiteralArgument;
-import github.rainbowmori.rainbowapi.object.command.arguments.TextArgument;
+import github.rainbowmori.rainbowapi.object.command.arguments.*;
 import github.rainbowmori.rainbowapi.util.ItemBuilder;
 import github.rainbowmori.rainbowapi.util.Util;
 import org.bukkit.Material;
@@ -22,7 +19,7 @@ public class CommandItemEdit {
     public static void register() {
         new CommandTree("ie")
             .then(new LiteralArgument("rename")
-                .then(new TextArgument("name").executesPlayer((sender, args) -> {
+                .then(new GreedyStringArgument("name").executesPlayer((sender, args) -> {
                     itemEdit(sender, builder -> builder.name(args[0]));
                 })))
             .then(new LiteralArgument("type")
