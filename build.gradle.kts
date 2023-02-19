@@ -9,6 +9,10 @@ plugins {
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
 }
 
+group = "github.rainbowmori"
+version = "1.0.0"
+description = "Rainbow API"
+
 repositories {
     mavenCentral()
     maven(url = "https://libraries.minecraft.net")
