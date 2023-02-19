@@ -19,16 +19,16 @@ repositories {
     maven(url = "https://jitpack.io")
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            group = "github.rainbowmori"
-            version = "1.0.0"
-            artifactId = "RainbowAPI"
-            from(components["java"])
-        }
-    }
-}
+//publishing {
+//    publications {
+//        create<MavenPublication>("maven") {
+//            group = "github.rainbowmori"
+//            version = "1.0.0"
+//            artifactId = "RainbowAPI"
+//            from(components["java"])
+//        }
+//    }
+//}
 
 
 dependencies {
