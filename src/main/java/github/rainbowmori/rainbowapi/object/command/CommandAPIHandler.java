@@ -26,6 +26,8 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.context.ParsedArgument;
+import com.mojang.brigadier.context.StringRange;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
@@ -61,6 +63,8 @@ public class CommandAPIHandler {
 	private final static VarHandle COMMANDNODE_CHILDREN;
 	private final static VarHandle COMMANDNODE_LITERALS;
 	private final static VarHandle COMMANDNODE_ARGUMENTS;
+
+	private final static VarHandle COMMANDCONTEXT_ARGUMENTS;
 	private static final MinecraftServer MINECRAFT_SERVER;
 	private static final CommandDispatcher<CommandSourceStack> DISPATCHER;
 	private static CommandAPIHandler instance;
@@ -70,16 +74,23 @@ public class CommandAPIHandler {
 		VarHandle commandNodeChildren = null;
 		VarHandle commandNodeLiterals = null;
 		VarHandle commandNodeArguments = null;
+		VarHandle commandContextArguments = null;
 		try {
-			commandNodeChildren = MethodHandles.privateLookupIn(CommandNode.class, MethodHandles.lookup()).findVarHandle(CommandNode.class, "children", Map.class);
-			commandNodeLiterals = MethodHandles.privateLookupIn(CommandNode.class, MethodHandles.lookup()).findVarHandle(CommandNode.class, "literals", Map.class);
-			commandNodeArguments = MethodHandles.privateLookupIn(CommandNode.class, MethodHandles.lookup()).findVarHandle(CommandNode.class, "arguments", Map.class);
+			commandNodeChildren = MethodHandles.privateLookupIn(CommandNode.class, MethodHandles.lookup())
+				.findVarHandle(CommandNode.class, "children", Map.class);
+			commandNodeLiterals = MethodHandles.privateLookupIn(CommandNode.class, MethodHandles.lookup())
+				.findVarHandle(CommandNode.class, "literals", Map.class);
+			commandNodeArguments = MethodHandles.privateLookupIn(CommandNode.class, MethodHandles.lookup())
+				.findVarHandle(CommandNode.class, "arguments", Map.class);
+			commandContextArguments = MethodHandles.privateLookupIn(CommandContext.class, MethodHandles.lookup())
+				.findVarHandle(CommandContext.class, "arguments", Map.class);
 		} catch (ReflectiveOperationException e) {
 			e.printStackTrace();
 		}
 		COMMANDNODE_CHILDREN = commandNodeChildren;
 		COMMANDNODE_LITERALS = commandNodeLiterals;
 		COMMANDNODE_ARGUMENTS = commandNodeArguments;
+		COMMANDCONTEXT_ARGUMENTS = commandContextArguments;
 	}
 	final TreeMap<String, CommandPermission> PERMISSIONS_TO_FIX = new TreeMap<>();
 	final List<RegisteredCommand> registeredCommands;
@@ -95,8 +106,21 @@ public class CommandAPIHandler {
 		return instance;
 	}
 
+	public static <CommandSourceStack> String getRawArgumentInput(CommandContext<CommandSourceStack> cmdCtx,
+																  String key) {
+		final Map<String, ParsedArgument<CommandSourceStack, ?>> commandContextArgs = (Map<String, ParsedArgument<CommandSourceStack, ?>>) COMMANDCONTEXT_ARGUMENTS.get(cmdCtx);
+		final ParsedArgument<CommandSourceStack, ?> parsedArgument = commandContextArgs.get(key);
+
+		if(parsedArgument != null) {
+			StringRange range = parsedArgument.getRange();
+			return cmdCtx.getInput().substring(range.getStart(), range.getEnd());
+		} else {
+			return "";
+		}
+	}
+
 	void unregisterted(String commandName, boolean force) {
-		logInfo("Unregistering command /" + commandName);
+		logInfo("コマンドの登録解除 " + commandName);
 		Map<String, CommandNode<?>> commandNodeChildren = (Map<String, CommandNode<?>>) COMMANDNODE_CHILDREN.get(DISPATCHER.getRoot());
 
 		if (force) {
@@ -244,13 +268,12 @@ public class CommandAPIHandler {
 					for (String[] arg : regArgs) {
 						builder2.append(arg[0]).append("<").append(arg[1]).append("> ");
 					}
-
 					logError("""
-						Failed to register command:
+        				コマンドを登録できませんでした:
 
 						  %s %s
 
-						Because it conflicts with this previously registered command:
+						この以前に登録されたコマンドと競合するため:
 
 						  %s %s
 						""".formatted(commandName, argumentsAsString, commandName, builder2.toString()));
@@ -306,11 +329,11 @@ public class CommandAPIHandler {
 				if (!(arg instanceof LiteralArgument)) {
 					if (argumentNames.contains(arg.getNodeName())) {
 						logError("""
-							Failed to register command:
+							コマンドの登録に失敗しました:
 
 							  %s %s
 
-							Because the following argument shares the same node name as another argument:
+							次の引数が別の引数と同じノード名を共有しているため:
 
 							  %s
 							""".formatted(meta.commandName, humanReadableCommandArgSyntax, arg.toString()));
@@ -345,11 +368,11 @@ public class CommandAPIHandler {
 		{
 			final PluginCommand pluginCommand = Bukkit.getPluginCommand(commandName);
 			if (pluginCommand != null) {
-				logWarning("Plugin command /%s is registered by Bukkit (%s). Did you forget to remove this from your plugin.yml file?".formatted(commandName, pluginCommand.getPlugin().getName()));
+				logWarning("プラグイン コマンド %s は Bukkit (%s) によって登録されています。これを plugin.yml ファイルから削除するのを忘れていませんか?".formatted(commandName, pluginCommand.getPlugin().getName()));
 			}
 		}
 
-		logInfo("Registering command /" + commandName + " " + humanReadableCommandArgSyntax);
+		logInfo("コマンドの登録 " + commandName + " " + humanReadableCommandArgSyntax);
 
 		Command<CommandSourceStack> command = generateCommand(args, executor);
 
@@ -358,7 +381,7 @@ public class CommandAPIHandler {
 			resultantNode = DISPATCHER.register(getLiteralArgumentBuilder(commandName).requires(generatePermissions(commandName, permission, requirements)).executes(command));
 
 			for (String alias : aliases) {
-				logInfo("Registering alias /" + alias + " -> " + resultantNode.getName());
+				logInfo("エイリアスを登録する /"+ alias + " -> " + resultantNode.getName());
 				DISPATCHER.register(getLiteralArgumentBuilder(alias).requires(generatePermissions(alias, permission, requirements)).executes(command));
 			}
 		} else {
@@ -368,7 +391,7 @@ public class CommandAPIHandler {
 
 			for (String alias : aliases) {
 
-				logInfo("Registering alias /" + alias + " -> " + resultantNode.getName());
+				logInfo("エイリアスを登録する /"+ alias + " -> " + resultantNode.getName());
 
 				DISPATCHER.register(getLiteralArgumentBuilder(alias).requires(generatePermissions(alias, permission, requirements)).then(commandArguments));
 			}

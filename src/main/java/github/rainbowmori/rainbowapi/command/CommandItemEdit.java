@@ -1,5 +1,6 @@
 package github.rainbowmori.rainbowapi.command;
 
+import github.rainbowmori.rainbowapi.object.command.CommandPermission;
 import github.rainbowmori.rainbowapi.object.command.CommandTree;
 import github.rainbowmori.rainbowapi.object.command.arguments.*;
 import github.rainbowmori.rainbowapi.util.ItemBuilder;
@@ -18,6 +19,7 @@ public class CommandItemEdit {
 
     public static void register() {
         new CommandTree("ie")
+            .withPermission(CommandPermission.OP)
             .then(new LiteralArgument("rename")
                 .then(new GreedyStringArgument("name").executesPlayer((sender, args) -> {
                     itemEdit(sender, builder -> builder.name(args[0]));
