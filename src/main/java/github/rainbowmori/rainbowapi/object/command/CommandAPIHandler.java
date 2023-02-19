@@ -30,6 +30,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import github.rainbowmori.rainbowapi.RMHome;
 import github.rainbowmori.rainbowapi.object.command.arguments.Argument;
 import github.rainbowmori.rainbowapi.object.command.arguments.ArgumentSuggestions;
@@ -330,26 +331,29 @@ public class CommandAPIHandler {
 
         Command<CommandSourceStack> command = generateCommand(args, executor, converted);
 
+        LiteralCommandNode<CommandSourceStack> resultantNode;
         if (args.length == 0) {
-            // Link command name to the executor
-            DISPATCHER.register(getLiteralArgumentBuilder(commandName).requires(generatePermissions(commandName, permission, requirements)).executes(command));
+            resultantNode = DISPATCHER.register(getLiteralArgumentBuilder(commandName)
+                .requires(generatePermissions(commandName, permission, requirements)).executes(command));
 
-            // Register aliases
             for (String alias : aliases) {
-                DISPATCHER.register(getLiteralArgumentBuilder(alias).requires(generatePermissions(alias, permission, requirements)).executes(command));
+                RMHome.getRainbowAPI().mcUtil.logInfo("Registering alias /" + alias + " -> " + resultantNode.getName());
+                DISPATCHER.register(getLiteralArgumentBuilder(alias)
+                    .requires(generatePermissions(alias, permission, requirements)).executes(command));
             }
         } else {
+            ArgumentBuilder<CommandSourceStack, ?> commandArguments = generateOuterArguments(
+                generateInnerArgument(command, args), args);
 
+            resultantNode = DISPATCHER.register(getLiteralArgumentBuilder(commandName)
+                .requires(generatePermissions(commandName, permission, requirements)).then(commandArguments));
 
-            ArgumentBuilder<CommandSourceStack, ?> commandArguments = generateOuterArguments(generateInnerArgument(command, args), args);
-
-            // Link command name to first argument and register
-            DISPATCHER.register(getLiteralArgumentBuilder(commandName).requires(generatePermissions(commandName, permission, requirements)).then(commandArguments));
-
-            // Register aliases
             for (String alias : aliases) {
 
-                DISPATCHER.register(getLiteralArgumentBuilder(alias).requires(generatePermissions(alias, permission, requirements)).then(commandArguments));
+                RMHome.getRainbowAPI().mcUtil.logInfo("Registering alias /" + alias + " -> " + resultantNode.getName());
+
+                DISPATCHER.register(getLiteralArgumentBuilder(alias)
+                    .requires(generatePermissions(alias, permission, requirements)).then(commandArguments));
             }
         }
     }
