@@ -25,6 +25,7 @@ afterEvaluate {
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
+                artifact(tasks["sourcesJar"])
                 group = project.group
                 version = project.version.toString()
                 artifactId = project.name
@@ -48,6 +49,10 @@ java {
 
 
 tasks {
+    val sourcesJar by creating(Jar::class) {
+        archiveClassifier.set("")
+    }
+
     assemble {
         dependsOn(reobfJar)
     }
