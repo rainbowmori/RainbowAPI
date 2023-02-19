@@ -25,7 +25,7 @@ public class JsonAPI {
     public JsonAPI(RainbowAPI api, String name, String path) {
         Objects.requireNonNull(name);
         this.name = name.endsWith(".json") ? name : name + ".json";
-        this.path = Objects.requireNonNullElse(path, "");
+        this.path = path == null || path.isEmpty() ? "" : "/" + path;
         this.api = api;
         file = new File(api.plugin.getDataFolder() + this.path, this.name);
         Created();

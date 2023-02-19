@@ -19,8 +19,9 @@ public class YamlAPI {
     }
 
     public YamlAPI(RainbowAPI api, String name, String path) {
-        this.name = Objects.requireNonNullElse(name, "");
-        this.path = Objects.requireNonNullElse(path, "");
+        Objects.requireNonNull(name);
+        this.name = name.endsWith(".yml") ? name : name + ".yml";
+        this.path = path == null || path.isEmpty() ? "" : "/" + path;
         this.api = api;
         file = new File(api.plugin.getDataFolder() + this.path, this.name);
         Created();
