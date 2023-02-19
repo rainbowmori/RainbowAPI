@@ -19,16 +19,21 @@ repositories {
     maven(url = "https://jitpack.io")
 }
 
-//publishing {
-//    publications {
-//        create<MavenPublication>("maven") {
-//            group = "github.rainbowmori"
-//            version = "1.0.0"
-//            artifactId = "RainbowAPI"
-//            from(components["java"])
-//        }
-//    }
-//}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                from(components["java"])
+                artifact(tasks.getByName("sourcesJar"))
+                group = project.group
+                version = project.version.toString()
+                artifactId = project.name
+            }
+        }
+    }
+}
+
 
 
 dependencies {
@@ -44,6 +49,12 @@ java {
 
 
 tasks {
+
+    val sourcesJar by creating(Jar::class) {
+        archiveClassifier.set("sources")
+        from(sourceSets["main"].allSource)
+    }
+
     assemble {
         dependsOn(reobfJar)
     }
