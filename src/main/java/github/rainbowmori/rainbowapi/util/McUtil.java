@@ -7,12 +7,11 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class McUtil {
     private final RainbowAPI api;
-    private final Logger log = Logger.getLogger("[RMLOG]");
+    private final Logger log;
 
     /**
      * マイクラに関するUtil
@@ -22,16 +21,23 @@ public class McUtil {
 
     public McUtil(RainbowAPI api) {
         this.api = api;
+        this.log = api.plugin.getLogger();
     }
 
-    /**
-     * consoleに表示
-     *
-     * @param object 表示する内容
-     */
+    public void logInfo(String message) {
+        log.info(message);
+    }
 
-    public void log(Object object) {
-        api.plugin.getLogger().log(Level.INFO, object.toString());
+    public void logNormal(String message) {
+        log.info(message);
+    }
+
+    public void logWarning(String message) {
+        log.warning(message);
+    }
+
+    public void logError(String message) {
+        log.severe(message);
     }
 
     /**

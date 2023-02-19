@@ -1,7 +1,5 @@
 package github.rainbowmori.rainbowapi.object.command;
 
-import org.bukkit.plugin.Plugin;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +16,7 @@ public class CommandTree extends ExecutableCommand<CommandTree> {
 		return this;
 	}
 
-	public void register(Plugin plugin) {
+	public void register() {
 		List<Execution> executions = new ArrayList<>();
 		if (this.executor.hasAnyExecutors()) {
 			executions.add(new Execution(new ArrayList<>(), this.executor));
@@ -27,7 +25,7 @@ public class CommandTree extends ExecutableCommand<CommandTree> {
 			executions.addAll(tree.getExecutions());
 		}
 		for (Execution execution : executions) {
-			execution.register(plugin,this.meta);
+			execution.register(this.meta);
 		}
 	}
 

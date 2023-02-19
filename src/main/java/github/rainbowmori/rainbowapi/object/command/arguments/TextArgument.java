@@ -2,6 +2,7 @@ package github.rainbowmori.rainbowapi.object.command.arguments;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import net.minecraft.commands.CommandSourceStack;
 
 public class TextArgument extends Argument<String> {
 
@@ -15,8 +16,8 @@ public class TextArgument extends Argument<String> {
 	}
 
 	@Override
-	public <CommandListenerWrapper> String parseArgument(
-			CommandContext<CommandListenerWrapper> cmdCtx, String key, Object[] previousArgs) {
+	public  String parseArgument(
+		CommandContext<CommandSourceStack> cmdCtx, String key, Object[] previousArgs) {
 		return cmdCtx.getArgument(key, getPrimitiveType());
 	}
 }

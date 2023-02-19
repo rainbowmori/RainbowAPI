@@ -14,5 +14,5 @@ public enum ExecutorType {
 
 	PROXY,
 
-	NATIVE;
+	NATIVE
 }

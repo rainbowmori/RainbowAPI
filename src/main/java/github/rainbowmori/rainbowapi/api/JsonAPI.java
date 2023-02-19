@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import github.rainbowmori.rainbowapi.RainbowAPI;
-import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -16,19 +15,19 @@ import java.util.Objects;
 public class JsonAPI {
     public final File file;
     protected final String name, path;
-    private final Plugin plugin;
+    private final RainbowAPI api;
     public JsonObject json;
 
-    public JsonAPI(Plugin plugin, String name) {
-        this(plugin, name, "");
+    public JsonAPI(RainbowAPI api, String name) {
+        this(api, name, "");
     }
 
-    public JsonAPI(Plugin plugin, String name, String path) {
+    public JsonAPI(RainbowAPI api, String name, String path) {
         Objects.requireNonNull(name);
         this.name = name.endsWith(".json") ? name : name + ".json";
         this.path = Objects.requireNonNullElse(path, "");
-        this.plugin = plugin;
-        file = new File(plugin.getDataFolder() + this.path, this.name);
+        this.api = api;
+        file = new File(api.plugin.getDataFolder() + this.path, this.name);
         Created();
     }
 
@@ -118,12 +117,12 @@ public class JsonAPI {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public final void Created() {
         try {
-            if (!new File(plugin.getDataFolder() + path).exists()) {
-                new File(plugin.getDataFolder() + path).mkdir();
+            if (!new File(api.plugin.getDataFolder() + path).exists()) {
+                new File(api.plugin.getDataFolder() + path).mkdir();
             }
             if (!file.exists() || new BufferedReader(new FileReader(file)).readLine() == null) {
                 file.createNewFile();
-                plugin.getLogger().info(name + "に{}を入力しています");
+                api.mcUtil.logInfo(name + "に{}を入力しています");
                 FileWriter writer = new FileWriter(file);
                 writer.write("{}");
                 writer.close();
@@ -136,7 +135,7 @@ public class JsonAPI {
 
     public final void Remove() {
         if (file.delete()) {
-            plugin.getLogger().info(name + "を削除しました");
+            api.mcUtil.logInfo(name + "を削除しました");
         }
     }
 

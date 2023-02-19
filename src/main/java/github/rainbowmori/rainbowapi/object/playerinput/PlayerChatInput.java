@@ -12,8 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class PlayerChatInput implements ConversationAbandonedListener {
 
-    private final JavaPlugin plugin;
-
     private final ConversationFactory factory;
 
     public PlayerChatInput(JavaPlugin plugin, String prefix, boolean cancelable, Prompt prompt) {
@@ -24,7 +22,6 @@ public class PlayerChatInput implements ConversationAbandonedListener {
         }
         factory.addConversationAbandonedListener(this).thatExcludesNonPlayersWithMessage("プレイヤーしか入力できません");
         this.factory = factory;
-        this.plugin = plugin;
     }
 
     public PlayerChatInput(JavaPlugin plugin, boolean cancelable, Prompt prompt) {

@@ -1,12 +1,13 @@
-
 package github.rainbowmori.rainbowapi.object.command.arguments;
 
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import github.rainbowmori.rainbowapi.object.command.ArgumentTree;
 import github.rainbowmori.rainbowapi.object.command.CommandPermission;
 import github.rainbowmori.rainbowapi.object.command.IStringTooltip;
 import github.rainbowmori.rainbowapi.object.command.SuggestionInfo;
+import net.minecraft.commands.CommandSourceStack;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
@@ -40,8 +41,8 @@ public abstract class Argument<T> extends ArgumentTree {
         return this.nodeName;
     }
 
-    public abstract <CommandSourceStack> T parseArgument(
-        CommandContext<CommandSourceStack> cmdCtx, String key, Object[] previousArgs);
+    public abstract T parseArgument(
+        CommandContext<CommandSourceStack> cmdCtx, String key, Object[] previousArgs) throws CommandSyntaxException;
 
     public Argument<T> includeSuggestions(ArgumentSuggestions suggestions) {
         this.addedSuggestions = Optional.of(suggestions);

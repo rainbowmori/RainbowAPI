@@ -4,6 +4,7 @@ package github.rainbowmori.rainbowapi.object.command.arguments;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import github.rainbowmori.rainbowapi.object.command.exceptions.InvalidRangeException;
+import net.minecraft.commands.CommandSourceStack;
 
 public class IntegerArgument extends SafeOverrideableArgument<Integer, Integer> {
 
@@ -43,8 +44,8 @@ public class IntegerArgument extends SafeOverrideableArgument<Integer, Integer> 
 	}
 
 	@Override
-	public <CommandListenerWrapper> Integer parseArgument(
-		CommandContext<CommandListenerWrapper> cmdCtx, String key, Object[] previousArgs) {
+	public Integer parseArgument(
+		CommandContext<CommandSourceStack> cmdCtx, String key, Object[] previousArgs) {
 		return cmdCtx.getArgument(key, getPrimitiveType());
 	}
 	

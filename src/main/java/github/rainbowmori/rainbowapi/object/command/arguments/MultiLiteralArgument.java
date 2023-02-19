@@ -2,6 +2,7 @@ package github.rainbowmori.rainbowapi.object.command.arguments;
 
 import com.mojang.brigadier.context.CommandContext;
 import github.rainbowmori.rainbowapi.object.command.exceptions.BadLiteralException;
+import net.minecraft.commands.CommandSourceStack;
 
 import java.util.List;
 
@@ -34,8 +35,8 @@ public class MultiLiteralArgument extends Argument<String> {
 	}
 
 	@Override
-	public <CommandListenerWrapper> String parseArgument(
-			CommandContext<CommandListenerWrapper> cmdCtx, String key, Object[] previousArgs) {
+	public  String parseArgument(
+		CommandContext<CommandSourceStack> cmdCtx, String key, Object[] previousArgs) {
 		throw new IllegalStateException("Cannot parse MultiLiteralArgument");
 	}
 }

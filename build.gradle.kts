@@ -43,15 +43,9 @@ tasks {
     processResources {
         filteringCharset = Charsets.UTF_8.name()
     }
-    build{
-        dependsOn(copied)
-    }
+
 }
 
-val copied = tasks.register("copied", Copy::class.java) {
-    from(layout.buildDirectory.file("libs/${rootProject.name}-${project.version}.jar"))
-    into(file("C:\\Users\\moriy\\Desktop\\java\\1.19.3_TestServer\\plugins"))
-}
 
 
 

@@ -1,9 +1,8 @@
 package github.rainbowmori.rainbowapi.api;
 
+import github.rainbowmori.rainbowapi.RainbowAPI;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,18 +11,18 @@ import java.util.Objects;
 public class YamlAPI {
     public final File file;
     protected final String name, path;
-    private final Plugin plugin;
+    private final RainbowAPI api;
     public FileConfiguration yaml;
 
-    public YamlAPI(@NotNull Plugin plugin, String name) {
-        this(plugin, name, "");
+    public YamlAPI(RainbowAPI api, String name) {
+        this(api, name, "");
     }
 
-    public YamlAPI(@NotNull Plugin plugin, String name, String path) {
+    public YamlAPI(RainbowAPI api, String name, String path) {
         this.name = Objects.requireNonNullElse(name, "");
         this.path = Objects.requireNonNullElse(path, "");
-        this.plugin = plugin;
-        file = new File(plugin.getDataFolder() + this.path, this.name);
+        this.api = api;
+        file = new File(api.plugin.getDataFolder() + this.path, this.name);
         Created();
     }
 
@@ -41,15 +40,15 @@ public class YamlAPI {
 
     public final void Remove() {
         if (file.delete()) {
-            plugin.getLogger().info(name + "を削除しました");
+            api.mcUtil.logInfo(name + "を削除しました");
         }
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public final void Created() {
         try {
-            if (!new File(plugin.getDataFolder() + path).exists()) {
-                new File(plugin.getDataFolder() + path).mkdir();
+            if (!new File(api.plugin.getDataFolder() + path).exists()) {
+                new File(api.plugin.getDataFolder() + path).mkdir();
             }
             if (!file.exists()) {
                 file.createNewFile();

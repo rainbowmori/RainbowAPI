@@ -2,7 +2,6 @@ package github.rainbowmori.rainbowapi.object.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
 
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -102,11 +101,11 @@ abstract class ExecutableCommand<T extends ExecutableCommand<T>> extends Executa
 	}
 
 
-	public void override(Plugin plugin) {
+	public void override() {
 		Bukkit.getServer().getCommandMap().getKnownCommands().remove(this.meta.commandName);
-		register(plugin);
+		register();
 	}
 
-	public abstract void register(Plugin plugin);
+	public abstract void register();
 	
 }
