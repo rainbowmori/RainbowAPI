@@ -46,15 +46,9 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
-
-
 tasks {
     val sourcesJar by creating(Jar::class) {
-        archiveClassifier.set("")
-    }
-
-    assemble {
-        dependsOn(reobfJar)
+        archiveClassifier.set(rootProject.name)
     }
     compileJava {
         options.encoding = Charsets.UTF_8.name()
