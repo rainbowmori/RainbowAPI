@@ -12,6 +12,7 @@ plugins {
 repositories {
     mavenCentral()
     maven(url = "https://libraries.minecraft.net")
+    maven(url = "https://jitpack.io")
 }
 
 publishing {
@@ -20,7 +21,7 @@ publishing {
             group = "github.rainbowmori"
             version = "1.0.0"
             artifactId = "RainbowAPI"
-            description = "Rainbow API"
+            from(components["java"])
         }
     }
 }
@@ -50,9 +51,6 @@ tasks {
     }
     processResources {
         filteringCharset = Charsets.UTF_8.name()
-    }
-    build{
-        dependsOn(copied)
     }
 }
 
