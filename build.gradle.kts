@@ -17,6 +17,10 @@ repositories {
     mavenCentral()
     maven(url = "https://libraries.minecraft.net")
     maven(url = "https://jitpack.io")
+    maven{
+        name = "CodeMC"
+        url = uri("https://repo.codemc.org/repository/maven-public/")
+    }
 }
 
 
@@ -38,6 +42,7 @@ afterEvaluate {
 dependencies {
     paperweight.paperDevBundle("1.19.3-R0.1-SNAPSHOT")
     compileOnly("com.mojang:brigadier:1.0.18")
+    compileOnly("de.tr7zw:item-nbt-api-plugin:2.11.1")
 }
 
 
@@ -65,6 +70,7 @@ tasks {
 
 
 bukkit {
+    print("ｄさだｓだｓだｓだｓだｓだｓだｓｄさ")
     // Default values can be overridden if needed
     // name = 'TestPlugin'
     // version = '1.0'
@@ -81,6 +87,7 @@ bukkit {
     authors = listOf("rainbowmori")
     prefix = "RainbowAPI"
     load = BukkitPluginDescription.PluginLoadOrder.STARTUP
+    depend = listOf("NBTAPI")
 
 //    commands {
 //        test {

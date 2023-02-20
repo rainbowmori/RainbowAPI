@@ -1,8 +1,11 @@
 package github.rainbowmori.rainbowapi.command;
 
-import github.rainbowmori.rainbowapi.object.command.CommandPermission;
-import github.rainbowmori.rainbowapi.object.command.CommandTree;
-import github.rainbowmori.rainbowapi.object.command.arguments.*;
+import github.rainbowmori.rainbowapi.object.commandapi.CommandPermission;
+import github.rainbowmori.rainbowapi.object.commandapi.CommandTree;
+import github.rainbowmori.rainbowapi.object.commandapi.arguments.GreedyStringArgument;
+import github.rainbowmori.rainbowapi.object.commandapi.arguments.IntegerArgument;
+import github.rainbowmori.rainbowapi.object.commandapi.arguments.LiteralArgument;
+import github.rainbowmori.rainbowapi.object.commandapi.arguments.MultiLiteralArgument;
 import github.rainbowmori.rainbowapi.util.ItemBuilder;
 import github.rainbowmori.rainbowapi.util.Util;
 import org.bukkit.Material;
