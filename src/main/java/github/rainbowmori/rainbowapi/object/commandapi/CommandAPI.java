@@ -38,7 +38,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -57,7 +56,7 @@ public final class CommandAPI {
 
 	private static boolean canRegister;
 	public static InternalConfig config;
-	public static Logger logger;
+	static Logger logger;
 	private static boolean loaded;
 
 	/**
@@ -84,17 +83,6 @@ public final class CommandAPI {
 		}
 		return config;
 	}
-
-	private static class CommandAPILogger extends Logger {
-
-		protected CommandAPILogger() {
-			super("CommandAPI", null);
-			setParent(Bukkit.getServer().getLogger());
-			setLevel(Level.ALL);
-		}
-
-	}
-	
 	/**
 	 * Unloads the CommandAPI. This should go in your plugin's
 	 * {@link JavaPlugin#onDisable} method.
@@ -115,7 +103,7 @@ public final class CommandAPI {
 	 */
 	public static Logger getLogger() {
 		if (logger == null) {
-			logger = new CommandAPILogger();
+			logger = Logger.getLogger("CommandAPI");
 		}
 		return logger;
 	}

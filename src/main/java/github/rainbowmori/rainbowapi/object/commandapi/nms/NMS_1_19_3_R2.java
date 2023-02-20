@@ -541,6 +541,7 @@ public class NMS_1_19_3_R2 extends NMS_Common {
 		return new ParticleData<DustTransition>(particle, new DustTransition(color, toColor, options.getScale()));
 	}
 
+	@SuppressWarnings("removal")
 	private ParticleData<?> getParticleDataAsVibrationParticleOption(CommandContext<CommandSourceStack> cmdCtx, Particle particle, VibrationParticleOption options) {
 		// The "from" part of the Vibration object in Bukkit is completely ignored now,
 		// so we just populate it with some "feasible" information

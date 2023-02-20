@@ -1,11 +1,9 @@
 package github.rainbowmori.rainbowapi.util;
 
 import github.rainbowmori.rainbowapi.RainbowAPI;
-import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -61,33 +59,6 @@ public class McUtil {
     public void send(Player player, Object str) {
         if (player != null) {
             player.sendMessage(Util.mm(api.prefix + str));
-        }
-    }
-
-    /**
-     * show title
-     *
-     * @param uuid     player uuid
-     * @param title    title string
-     * @param subtitle subtitle string
-     */
-
-    public void title(UUID uuid, Object title, Object subtitle) {
-        title(Bukkit.getPlayer(uuid), title, subtitle);
-    }
-
-    /**
-     * show title
-     *
-     * @param player   player
-     * @param title    title string
-     * @param subtitle subtitle string
-     */
-
-    public void title(Player player, Object title, Object subtitle) {
-        if (player != null && player.isOnline()) {
-            player.showTitle(Title.title(Util.mm(Objects.requireNonNullElse(title, "")),
-                    Util.mm(Objects.requireNonNullElse(subtitle, ""))));
         }
     }
 

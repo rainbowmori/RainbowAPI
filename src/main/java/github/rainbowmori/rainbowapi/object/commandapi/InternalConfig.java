@@ -33,7 +33,7 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 
 /**
- * Configuration wrapper class. The config.yml file used by the CommandAPI is
+ * Configuration wrapper class. The CommandAPI.yml file used by the CommandAPI is
  * only ever read from, nothing is ever written to it. That's why there's only
  * getter methods.
  */

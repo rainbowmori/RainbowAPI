@@ -49,7 +49,7 @@ public class YamlAPI {
     public final void Created() {
         try {
             if (!new File(api.plugin.getDataFolder() + path).exists()) {
-                new File(api.plugin.getDataFolder() + path).mkdir();
+                new File(api.plugin.getDataFolder() + path).mkdirs();
             }
             if (!file.exists()) {
                 file.createNewFile();

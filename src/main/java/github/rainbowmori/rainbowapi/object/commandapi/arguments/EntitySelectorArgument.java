@@ -20,24 +20,23 @@
  *******************************************************************************/
 package github.rainbowmori.rainbowapi.object.commandapi.arguments;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import github.rainbowmori.rainbowapi.object.commandapi.CommandAPIHandler;
+import github.rainbowmori.rainbowapi.object.commandapi.nms.NMS;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-
-import github.rainbowmori.rainbowapi.object.commandapi.CommandAPIHandler;
-import github.rainbowmori.rainbowapi.object.commandapi.nms.NMS;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * An argument that represents a selection of entities
  * 
  * @apiNote The return type depends on the provided {@link EntitySelector}
  */
+@SuppressWarnings("removal")
 public class EntitySelectorArgument<T> extends Argument<T> {
 
 	private final EntitySelector selector;

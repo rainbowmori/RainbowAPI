@@ -3,10 +3,13 @@ package github.rainbowmori.rainbowapi.util;
 import github.rainbowmori.rainbowapi.RMHome;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
+import net.kyori.adventure.title.Title;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -68,5 +71,42 @@ public class Util {
 
     public static String serialize(Component str) {
         return MiniMessage.miniMessage().serialize(str);
+    }
+
+    /**
+     * show title
+     *
+     * @param uuid     player uuid
+     * @param title    title string
+     * @param subtitle subtitle string
+     */
+
+    public static void title(UUID uuid, Object title, Object subtitle) {
+        title(Bukkit.getPlayer(uuid), title, subtitle);
+    }
+
+    /**
+     * show title
+     *
+     * @param player   player
+     * @param title    title string
+     * @param subtitle subtitle string
+     */
+
+    public static void title(Player player, Object title, Object subtitle) {
+        if (player != null && player.isOnline()) {
+            player.showTitle(Title.title(Util.mm(Objects.requireNonNullElse(title, "")),
+                Util.mm(Objects.requireNonNullElse(subtitle, ""))));
+        }
+    }
+
+    /**
+     * BroadCast
+     *
+     * @param str message
+     */
+
+    public static void Cast(Object str) {
+        Bukkit.broadcast(Util.mm(str));
     }
 }

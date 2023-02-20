@@ -1,12 +1,17 @@
 package github.rainbowmori.rainbowapi;
 
+import com.google.common.base.Charsets;
 import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.utils.MinecraftVersion;
 import github.rainbowmori.rainbowapi.command.CommandItemEdit;
 import github.rainbowmori.rainbowapi.object.commandapi.*;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Map;
 
 /**
@@ -36,18 +41,17 @@ public class RMHome extends JavaPlugin {
     }
 
     @Override
+    public void onDisable() {
+        CommandAPI.onDisable();
+    }
+
+    @Override
     public void onLoad() {
-        // Configure the NBT API - we're not allowing tracking at all, according
-        // to the CommandAPI's design principles. The CommandAPI isn't used very
-        // much, so this tiny proportion of servers makes very little impact to
-        // the NBT API's stats.
         MinecraftVersion.disableBStats();
         MinecraftVersion.disableUpdateCheck();
 
-        // Config loading
-        CommandAPI.logger = getLogger();
-        saveDefaultConfig();
-        CommandAPI.config = new InternalConfig(getConfig(), NBTContainer.class, NBTContainer::new, new File(getDataFolder(), "command_registration.json"));
+        CommandAPI.config = new InternalConfig(createFile(), NBTContainer.class,
+            NBTContainer::new, new File(getDataFolder(), "command_registration.json"));
 
         // Check dependencies for CommandAPI
         CommandAPIHandler.getInstance().checkDependencies();
@@ -67,5 +71,19 @@ public class RMHome extends JavaPlugin {
         for (String commandName : CommandAPI.config.getCommandsToConvert()) {
             new AdvancedConverter(commandName).convertCommand();
         }
+    }
+
+    private static final String CommandAPIConfig = "CommandAPI.yml";
+
+    public FileConfiguration createFile() {
+        saveResource(CommandAPIConfig,false);
+        FileConfiguration newConfig = YamlConfiguration.loadConfiguration(
+            new File(getDataFolder(),CommandAPIConfig));
+        final InputStream defConfigStream = getResource(CommandAPIConfig);
+        if (defConfigStream == null) {
+            return null;
+        }
+        newConfig.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream, Charsets.UTF_8)));
+        return newConfig;
     }
 }

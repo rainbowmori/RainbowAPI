@@ -70,7 +70,6 @@ tasks {
 
 
 bukkit {
-    print("ｄさだｓだｓだｓだｓだｓだｓだｓｄさ")
     // Default values can be overridden if needed
     // name = 'TestPlugin'
     // version = '1.0'
