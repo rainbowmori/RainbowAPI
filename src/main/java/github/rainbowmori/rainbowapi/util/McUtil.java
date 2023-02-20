@@ -1,25 +1,23 @@
 package github.rainbowmori.rainbowapi.util;
 
-import github.rainbowmori.rainbowapi.RainbowAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 import java.util.logging.Logger;
 
 public class McUtil {
-    private final RainbowAPI api;
+    private final String prefix;
     private final Logger log;
+    
+    public McUtil(String prefix,String logName) {
+        this(prefix, Logger.getLogger(logName));
+    }
 
-    /**
-     * マイクラに関するUtil
-     *
-     * @param api {@link RainbowAPI}
-     */
-
-    public McUtil(RainbowAPI api) {
-        this.api = api;
-        this.log = api.plugin.getLogger();
+    public McUtil(String prefix, Logger log) {
+        this.prefix = prefix;
+        this.log = log;
     }
 
     public void logInfo(String message) {
@@ -37,57 +35,24 @@ public class McUtil {
     public void logError(String message) {
         log.severe(message);
     }
-
-    /**
-     * プレイヤーにメッセージ送信
-     *
-     * @param uuid player uuid
-     * @param str  message
-     */
-
+    
     public void send(UUID uuid, Object str) {
         send(Bukkit.getPlayer(uuid), str);
     }
-
-    /**
-     * プレイヤーにメッセージ送信
-     *
-     * @param player player
-     * @param str    message
-     */
-
-    public void send(Player player, Object str) {
-        if (player != null) {
-            player.sendMessage(Util.mm(api.prefix + str));
+    
+    public void send(CommandSender sender, Object str) {
+        if (sender != null) {
+            sender.sendMessage(Util.mm(prefix + str));
         }
     }
-
-    /**
-     * BroadCast
-     *
-     * @param str message
-     */
-
+    
     public void Cast(Object str) {
-        Bukkit.broadcast(Util.mm(api.prefix + str));
+        Bukkit.broadcast(Util.mm(prefix + str));
     }
-
-    /**
-     * コマンドをコンソールセンダーで実行
-     *
-     * @param command command
-     */
-
+    
     public void consoleCommand(String command) {
-        api.plugin.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
     }
-
-    /**
-     * コマンドをプレイヤーで実行
-     *
-     * @param execute player
-     * @param command command
-     */
 
     public void executeCommand(Player execute, String command) {
         if (execute.isOp()) {

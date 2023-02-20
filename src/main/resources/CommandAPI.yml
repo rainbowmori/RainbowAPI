@@ -18,7 +18,7 @@ messages:
   #Missing executor implementation (デフォルト: "このコマンドには %s の実装がありません")
   #コマンドに executor がない場合に送信者に表示するメッセージ。利用可能なパラメータは次のとおりです:
   #%s - エグゼキュータ クラス (小文字) %S - エグゼキュータ クラス (通常のケース)
-  missing-executor-implementation: "このコマンドには %s の実装がありません"
+  missing-executor-implementation: "このコマンドを %s は実行できません"
 
 ################################################################################
 # Debugging                                                                    #
