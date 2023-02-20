@@ -20,13 +20,12 @@
  *******************************************************************************/
 package github.rainbowmori.rainbowapi.object.commandapi.arguments;
 
-import java.util.Collection;
-
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-
 import github.rainbowmori.rainbowapi.object.commandapi.CommandAPIHandler;
 import github.rainbowmori.rainbowapi.object.commandapi.nms.NMS;
+
+import java.util.Collection;
 
 /**
  * An argument that represents a scoreholder's name, or a collection of scoreholder names
@@ -136,11 +135,6 @@ public class ScoreHolderArgument<T> extends Argument<T> {
 
 	}
 
-	/**
-	 * An enum specifying whether a score holder consists of a single score holder or a collection of score holders
-	 * @deprecated 
-	 */
-	@Deprecated(forRemoval = true, since = "8.7.0")
 	public static enum ScoreHolderType {
 		/**
 		 * A single score holder name

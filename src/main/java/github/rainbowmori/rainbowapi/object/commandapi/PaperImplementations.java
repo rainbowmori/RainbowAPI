@@ -1,13 +1,8 @@
 package github.rainbowmori.rainbowapi.object.commandapi;
 
+import github.rainbowmori.rainbowapi.object.commandapi.nms.NMS;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
-
-import github.rainbowmori.rainbowapi.object.commandapi.nms.NMS;
-import io.papermc.paper.event.server.ServerResourcesReloadedEvent;
 
 public class PaperImplementations {
 
@@ -25,26 +20,6 @@ public class PaperImplementations {
 		this.nmsInstance = nmsInstance;
 	}
 
-	/**
-	 * Hooks into Paper's {@link ServerResourcesReloadedEvent} to detect if
-	 * {@code /minecraft:reload} is called, and registers a reload handler that
-	 * automatically calls the CommandAPI's internal datapack reloading function
-	 * 
-	 * @param plugin the plugin that the CommandAPI is being used from
-	 */
-	public void registerReloadHandler(Plugin plugin) {
-		if (isPaperPresent) {
-			Bukkit.getServer().getPluginManager().registerEvents(new Listener() {
-
-				@EventHandler
-				public void onServerReloadResources(ServerResourcesReloadedEvent event) {
-					CommandAPI.logNormal("/minecraft:reload detected. Reloading CommandAPI commands!");
-					nmsInstance.reloadDataPacks();
-				}
-
-			}, plugin);
-		}
-	}
 
 	/**
 	 * @return Bukkit's {@link CommandMap}

@@ -20,7 +20,6 @@
  *******************************************************************************/
 package github.rainbowmori.rainbowapi.object.commandapi.nms;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
 import com.google.gson.GsonBuilder;
 import com.mojang.brigadier.CommandDispatcher;
@@ -32,7 +31,6 @@ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.datafixers.util.Either;
-import com.mojang.logging.LogUtils;
 import github.rainbowmori.rainbowapi.object.commandapi.CommandAPI;
 import github.rainbowmori.rainbowapi.object.commandapi.CommandAPIHandler;
 import github.rainbowmori.rainbowapi.object.commandapi.arguments.ArgumentSubType;
@@ -63,32 +61,21 @@ import net.minecraft.commands.arguments.item.ItemPredicateArgument;
 import net.minecraft.commands.arguments.selector.EntitySelector;
 import net.minecraft.commands.synchronization.ArgumentUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess.Frozen;
 import net.minecraft.core.particles.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component.Serializer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.MinecraftServer.ReloadableResources;
 import net.minecraft.server.ServerFunctionLibrary;
 import net.minecraft.server.ServerFunctionManager;
 import net.minecraft.server.level.ColumnPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.packs.PackResources;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackRepository;
-import net.minecraft.server.packs.resources.MultiPackResourceManager;
-import net.minecraft.server.packs.resources.SimpleReloadInstance;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.Unit;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.DataPackConfig;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.WorldDataConfiguration;
 import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.gameevent.BlockPositionSource;
 import net.minecraft.world.level.gameevent.EntityPositionSource;
@@ -122,19 +109,15 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.help.HelpTopic;
-import org.bukkit.inventory.Recipe;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
@@ -684,139 +667,6 @@ public class NMS_1_19_3_R2 extends NMS_Common {
 	@Override
 	public final boolean isVanillaCommandWrapper(Command command) {
 		return command instanceof VanillaCommandWrapper;
-	}
-
-	@Differs(from = "1.19.2", by = """
-		MINECRAFT_SERVER.getWorldData().getDataPackConfig().getDisabled() -> MINECRAFT_SERVER.getWorldData().getDataConfiguration().dataPacks().getDisabled()
-		Everything about this WorldDataConfiguration thingy: MINECRAFT_SERVER.getWorldData().setDataConfiguration(new WorldDataConfiguration(new DataPackConfig(enabledIDs, disabledIDs), MINECRAFT_SERVER.getWorldData().getDataConfiguration().enabledFeatures()));
-		""")
-	@Override
-	public final void reloadDataPacks() {
-		CommandAPI.logNormal("Reloading datapacks...");
-
-		// Get previously declared recipes to be re-registered later
-		Iterator<Recipe> recipes = Bukkit.recipeIterator();
-
-		// Update the commandDispatcher with the current server's commandDispatcher
-		ReloadableResources serverResources = MINECRAFT_SERVER.resources;
-		serverResources.managers().commands = MINECRAFT_SERVER.getCommands();
-
-		// Update the ServerFunctionLibrary's command dispatcher with the new one
-		try {
-			CommandAPIHandler.getInstance().getField(ServerFunctionLibrary.class, "g")
-				.set(serverResources.managers().getFunctionLibrary(), getBrigadierDispatcher());
-		} catch (ReflectiveOperationException e) {
-			e.printStackTrace();
-		}
-
-		// From MINECRAFT_SERVER.reloadResources //
-		// Discover new packs
-		Collection<String> collection;
-		{
-			List<String> packIDs = new ArrayList<>(MINECRAFT_SERVER.getPackRepository().getSelectedIds());
-			List<String> disabledPacks = MINECRAFT_SERVER.getWorldData().getDataConfiguration().dataPacks().getDisabled();
-
-			for (String availablePack : MINECRAFT_SERVER.getPackRepository().getAvailableIds()) {
-				// Add every other available pack that is not disabled
-				// and is not already in the list of existing packs
-				if (!disabledPacks.contains(availablePack) && !packIDs.contains(availablePack)) {
-					packIDs.add(availablePack);
-				}
-			}
-			collection = packIDs;
-		}
-
-		Frozen registryAccess = MINECRAFT_SERVER.registryAccess();
-
-		// Step 1: Construct an async supplier of a list of all resource packs to
-		// be loaded in the reload phase
-		CompletableFuture<List<PackResources>> first = CompletableFuture.supplyAsync(() -> {
-			PackRepository serverPackRepository = MINECRAFT_SERVER.getPackRepository();
-
-			List<PackResources> packResources = new ArrayList<>();
-			for (String packID : collection) {
-				Pack pack = serverPackRepository.getPack(packID);
-				if (pack != null) {
-					packResources.add(pack.open());
-				}
-			}
-			return packResources;
-		});
-
-		// Step 2: Convert all of the resource packs into ReloadableResources which
-		// are replaced by our custom server resources with defined commands
-		CompletableFuture<ReloadableResources> second = first.thenCompose(packResources -> {
-			MultiPackResourceManager resourceManager = new MultiPackResourceManager(PackType.SERVER_DATA,
-				packResources);
-
-			// Not using packResources, because we really really want this to work
-			CompletableFuture<?> simpleReloadInstance = SimpleReloadInstance.create(
-				resourceManager, serverResources.managers().listeners(), MINECRAFT_SERVER.executor,
-				MINECRAFT_SERVER, CompletableFuture
-					.completedFuture(Unit.INSTANCE) /* ReloadableServerResources.DATA_RELOAD_INITIAL_TASK */,
-				LogUtils.getLogger().isDebugEnabled()).done();
-
-			return simpleReloadInstance.thenApply(x -> serverResources);
-		});
-
-		// Step 3: Actually load all of the resources
-		CompletableFuture<Void> third = second.thenAcceptAsync(resources -> {
-			MINECRAFT_SERVER.resources.close();
-			MINECRAFT_SERVER.resources = serverResources;
-			MINECRAFT_SERVER.server.syncCommands();
-			MINECRAFT_SERVER.getPackRepository().setSelected(collection);
-
-			// MINECRAFT_SERVER.getSelectedPacks
-			Collection<String> selectedIDs = MINECRAFT_SERVER.getPackRepository().getSelectedIds();
-			List<String> enabledIDs = ImmutableList.copyOf(selectedIDs);
-			List<String> disabledIDs = new ArrayList<>(MINECRAFT_SERVER.getPackRepository().getAvailableIds());
-
-			disabledIDs.removeIf(enabledIDs::contains);
-
-			MINECRAFT_SERVER.getWorldData().setDataConfiguration(new WorldDataConfiguration(new DataPackConfig(enabledIDs, disabledIDs), MINECRAFT_SERVER.getWorldData().getDataConfiguration().enabledFeatures()));
-			MINECRAFT_SERVER.resources.managers().updateRegistryTags(registryAccess);
-			// May need to be commented out, may not. Comment it out just in case.
-			// For some reason, calling getPlayerList().saveAll() may just hang
-			// the server indefinitely. Not sure why!
-			// MINECRAFT_SERVER.getPlayerList().saveAll();
-			// MINECRAFT_SERVER.getPlayerList().reloadResources();
-			// MINECRAFT_SERVER.getFunctions().replaceLibrary(MINECRAFT_SERVER.resources.managers().getFunctionLibrary());
-			MINECRAFT_SERVER.getStructureManager()
-				.onResourceManagerReload(MINECRAFT_SERVER.resources.resourceManager());
-		});
-
-		// Step 4: Block the thread until everything's done
-		if (MINECRAFT_SERVER.isSameThread()) {
-			MINECRAFT_SERVER.managedBlock(third::isDone);
-		}
-
-		// Run the completableFuture (and bind tags?)
-		try {
-			// Register recipes again because reloading datapacks removes all non-vanilla
-			// recipes
-			Recipe recipe;
-			while (recipes.hasNext()) {
-				recipe = recipes.next();
-				try {
-					Bukkit.addRecipe(recipe);
-					if (recipe instanceof Keyed keyedRecipe) {
-						CommandAPI.logInfo("Re-registering recipe: " + keyedRecipe.getKey());
-					}
-				} catch (Exception e) {
-					continue; // Can't re-register registered recipes. Not an error.
-				}
-			}
-
-			CommandAPI.logNormal("Finished reloading datapacks");
-		} catch (Exception e) {
-			StringWriter stringWriter = new StringWriter();
-			PrintWriter printWriter = new PrintWriter(stringWriter);
-			e.printStackTrace(printWriter);
-
-			CommandAPI.logError(
-				"Failed to load datapacks, can't proceed with normal server load procedure. Try fixing your datapacks?\n"
-					+ stringWriter.toString());
-		}
 	}
 
 	@Override

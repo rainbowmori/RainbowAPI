@@ -20,7 +20,6 @@
  *******************************************************************************/
 package github.rainbowmori.rainbowapi.object.commandapi;
 
-import de.tr7zw.nbtapi.NBTContainer;
 import github.rainbowmori.rainbowapi.object.commandapi.arguments.*;
 import github.rainbowmori.rainbowapi.object.commandapi.arguments.ScoreHolderArgument.ScoreHolderType;
 import github.rainbowmori.rainbowapi.object.commandapi.exceptions.InvalidNumberException;
@@ -212,7 +211,6 @@ public class AdvancedConverter {
 			case LOOT_TABLE -> new LootTableArgument(nodeName);
 			case MATH_OPERATION -> new MathOperationArgument(nodeName);
 			case NAMESPACED_KEY -> new NamespacedKeyArgument(nodeName);
-			case NBT_COMPOUND -> new NBTCompoundArgument<NBTContainer>(nodeName);
 			case OBJECTIVE -> new ObjectiveArgument(nodeName);
 			case OBJECTIVE_CRITERIA -> new ObjectiveCriteriaArgument(nodeName);
 			case OFFLINE_PLAYER -> new OfflinePlayerArgument(nodeName);

@@ -619,10 +619,6 @@ public abstract class NMS_Common implements NMS<CommandSourceStack> {
 	public abstract boolean isVanillaCommandWrapper(Command command);
 
 	@Override
-	@Unimplemented(because = VERSION_SPECIFIC_IMPLEMENTATION)
-	public abstract void reloadDataPacks();
-
-	@Override
 	@Unimplemented(because = REQUIRES_CRAFTBUKKIT, classNamed = "CraftPlayer")
 	public abstract void resendPackets(Player player);
 }

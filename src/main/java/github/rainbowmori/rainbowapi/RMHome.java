@@ -1,8 +1,6 @@
 package github.rainbowmori.rainbowapi;
 
 import com.google.common.base.Charsets;
-import de.tr7zw.nbtapi.NBTContainer;
-import de.tr7zw.nbtapi.utils.MinecraftVersion;
 import github.rainbowmori.rainbowapi.command.CommandItemEdit;
 import github.rainbowmori.rainbowapi.object.commandapi.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -47,11 +45,7 @@ public class RMHome extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        MinecraftVersion.disableBStats();
-        MinecraftVersion.disableUpdateCheck();
-
-        CommandAPI.config = new InternalConfig(createFile(), NBTContainer.class,
-            NBTContainer::new, new File(getDataFolder(), "command_registration.json"));
+        CommandAPI.config = new InternalConfig(createFile(), new File(getDataFolder(), "command_registration.json"));
 
         // Check dependencies for CommandAPI
         CommandAPIHandler.getInstance().checkDependencies();

@@ -468,11 +468,6 @@ public interface NMS<CommandListenerWrapper> {
 	boolean isVanillaCommandWrapper(Command command);
 
 	/**
-	 * Reloads the datapacks by using the updated the commandDispatcher tree
-	 */
-	void reloadDataPacks();
-
-	/**
 	 * Resends the command dispatcher's set of commands to a player.
 	 * 
 	 * @param player the player to send the command graph packet to

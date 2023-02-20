@@ -183,7 +183,6 @@ public final class CommandAPI {
 
 			// Sort out permissions after the server has finished registering them all
 			CommandAPIHandler.getInstance().fixPermissions();
-			CommandAPIHandler.getInstance().getNMS().reloadDataPacks();
 			CommandAPIHandler.getInstance().updateHelpForCommands();
 		}, 0L);
 
@@ -221,8 +220,6 @@ public final class CommandAPI {
 		} else {
 			logNormal("Chat preview is not available");
 		}
-
-		CommandAPIHandler.getInstance().getPaper().registerReloadHandler(plugin);
 	}
 
 	/**
@@ -232,15 +229,6 @@ public final class CommandAPI {
 	 */
 	public static void updateRequirements(Player player) {
 		CommandAPIHandler.getInstance().getNMS().resendPackets(player);
-	}
-
-	/**
-	 * Reloads all of the datapacks that are on the server. This should be used if
-	 * you change a datapack and want to reload a server. Execute this method after
-	 * running /minecraft:reload, NOT before.
-	 */
-	public static void reloadDatapacks() {
-		CommandAPIHandler.getInstance().getNMS().reloadDataPacks();
 	}
 
 	/**

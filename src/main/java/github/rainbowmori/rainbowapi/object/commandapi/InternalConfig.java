@@ -30,7 +30,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.function.Function;
 
 /**
  * Configuration wrapper class. The CommandAPI.yml file used by the CommandAPI is
@@ -63,13 +62,9 @@ public class InternalConfig {
 	// List of arbitrary commands to convert
 	private final List<String> commandsToConvert;
 
-	private final Class<?> nbtContainerClass;
-	private final Function<Object, ?> nbtContainerConstructor;
-
 	private final NMS<?> customNMS;
 
-	public InternalConfig(FileConfiguration fileConfig, Class<?> nbtContainerClass,
-		Function<Object, ?> nbtContainerConstructor, File dispatcherFile) {
+	public InternalConfig(FileConfiguration fileConfig,  File dispatcherFile) {
 		this.verboseOutput = fileConfig.getBoolean("verbose-outputs");
 		this.silentLogs = fileConfig.getBoolean("silent-logs");
 		this.useLatestNMSVersion = fileConfig.getBoolean("use-latest-nms-version");
@@ -78,8 +73,6 @@ public class InternalConfig {
 		this.pluginsToConvert = new HashMap<>();
 		this.skipSenderProxy = new ArrayList<>();
 		this.commandsToConvert = new ArrayList<>();
-		this.nbtContainerClass = nbtContainerClass;
-		this.nbtContainerConstructor = nbtContainerConstructor;
 		this.customNMS = null;
 
 		if (!fileConfig.getList("plugins-to-convert").isEmpty()
@@ -150,8 +143,6 @@ public class InternalConfig {
 		this.pluginsToConvert = new HashMap<>();
 		this.skipSenderProxy = new ArrayList<>();
 		this.commandsToConvert = new ArrayList<>();
-		this.nbtContainerClass = config.nbtContainerClass;
-		this.nbtContainerConstructor = config.nbtContainerConstructor;
 		this.customNMS = config.customNMS;
 	}
 
@@ -220,21 +211,6 @@ public class InternalConfig {
 	 */
 	public List<String> getCommandsToConvert() {
 		return this.commandsToConvert;
-	}
-
-	/**
-	 * @return The NBT Tag Compound implementation class
-	 */
-	public Class<?> getNBTContainerClass() {
-		return this.nbtContainerClass;
-	}
-
-	/**
-	 * @return A function that takes in an Object (NMS NBTTagCompound) and returns
-	 *         an implementation of an NBT Tag Compound
-	 */
-	public Function<Object, ?> getNBTContainerConstructor() {
-		return this.nbtContainerConstructor;
 	}
 
 	public NMS<?> getCustomNMS() {
