@@ -73,12 +73,9 @@ public class ItemBuilder {
 
     public ItemBuilder setLore(int line, Object str) {
         List<Component> lore = getLore();
-        if (lore.size() < line-1) {
-            int i = lore.size()+1;
-            while (i <= line) {
-                lore.set(i, Util.mm(""));
-                i++;
-            }
+        System.out.println(line + "*::" + lore.size());
+        while (lore.size() <= line){
+            lore.add(Util.mm(" "));
         }
         lore.set(line, Util.mm(str));
         return lore(lore);

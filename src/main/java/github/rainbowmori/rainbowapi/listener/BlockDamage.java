@@ -1,11 +1,12 @@
 package github.rainbowmori.rainbowapi.listener;
 
 import github.rainbowmori.rainbowapi.object.playerinput.PlayerBlockInput;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+
+import java.util.UUID;
 
 public class BlockDamage implements Listener {
 
@@ -17,9 +18,9 @@ public class BlockDamage implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void damage(BlockBreakEvent e) {
-        Player p = e.getPlayer();
-        if (PlayerBlockInput.inputMap.containsKey(p)) {
-            PlayerBlockInput.inputMap.get(p).build(e);
+        UUID uuid = e.getPlayer().getUniqueId();
+        if (PlayerBlockInput.inputMap.containsKey(uuid)) {
+            PlayerBlockInput.inputMap.get(uuid).build(e);
         }
     }
 }

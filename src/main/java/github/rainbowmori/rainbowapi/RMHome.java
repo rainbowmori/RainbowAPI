@@ -1,7 +1,6 @@
 package github.rainbowmori.rainbowapi;
 
 import com.google.common.base.Charsets;
-import github.rainbowmori.rainbowapi.command.CommandItemEdit;
 import github.rainbowmori.rainbowapi.object.commandapi.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -35,7 +34,6 @@ public class RMHome extends JavaPlugin {
         plugin = this;
         rainbowAPI = new RainbowAPI(this, "<gray>[<red>RM<gray>] ");
         CommandAPI.onEnable(this);
-        CommandItemEdit.register();
     }
 
     @Override
