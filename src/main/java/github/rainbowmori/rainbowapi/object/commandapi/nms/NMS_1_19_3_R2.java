@@ -666,6 +666,9 @@ public class NMS_1_19_3_R2 extends NMS_Common {
 
 	@Override
 	public final boolean isVanillaCommandWrapper(Command command) {
+		if (command == null) {
+			return false;
+		}
 		return command instanceof VanillaCommandWrapper;
 	}
 

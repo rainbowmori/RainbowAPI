@@ -45,7 +45,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.craftbukkit.v1_19_R2.CraftServer;
 import org.bukkit.entity.Player;
 import org.bukkit.help.HelpTopic;
 import org.bukkit.permissions.Permission;
@@ -272,11 +271,6 @@ public class CommandAPIHandler<CommandSourceStack> {
 		commandNodeChildren.remove(commandName);
 		((Map<String, CommandNode<?>>) COMMANDNODE_LITERALS.get(DISPATCHER.getRoot())).remove(commandName);
 		((Map<String, CommandNode<?>>) COMMANDNODE_ARGUMENTS.get(DISPATCHER.getRoot())).remove(commandName);
-		
-		CraftServer server = (CraftServer) Bukkit.getServer();
-		server.getCommandMap().getKnownCommands().remove(commandName);
-		server.syncCommands();
-		Bukkit.getOnlinePlayers().forEach(getNMS()::resendPackets);
 	}
 
 	Command<CommandSourceStack> generateCommand(Argument<?>[] args,
@@ -478,7 +472,7 @@ public class CommandAPIHandler<CommandSourceStack> {
 				map.getCommand(cmdName).setPermission(permNode);
 			}
 			if (NMS.isVanillaCommandWrapper(map.getCommand("minecraft:" + cmdName))) {
-				map.getCommand(cmdName).setPermission(permNode);
+				map.getCommand("minecraft:" + cmdName).setPermission(permNode);
 			}
 		}
 		CommandAPI.logNormal("Linked " + PERMISSIONS_TO_FIX.size() + " Bukkit permissions to commands");
