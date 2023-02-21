@@ -70,10 +70,15 @@ public class ItemBuilder {
         lore.add(Util.mm(str));
         return lore(lore);
     }
+    
+    public ItemBuilder insertLore(int line, Object str) {
+        List<Component> lore = getLore();
+        lore.add(line, Util.mm(str));
+        return lore(lore);
+    }
 
     public ItemBuilder setLore(int line, Object str) {
         List<Component> lore = getLore();
-        System.out.println(line + "*::" + lore.size());
         while (lore.size() <= line){
             lore.add(Util.mm(" "));
         }
