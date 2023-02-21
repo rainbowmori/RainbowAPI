@@ -276,6 +276,7 @@ public class CommandAPIHandler<CommandSourceStack> {
 		CraftServer server = (CraftServer) Bukkit.getServer();
 		server.getCommandMap().getKnownCommands().remove(commandName);
 		server.syncCommands();
+		Bukkit.getOnlinePlayers().forEach(getNMS()::resendPackets);
 	}
 
 	Command<CommandSourceStack> generateCommand(Argument<?>[] args,
