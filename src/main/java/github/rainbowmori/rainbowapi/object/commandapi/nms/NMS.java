@@ -47,7 +47,6 @@ import org.bukkit.help.HelpTopic;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.loot.LootTable;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
@@ -442,24 +441,6 @@ public interface NMS<CommandListenerWrapper> {
 	World getWorldForCSS(CommandListenerWrapper clw);
 
 	/**
-	 * Hooks into the chat previewing system for 1.19+
-	 * 
-	 * @param plugin the plugin (for async calls)
-	 * @param player the player to hook
-	 */
-	default void hookChatPreview(Plugin plugin, Player player) {
-	};
-
-	/**
-	 * Unhooks a player from the chat previewing system for 1.19+. This should be
-	 * called when the player quits and when the plugin is disabled
-	 * 
-	 * @param player the player to unhook
-	 */
-	default void unhookChatPreview(Player player) {
-	};
-
-	/**
 	 * Checks if a Command is an instance of the OBC VanillaCommandWrapper
 	 * 
 	 * @param command The Command to check
@@ -479,14 +460,5 @@ public interface NMS<CommandListenerWrapper> {
 	void addToHelpMap(Map<String, HelpTopic> helpTopicsToAdd);
 
 	Message generateMessageFromJson(String json);
-
-	/**
-	 * @return Whether the server can use chat preview. This is always false for
-	 *         pre-1.19 servers, and depends on
-	 *         {@link Bukkit#shouldSendChatPreviews} for 1.19+ servers
-	 */
-	default boolean canUseChatPreview() {
-		return false;
-	}
 
 }

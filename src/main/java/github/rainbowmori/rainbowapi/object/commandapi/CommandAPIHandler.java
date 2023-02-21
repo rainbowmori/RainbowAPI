@@ -38,8 +38,6 @@ import github.rainbowmori.rainbowapi.object.commandapi.arguments.*;
 import github.rainbowmori.rainbowapi.object.commandapi.nms.NMS;
 import github.rainbowmori.rainbowapi.object.commandapi.nms.NMS_1_19_3_R2;
 import github.rainbowmori.rainbowapi.object.commandapi.preprocessor.RequireField;
-import github.rainbowmori.rainbowapi.object.commandapi.wrappers.PreviewableFunction;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandMap;
@@ -138,12 +136,6 @@ public class CommandAPIHandler<CommandSourceStack> {
 	}
 	
 	public static void onDisable() {
-		if(instance != null) {
-			for(Player player : Bukkit.getOnlinePlayers()) {
-				instance.NMS.unhookChatPreview(player);
-			}
-		}
-		
 		instance = null;
 	}
 
@@ -152,7 +144,6 @@ public class CommandAPIHandler<CommandSourceStack> {
 	final NMS<CommandSourceStack> NMS;
 	final CommandDispatcher<CommandSourceStack> DISPATCHER;
 	final List<RegisteredCommand> registeredCommands; // Keep track of what has been registered for type checking
-	final Map<List<String>, IPreviewable<? extends Argument<?>, ?>> previewableArguments; // Arguments with previewable chat
 	private PaperImplementations paper;
 
 	@SuppressWarnings("unchecked")
@@ -164,7 +155,6 @@ public class CommandAPIHandler<CommandSourceStack> {
 		}
 		DISPATCHER = NMS.getBrigadierDispatcher();
 		registeredCommands = new ArrayList<>();
-		previewableArguments = new HashMap<>();
 		this.paper = new PaperImplementations(false, NMS);
 	}
 
@@ -618,31 +608,6 @@ public class CommandAPIHandler<CommandSourceStack> {
 		}
 		return outer;
 	}
-	
-	/**
-	 * Handles previewable arguments. This stores the path to previewable arguments
-	 * in {@link CommandAPIHandler#previewableArguments} for runtime resolving
-	 * @param commandName the name of the command
-	 * @param args the declared arguments
-	 * @param aliases the command's aliases
-	 */
-	private void handlePreviewableArguments(String commandName, Argument<?>[] args, String[] aliases) {
-		if(args.length > 0 && args[args.length - 1] instanceof IPreviewable<?, ?> previewable) {
-			List<String> path = new ArrayList<>();
-			
-			path.add(commandName);
-			for(Argument<?> arg : args) {
-				path.add(arg.getNodeName());
-			}
-			previewableArguments.put(List.copyOf(path), previewable);
-
-			// And aliases
-			for(String alias : aliases) {
-				path.set(0, alias);
-				previewableArguments.put(List.copyOf(path), previewable);
-			}
-		}
-	}
 
 	// Builds our NMS command using the given arguments for this method, then
 	// registers it
@@ -712,10 +677,6 @@ public class CommandAPIHandler<CommandSourceStack> {
 			}
 			registeredCommands.add(new RegisteredCommand(commandName, argumentsString, shortDescription, fullDescription, aliases, permission));
 		}
-		
-		// Handle previewable arguments
-		handlePreviewableArguments(commandName, args, aliases);
-
 		// Warn if the command we're registering already exists in this plugin's
 		// plugin.yml file
 		{
@@ -916,45 +877,6 @@ public class CommandAPIHandler<CommandSourceStack> {
 					: theArgument.getIncludedSuggestions();
 			return suggestionsToAddOrOverride.orElse(ArgumentSuggestions.empty()).suggest(suggestionInfo, builder);
 		};
-	}
-	
-	/**
-	 * Looks up the function to generate a chat preview for a path of nodes in the
-	 * command tree. This is a method internal to the CommandAPI and isn't expected
-	 * to be used by plugin developers (but you're more than welcome to use it as
-	 * you see fit).
-	 * 
-	 * @param path a list of Strings representing the path (names of command nodes)
-	 *             to (and including) the previewable argument
-	 * @return a function that takes in a {@link PreviewInfo} and returns a
-	 *         {@link Component}. If such a function is not available, this will
-	 *         return a function that always returns null.
-	 */
-	public Optional<PreviewableFunction<?>> lookupPreviewable(List<String> path) {
-		final IPreviewable<? extends Argument<?>, ?> previewable = previewableArguments.get(path);
-		if(previewable != null && previewable.getPreview().isPresent()) {
-			// Yeah, don't even question this logic of getting the value of an
-			// optional and then wrapping it in an optional again. Java likes it
-			// and complains if you don't do this. Not sure why.
-			return Optional.of(previewable.getPreview().get());
-		} else {
-			return Optional.empty();
-		}
-	}
-	
-	/**
-	 * 
-	 * @param path a list of Strings representing the path (names of command nodes)
-	 *             to (and including) the previewable argument
-	 * @return Whether a previewable is legacy (non-Adventure) or not
-	 */
-	public boolean lookupPreviewableLegacyStatus(List<String> path) {
-		final IPreviewable<? extends Argument<?>, ?> previewable = previewableArguments.get(path);
-		if(previewable != null && previewable.getPreview().isPresent()) {
-			return previewable.isLegacy();
-		} else {
-			return true;
-		}
 	}
 
 	/////////////////////////

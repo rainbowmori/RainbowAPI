@@ -39,7 +39,6 @@ import github.rainbowmori.rainbowapi.object.commandapi.preprocessor.Differs;
 import github.rainbowmori.rainbowapi.object.commandapi.preprocessor.NMSMeta;
 import github.rainbowmori.rainbowapi.object.commandapi.preprocessor.RequireField;
 import github.rainbowmori.rainbowapi.object.commandapi.wrappers.*;
-import io.netty.channel.Channel;
 import io.papermc.paper.text.PaperComponents;
 import net.kyori.adventure.text.Component;
 import net.minecraft.commands.CommandBuildContext;
@@ -109,7 +108,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.help.HelpTopic;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
@@ -228,13 +226,6 @@ public class NMS_1_19_3_R2 extends NMS_Common {
 		// because we're updating an existing help topic, not adding a new help topic
 		helpTopics.putAll(helpTopicsToAdd);
 	}
-
-	@Differs(from = "1.19.2", by = "Chat preview removed")
-	@Override
-	public final boolean canUseChatPreview() {
-		return false;
-	}
-
 	@Override
 	public String[] compatibleVersions() {
 		return new String[] { "1.19.3" };
@@ -660,10 +651,6 @@ public class NMS_1_19_3_R2 extends NMS_Common {
 		return (css.getLevel() == null) ? null : css.getLevel().getWorld();
 	}
 
-	@Differs(from = "1.19.2", by = "Chat preview was removed")
-	@Override
-	public void hookChatPreview(Plugin plugin, Player player) {}
-
 	@Override
 	public final boolean isVanillaCommandWrapper(Command command) {
 		if (command == null) {
@@ -675,14 +662,6 @@ public class NMS_1_19_3_R2 extends NMS_Common {
 	@Override
 	public final void resendPackets(Player player) {
 		MINECRAFT_SERVER.getCommands().sendCommands(((CraftPlayer) player).getHandle());
-	}
-
-	@Override
-	public final void unhookChatPreview(Player player) {
-		final Channel channel = ((CraftPlayer) player).getHandle().connection.connection.channel;
-		if (channel.pipeline().get("CommandAPI_" + player.getName()) != null) {
-			channel.eventLoop().submit(() -> channel.pipeline().remove("CommandAPI_" + player.getName()));
-		}
 	}
 
 	@Override

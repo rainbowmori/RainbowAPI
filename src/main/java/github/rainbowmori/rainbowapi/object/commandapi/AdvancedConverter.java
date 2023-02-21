@@ -186,14 +186,12 @@ public class AdvancedConverter {
 	private Argument<?> parseDefinedArgumentType(String argumentType, String nodeName) throws UnknownArgumentException {
 		return switch (CommandAPIArgumentType.fromInternal(argumentType)) {
 			case ADVANCEMENT -> new AdvancementArgument(nodeName);
-			case ADVENTURE_CHAT -> new AdventureChatArgument(nodeName);
 			case ADVENTURE_CHAT_COMPONENT -> new AdventureChatComponentArgument(nodeName);
 			case ANGLE -> new AngleArgument(nodeName);
 			case AXIS -> new AxisArgument(nodeName);
 			case BIOME -> new BiomeArgument(nodeName);
 			case BLOCKSTATE -> new BlockStateArgument(nodeName);
 			case BLOCK_PREDICATE -> new BlockPredicateArgument(nodeName);
-			case CHAT -> new ChatArgument(nodeName);
 			case CHATCOLOR -> new ChatColorArgument(nodeName);
 			case CHAT_COMPONENT -> new ChatComponentArgument(nodeName);
 			case COMMAND -> new CommandArgument(nodeName);
@@ -233,7 +231,6 @@ public class AdvancedConverter {
 			case PRIMITIVE_LONG -> new LongArgument(nodeName);
 			case PRIMITIVE_STRING -> new StringArgument(nodeName);
 			case PRIMITIVE_TEXT -> new TextArgument(nodeName);
-			case LITERAL, MULTI_LITERAL, CUSTOM -> throw new UnknownArgumentException(argumentType);
 			default -> throw new UnknownArgumentException(argumentType);
 		};
 	}

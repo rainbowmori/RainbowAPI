@@ -33,11 +33,6 @@ public enum CommandAPIArgumentType {
 	ADVANCEMENT("api:advancement"),
 
 	/**
-	 * The ChatArgument (with Paper Adventure backend)
-	 */
-	ADVENTURE_CHAT,
-
-	/**
 	 * The ChatComponentArgument (with Paper Adventure backend)
 	 */
 	ADVENTURE_CHAT_COMPONENT,

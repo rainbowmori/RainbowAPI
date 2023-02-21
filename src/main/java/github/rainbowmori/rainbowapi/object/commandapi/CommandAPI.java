@@ -32,7 +32,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -196,30 +195,6 @@ public final class CommandAPI {
 			}
 
 		}, plugin);
-
-		// On 1.19+, enable chat preview if the server allows it
-		if(CommandAPIHandler.getInstance().getNMS().canUseChatPreview()) {
-			Bukkit.getServer().getPluginManager().registerEvents(new Listener() {
-	
-				@EventHandler
-				public void onPlayerJoin(PlayerJoinEvent e) {
-					if(Bukkit.shouldSendChatPreviews()) {
-						CommandAPIHandler.getInstance().getNMS().hookChatPreview(plugin, e.getPlayer());
-					}
-				}
-				
-				@EventHandler
-				public void onPlayerQuit(PlayerQuitEvent e) {
-					if(Bukkit.shouldSendChatPreviews()) {
-						CommandAPIHandler.getInstance().getNMS().unhookChatPreview(e.getPlayer());
-					}
-				}
-	
-			}, plugin);
-			logNormal("Chat preview enabled");
-		} else {
-			logNormal("Chat preview is not available");
-		}
 	}
 
 	/**
