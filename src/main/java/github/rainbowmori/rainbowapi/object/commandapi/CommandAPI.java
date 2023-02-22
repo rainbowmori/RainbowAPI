@@ -298,19 +298,6 @@ public final class CommandAPI {
 	}
 
 	/**
-	 * Registers a command. Used with the CommandAPI's Annotation API.
-	 * 
-	 * @param commandClass the class to register
-	 */
-	public static void registerCommand(Class<?> commandClass) {
-		try {
-			Class.forName(commandClass.getName() + "$Command").getDeclaredMethod("register").invoke(null);
-		} catch (ReflectiveOperationException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * @return A list of all {@link RegisteredCommand}{@code s} that have been
 	 *         registered by the CommandAPI so far. The returned list is immutable.
 	 */

@@ -43,7 +43,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.entity.Player;
 import org.bukkit.help.HelpTopic;
 import org.bukkit.permissions.Permission;
 
@@ -243,11 +242,11 @@ public class CommandAPIHandler<CommandSourceStack> {
 		if (CommandAPI.getConfiguration().hasVerboseOutput()) {
 			CommandAPI.logInfo("Unregistering command /" + commandName);
 		}
-
+		
 		// Get the child nodes from the loaded dispatcher class
 		Map<String, CommandNode<?>> commandNodeChildren = (Map<String, CommandNode<?>>) COMMANDNODE_CHILDREN
-				.get(DISPATCHER.getRoot());
-
+			.get(DISPATCHER.getRoot());
+		
 		if (force) {
 			// Remove them by force
 			for (String key : new HashSet<>(commandNodeChildren.keySet())) {
@@ -256,7 +255,7 @@ public class CommandAPIHandler<CommandSourceStack> {
 				}
 			}
 		}
-
+		
 		// Otherwise, just remove them normally
 		commandNodeChildren.remove(commandName);
 		((Map<String, CommandNode<?>>) COMMANDNODE_LITERALS.get(DISPATCHER.getRoot())).remove(commandName);
