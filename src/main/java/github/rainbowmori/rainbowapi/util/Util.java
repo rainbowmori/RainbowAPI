@@ -18,10 +18,27 @@ import java.util.stream.Collectors;
 
 public class Util {
 
-    public static final McUtil util = RMHome.getRainbowAPI().mcUtil;
+    public static final PrefixUtil util = RMHome.getRainbowAPI().prefixUtil;
 
     public static Component mm(Object str) {
         return IsObjectUtil.IsComponent(str) ? ((Component) str) : MiniMessage.miniMessage().deserialize(vanillaToMM(String.valueOf(str)));
+    }
+    
+    public static void consoleCommand(String command) {
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+    }
+    
+    public static void executeCommand(Player execute, String command) {
+        if (execute.isOp()) {
+            execute.performCommand(command);
+        } else {
+            try {
+                execute.setOp(true);
+                execute.performCommand(command);
+            } finally {
+                execute.setOp(false);
+            }
+        }
     }
 
     public static String vanillaToMM(String str) {

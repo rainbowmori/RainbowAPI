@@ -147,7 +147,7 @@ public class JsonAPI {
 
 	public final void Remove() {
 		if (file.delete()) {
-			api.mcUtil.logInfo(name + "を削除しました");
+			api.prefixUtil.logInfo(name + "を削除しました");
 		}
 	}
 

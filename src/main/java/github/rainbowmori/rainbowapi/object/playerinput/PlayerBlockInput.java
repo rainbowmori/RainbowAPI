@@ -41,9 +41,9 @@ public class PlayerBlockInput {
         this.rainbowAPI = RainbowAPI.apis.get(plugin);
         this.predicate = predicate;
         if (inputMap.containsKey(player.getUniqueId())) {
-            rainbowAPI.mcUtil.send(player, "<red>すでにブロック入力中です");
+            rainbowAPI.prefixUtil.send(player, "<red>すでにブロック入力中です");
         } else {
-            rainbowAPI.mcUtil.send(player, message);
+            rainbowAPI.prefixUtil.send(player, message);
             inputMap.put(player.getUniqueId(), this);
         }
     }
@@ -52,7 +52,7 @@ public class PlayerBlockInput {
         if (inputMap.containsKey(player.getUniqueId())) {
             return false;
         }
-        RMHome.getRainbowAPI().mcUtil.send(player, "<red>現在入力中です");
+        RMHome.getRainbowAPI().prefixUtil.send(player, "<red>現在入力中です");
         return true;
     }
 
@@ -60,11 +60,11 @@ public class PlayerBlockInput {
         Player p = e.getPlayer();
         e.setCancelled(true);
         if (predicate.test(this, e)) {
-            rainbowAPI.mcUtil.send(p, success.apply(e));
+            rainbowAPI.prefixUtil.send(p, success.apply(e));
             inputMap.remove(p);
         } else {
-            rainbowAPI.mcUtil.send(p, "<red>" + error);
-            rainbowAPI.mcUtil.send(p, message);
+            rainbowAPI.prefixUtil.send(p, "<red>" + error);
+            rainbowAPI.prefixUtil.send(p, message);
         }
     }
 }

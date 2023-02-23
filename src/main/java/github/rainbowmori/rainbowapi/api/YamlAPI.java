@@ -10,9 +10,9 @@ import java.util.Objects;
 
 public class YamlAPI {
     public final File file;
-    protected final String name, path;
-    private final RainbowAPI api;
-    public FileConfiguration yaml;
+    public final String name, path, paths;
+    protected final RainbowAPI api;
+    protected FileConfiguration yaml;
 
     public YamlAPI(RainbowAPI api, String name) {
         this(api, name, "");
@@ -22,6 +22,7 @@ public class YamlAPI {
         Objects.requireNonNull(name);
         this.name = name.endsWith(".yml") ? name : name + ".yml";
         this.path = path == null || path.isEmpty() ? "" : "/" + path;
+        this.paths = path == null || path.isEmpty() ? name : path + "/" + name;
         this.api = api;
         file = new File(api.plugin.getDataFolder() + this.path, this.name);
         Created();
@@ -31,7 +32,7 @@ public class YamlAPI {
         yaml = YamlConfiguration.loadConfiguration(file);
     }
 
-    public final void Save() {
+    public void Save() {
         try {
             yaml.save(file);
         } catch (IOException e) {
@@ -39,14 +40,14 @@ public class YamlAPI {
         }
     }
 
-    public final void Remove() {
+    public void Remove() {
         if (file.delete()) {
-            api.mcUtil.logInfo(name + "を削除しました");
+            api.prefixUtil.logInfo(name + "を削除しました");
         }
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public final void Created() {
+    public void Created() {
         try {
             if (!new File(api.plugin.getDataFolder() + path).exists()) {
                 new File(api.plugin.getDataFolder() + path).mkdirs();
@@ -59,4 +60,9 @@ public class YamlAPI {
             exception.printStackTrace();
         }
     }
+    
+    public FileConfiguration getYaml() {
+        return yaml;
+    }
+    
 }

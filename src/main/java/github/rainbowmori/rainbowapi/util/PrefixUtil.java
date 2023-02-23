@@ -2,20 +2,19 @@ package github.rainbowmori.rainbowapi.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.UUID;
 import java.util.logging.Logger;
 
-public class McUtil {
+public class PrefixUtil {
     private final String prefix;
     private final Logger log;
     
-    public McUtil(String prefix,String logName) {
+    public PrefixUtil(String prefix, String logName) {
         this(prefix, Logger.getLogger(logName));
     }
 
-    public McUtil(String prefix, Logger log) {
+    public PrefixUtil(String prefix, Logger log) {
         this.prefix = prefix;
         this.log = log;
     }
@@ -48,22 +47,5 @@ public class McUtil {
     
     public void Cast(Object str) {
         Bukkit.broadcast(Util.mm(prefix + str));
-    }
-    
-    public void consoleCommand(String command) {
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
-    }
-
-    public void executeCommand(Player execute, String command) {
-        if (execute.isOp()) {
-            execute.performCommand(command);
-        } else {
-            try {
-                execute.setOp(true);
-                execute.performCommand(command);
-            } finally {
-                execute.setOp(false);
-            }
-        }
     }
 }

@@ -39,7 +39,7 @@ public class PlayerChatInput implements ConversationAbandonedListener {
 
     public static boolean isInputted(Player player) {
         if (player.isConversing()) {
-            RMHome.getRainbowAPI().mcUtil.send(player, "<red>現在入力中です");
+            RMHome.getRainbowAPI().prefixUtil.send(player, "<red>現在入力中です");
             return true;
         }
         return false;

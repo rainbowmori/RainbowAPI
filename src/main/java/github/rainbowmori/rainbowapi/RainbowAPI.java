@@ -6,7 +6,7 @@ import github.rainbowmori.rainbowapi.api.serializer.ItemStackSerializer;
 import github.rainbowmori.rainbowapi.api.serializer.LocationSerializer;
 import github.rainbowmori.rainbowapi.listener.BlockDamage;
 import github.rainbowmori.rainbowapi.object.ui.GuiListener;
-import github.rainbowmori.rainbowapi.util.McUtil;
+import github.rainbowmori.rainbowapi.util.PrefixUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +35,7 @@ public final class RainbowAPI {
 
     public final JavaPlugin plugin;
 
-    public final McUtil mcUtil;
+    public final PrefixUtil prefixUtil;
 
     /**
      * プラグインとメッセージにつくprefixです
@@ -49,7 +49,7 @@ public final class RainbowAPI {
         this.prefix = prefix + " <reset>";
         manager.registerEvents(GuiListener.getInstance(), plugin);
         manager.registerEvents(BlockDamage.getInstance(), plugin);
-        mcUtil = new McUtil(prefix,plugin.getLogger());
+        prefixUtil = new PrefixUtil(prefix,plugin.getLogger());
         apis.put(plugin, this);
     }
 }
