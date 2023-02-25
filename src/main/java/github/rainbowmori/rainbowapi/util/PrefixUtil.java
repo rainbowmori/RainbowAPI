@@ -35,17 +35,17 @@ public class PrefixUtil {
         log.severe(message);
     }
     
-    public void send(UUID uuid, Object str) {
+    public void send(UUID uuid, String str) {
         send(Bukkit.getPlayer(uuid), str);
     }
     
-    public void send(CommandSender sender, Object str) {
+    public void send(CommandSender sender, String str) {
         if (sender != null) {
             sender.sendMessage(Util.mm(prefix + str));
         }
     }
     
-    public void Cast(Object str) {
+    public void Cast(String str) {
         Bukkit.broadcast(Util.mm(prefix + str));
     }
 }

@@ -30,6 +30,7 @@ public class ConfigAPI extends YamlAPI {
 			newConfig.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(api.plugin.getResource(paths), Charsets.UTF_8)));
 		}
 		Load();
+		Save();
 	}
 	
 }

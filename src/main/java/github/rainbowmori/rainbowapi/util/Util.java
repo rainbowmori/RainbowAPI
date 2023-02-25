@@ -7,6 +7,7 @@ import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -114,6 +115,13 @@ public class Util {
         if (player != null && player.isOnline()) {
             player.showTitle(Title.title(Util.mm(Objects.requireNonNullElse(title, "")),
                 Util.mm(Objects.requireNonNullElse(subtitle, ""))));
+        }
+    }
+    
+    public static void title(Player player, Object title, Object subtitle,int seconds) {
+        if (player != null && player.isOnline()) {
+            player.showTitle(Title.title(Util.mm(Objects.requireNonNullElse(title, "")),
+                Util.mm(Objects.requireNonNullElse(subtitle, "")),Title.Times.times(Duration.ZERO, Duration.ofSeconds(seconds), Duration.ZERO)));
         }
     }
 
