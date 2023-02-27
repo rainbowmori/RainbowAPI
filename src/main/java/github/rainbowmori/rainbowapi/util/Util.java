@@ -2,6 +2,7 @@ package github.rainbowmori.rainbowapi.util;
 
 import github.rainbowmori.rainbowapi.RMHome;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
@@ -22,7 +23,8 @@ public class Util {
     public static final PrefixUtil util = RMHome.getRainbowAPI().prefixUtil;
 
     public static Component mm(Object str) {
-        return IsObjectUtil.IsComponent(str) ? ((Component) str) : MiniMessage.miniMessage().deserialize(vanillaToMM(String.valueOf(str)));
+        return IsObjectUtil.IsComponent(str) ? ((Component) str) :
+            MiniMessage.miniMessage().deserialize(vanillaToMM(String.valueOf(str))).decoration(TextDecoration.ITALIC,false);
     }
     
     public static void consoleCommand(String command) {
@@ -59,7 +61,7 @@ public class Util {
         if (str.contains("&d")) str = str.replace("&d", "<light_purple>");
         if (str.contains("&e")) str = str.replace("&e", "<yellow>");
         if (str.contains("&f")) str = str.replace("&f", "<white>");
-        if (str.contains("&g")) str = str.replace("&g", "<minecoin_gold>");
+        if (str.contains("&g")) str = str.replace("&g", "<color:#DDD605>");
         if (str.contains("&k")) str = str.replace("&k", "<obfuscated>");
         if (str.contains("&l")) str = str.replace("&l", "<bold>");
         if (str.contains("&m")) str = str.replace("&m", "<strikethrough>");

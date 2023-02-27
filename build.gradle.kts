@@ -9,6 +9,10 @@ plugins {
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
 }
 
+
+val javadoc by tasks.existing(Javadoc::class)
+val jar by tasks.existing
+
 group = "github.rainbowmori"
 version = "1.0.0"
 description = "Rainbow API"
@@ -42,7 +46,14 @@ dependencies {
 
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+    withSourcesJar()
+}
+
+javadoc {
+    isFailOnError = false
 }
 
 tasks {
@@ -60,6 +71,7 @@ tasks {
         filteringCharset = Charsets.UTF_8.name()
     }
 }
+
 
 
 
