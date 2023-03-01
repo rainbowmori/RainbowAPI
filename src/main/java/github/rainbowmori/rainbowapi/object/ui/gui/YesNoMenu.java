@@ -72,13 +72,13 @@ public class YesNoMenu<P extends JavaPlugin> extends MenuHolder<P> {
      * @return yes or no button
      */
 
-    protected MenuButton<YesNoMenu<P>> makeButton(boolean yesOrNo) {
+    protected MenuButton makeButton(boolean yesOrNo) {
         ItemStack stack = yesOrNo ? YES_STACK : NO_STACK;
         Consumer<Player> action = yesOrNo ? yesAction : noAction;
 
-        return new ItemButton<>(stack) {
+        return new ItemButton(stack) {
             @Override
-            public void onClick(YesNoMenu<P> holder, InventoryClickEvent event) {
+            public void onClick(MenuHolder<?> holder, InventoryClickEvent event) {
                 end = true;
                 getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
                     event.getView().close();

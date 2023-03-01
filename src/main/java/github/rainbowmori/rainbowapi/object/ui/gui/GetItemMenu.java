@@ -48,8 +48,8 @@ public class GetItemMenu<P extends JavaPlugin> extends MenuHolder<P> {
 
     private void setUpButton() {
         setButton(0, makeYesButton());
-        setButton(1, new ItemButton<GetItemMenu<P>>(TO_RIGHT_STACK));
-        setButton(3, new ItemButton<GetItemMenu<P>>(TO_LEFT_STACK));
+        setButton(1, new ItemButton(TO_RIGHT_STACK));
+        setButton(3, new ItemButton(TO_LEFT_STACK));
         setButton(4, makeNoButton());
     }
 
@@ -72,10 +72,10 @@ public class GetItemMenu<P extends JavaPlugin> extends MenuHolder<P> {
         super.onClick(event);
     }
 
-    protected MenuButton<GetItemMenu<P>> makeYesButton() {
-        return new ItemButton<>(YES_STACK) {
+    protected MenuButton makeYesButton() {
+        return new ItemButton(YES_STACK) {
             @Override
-            public void onClick(GetItemMenu<P> holder, InventoryClickEvent event) {
+            public void onClick(MenuHolder<?> holder, InventoryClickEvent event) {
                 end = true;
                 getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
                     event.getView().close();
@@ -87,10 +87,10 @@ public class GetItemMenu<P extends JavaPlugin> extends MenuHolder<P> {
         };
     }
 
-    protected MenuButton<GetItemMenu<P>> makeNoButton() {
-        return new ItemButton<>(NO_STACK) {
+    protected MenuButton makeNoButton() {
+        return new ItemButton(NO_STACK) {
             @Override
-            public void onClick(GetItemMenu<P> holder, InventoryClickEvent event) {
+            public void onClick(MenuHolder<?> holder, InventoryClickEvent event) {
                 end = true;
                 getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
                     event.getView().close();

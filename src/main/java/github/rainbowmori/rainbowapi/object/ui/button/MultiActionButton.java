@@ -8,9 +8,9 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-public class MultiActionButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
+public class MultiActionButton implements MenuButton {
     protected final HashMap<ItemClickType, List<MenuAction>> actions = new HashMap<>();
-    private final WeakHashMap<MH, Set<Integer>> inventoriesContainingMe = new WeakHashMap<>();
+    private final WeakHashMap<MenuHolder<?>, Set<Integer>> inventoriesContainingMe = new WeakHashMap<>();
     protected ItemStack stack;
 
     protected MultiActionButton() {
@@ -31,12 +31,12 @@ public class MultiActionButton<MH extends MenuHolder<?>> implements MenuButton<M
     }
 
     @Override
-    public final boolean onAdd(MH menuHolder, int slot) {
+    public final boolean onAdd(MenuHolder<?> menuHolder, int slot) {
         return inventoriesContainingMe.computeIfAbsent(menuHolder, mh -> new HashSet<>()).add(slot);
     }
 
     @Override
-    public final boolean onRemove(MH menuHolder, int slot) {
+    public final boolean onRemove(MenuHolder<?> menuHolder, int slot) {
         Set<Integer> slots = inventoriesContainingMe.get(menuHolder);
         if (slots != null) {
             boolean result = slots.remove(slot);
@@ -48,7 +48,7 @@ public class MultiActionButton<MH extends MenuHolder<?>> implements MenuButton<M
         return true;
     }
 
-    protected final MenuButton<?> addAction(ItemClickType clickType, MenuAction action) {
+    protected final MenuButton addAction(ItemClickType clickType, MenuAction action) {
         actions.computeIfAbsent(clickType, type -> new ArrayList<>()).add(action);
         return this;
     }
@@ -58,7 +58,7 @@ public class MultiActionButton<MH extends MenuHolder<?>> implements MenuButton<M
     }
 
     @Override
-    public void onClick(MH holder, InventoryClickEvent event) {
+    public void onClick(MenuHolder<?> holder, InventoryClickEvent event) {
         getAction(ItemClickType.ALL).ifPresentOrElse(actions -> actions.forEach(menuAction -> onClick(holder, event)), () -> {
             if (ItemClickType.isItemClickType(event.getClick())) {
                 getAction(ItemClickType.valueOf(event.getClick().name())).

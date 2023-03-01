@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 
 public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
 
-    private final MenuButton<?>[] buttons;
+    private final MenuButton[] buttons;
     protected boolean canceled = true;
 
     /**
@@ -95,7 +95,14 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
         if (clickedInventory == null) {
             return;
         }
+        if (!generalInvClickAction(event)) {
+            return;
+        }
         getButtonOptionally(event.getSlot()).ifPresent((MenuButton button) -> button.onClick(this, event));
+    }
+    
+    public boolean generalInvClickAction(InventoryClickEvent event) {
+        return true;
     }
 
     /**
@@ -105,7 +112,7 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
      * @return 取得したボタン
      */
 
-    public MenuButton<?> getButton(int slot) {
+    public MenuButton getButton(int slot) {
         if (slot < 0 || slot >= getInventory().getSize()) {
             return null;
         }
@@ -120,7 +127,7 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
      * @return 取得したボタン
      */
 
-    public Optional<MenuButton<?>> getButtonOptionally(int slot) {
+    public Optional<MenuButton> getButtonOptionally(int slot) {
         return Optional.ofNullable(getButton(slot));
     }
 
@@ -131,8 +138,8 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
      * @param button button
      */
 
-    public void setButton(int slot, MenuButton<?> button) {
-        if (!unsetButton(slot) || button == null || !((MenuButton) button).onAdd(this, slot)) {
+    public void setButton(int slot, MenuButton button) {
+        if (!unsetButton(slot) || button == null || !button.onAdd(this, slot)) {
             return;
         }
         getInventory().setItem(slot, button.getIcon());
@@ -147,11 +154,11 @@ public class MenuHolder<P extends JavaPlugin> extends GuiHolder<P> {
      */
 
     public boolean unsetButton(int slot) {
-        MenuButton<?> menuButton = this.buttons[slot];
+        MenuButton menuButton = this.buttons[slot];
         if (menuButton == null) {
             return true;
         }
-        if (!((MenuButton) menuButton).onRemove(this, slot)) {
+        if (!menuButton.onRemove(this, slot)) {
             return false;
         }
         this.buttons[slot] = null;

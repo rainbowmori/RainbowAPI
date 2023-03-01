@@ -195,4 +195,8 @@ public abstract class GuiHolder<P extends JavaPlugin> implements InventoryHolder
 
     public void onDrag(InventoryDragEvent event) {
     }
+    
+    public void updateInventory() {
+    
+    }
 }

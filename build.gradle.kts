@@ -4,9 +4,9 @@ plugins {
     `java-library`
     `maven-publish`
 
-    id("io.papermc.paperweight.userdev") version "1.5.0"
-    id("xyz.jpenilla.run-paper") version "2.0.1"
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
+    id("io.papermc.paperweight.userdev") version "1.5.2"
+    id("xyz.jpenilla.run-paper") version "2.0.1" // Adds runServer and runMojangMappedServer tasks for testing
+    id("net.minecrell.plugin-yml.bukkit") version "0.5.1" // Generates plugin.yml
 }
 
 
@@ -23,7 +23,6 @@ repositories {
     maven(url = "https://jitpack.io")
 }
 
-
 afterEvaluate {
     publishing {
         publications {
@@ -37,8 +36,6 @@ afterEvaluate {
     }
 }
 
-
-
 dependencies {
     paperweight.paperDevBundle("1.19.3-R0.1-SNAPSHOT")
     compileOnly("com.mojang:brigadier:1.0.18")
@@ -49,11 +46,8 @@ java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
+    withJavadocJar()
     withSourcesJar()
-}
-
-javadoc {
-    isFailOnError = false
 }
 
 tasks {
@@ -66,54 +60,19 @@ tasks {
     }
     javadoc {
         options.encoding = Charsets.UTF_8.name()
+        isFailOnError = false
     }
     processResources {
         filteringCharset = Charsets.UTF_8.name()
     }
 }
 
-
-
-
-
 bukkit {
-    // Default values can be overridden if needed
-    // name = 'TestPlugin'
-    // version = '1.0'
-    // description = 'This is a test plugin'
-    // website = 'https://example.com'
-    // author = 'Notch'
-
-    // Plugin main class (required)
+    name = "RainbowAPI"
     main = "github.rainbowmori.rainbowapi.RMHome"
-
-    // API version (should be set for 1.13+)
+    version = "${project.version}"
     apiVersion = "1.19"
-
-    authors = listOf("rainbowmori")
     prefix = "RainbowAPI"
+    authors = listOf("rainbowmori")
     load = BukkitPluginDescription.PluginLoadOrder.STARTUP
-
-//    commands {
-//        test {
-//            description = 'This is a test command!'
-//            aliases = ['t']
-//            permission = 'testplugin.test'
-//            usage = 'Just run the command!'
-//            // permissionMessage = 'You may not test this command!'
-//        }
-//        // ...
-//    }
-
-//    permissions {
-//        'testplugin.*' {
-//            children = ['testplugin.test'] // Defaults permissions to true
-//            // You can also specify the values of the permissions
-//            childrenMap = ['testplugin.test': false]
-//        }
-//        'testplugin.test' {
-//            description = 'Allows you to run the test command'
-//            setDefault('OP') // 'TRUE', 'FALSE', 'OP' or 'NOT_OP'
-//        }
-//    }
 }
