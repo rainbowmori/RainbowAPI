@@ -47,16 +47,18 @@ dependencies {
     shadow 'io.github.skytasul:glowingentities:1.1.3'
 }
 
-def buildFileName = '${project.name}-${project.version}-all.jar'
+def buildFileName = "${project.name}-${project.version}-all.jar"
 
 def multipleDirectory = ['C:\\Users\\moriy\\Desktop\\java\\OfroPluginCreateServer\\plugins',
                          'C:\\Users\\moriy\\Desktop\\java\\1.19.3_TestServer\\plugins']
 
-task copyJar (type: Copy) {
-    multipleDirectory.each { outputDir ->
-        copy {
-            from "$buildDir\\libs\\$buildFileName"
-            into outputDir
+task copyJar {
+    doLast {
+        multipleDirectory.each { outputDir ->
+            copy {
+                from "$buildDir\\libs\\$buildFileName"
+                into outputDir
+            }
         }
     }
 }
