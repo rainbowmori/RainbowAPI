@@ -8,33 +8,21 @@ public class IsObjectUtil {
     public static boolean IsComponent(Object is) {
         return is instanceof Component;
     }
-
-    public static int IsInt(String s) {
-        try {
-            return Integer.parseInt(s);
-        } catch (NumberFormatException ex) {
-            return -1;
-        }
+    
+    public static boolean isInteger(String s) {
+        return isInteger(s,10);
     }
-
-    public static float IsFloat(String s) {
-        try {
-            return Float.parseFloat(s);
-        } catch (NumberFormatException ex) {
-            return -1;
+    
+    public static boolean isInteger(String s, int radix) {
+        if(s.isEmpty()) return false;
+        for(int i = 0; i < s.length(); i++) {
+            if(i == 0 && s.charAt(i) == '-') {
+                if(s.length() == 1) return false;
+                else continue;
+            }
+            if(Character.digit(s.charAt(i),radix) < 0) return false;
         }
-    }
-
-    public static double IsDouble(String s) {
-        try {
-            return Double.parseDouble(s);
-        } catch (NumberFormatException ex) {
-            return -1;
-        }
-    }
-
-    public static boolean IsBoolean(String value) {
-        return "true".equals(value) || "false".equals(value);
+        return true;
     }
 
     public static boolean IsListEmpty(List<?> list) {

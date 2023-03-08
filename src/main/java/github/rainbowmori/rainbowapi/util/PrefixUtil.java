@@ -1,5 +1,6 @@
 package github.rainbowmori.rainbowapi.util;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
@@ -42,6 +43,16 @@ public class PrefixUtil {
     public void send(CommandSender sender, String str) {
         if (sender != null) {
             sender.sendMessage(Util.mm(prefix + str));
+        }
+    }
+    
+    public void send(UUID uuid, Component str) {
+        send(Bukkit.getPlayer(uuid), str);
+    }
+    
+    public void send(CommandSender sender, Component str) {
+        if (sender != null) {
+            sender.sendMessage(Util.mm(prefix + Util.serialize(str)));
         }
     }
     

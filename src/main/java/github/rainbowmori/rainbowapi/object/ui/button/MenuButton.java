@@ -1,23 +1,59 @@
 package github.rainbowmori.rainbowapi.object.ui.button;
 
-import github.rainbowmori.rainbowapi.object.ui.gui.MenuHolder;
+import github.rainbowmori.rainbowapi.object.ui.menu.MenuHolder;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-public interface MenuButton {
+/**
+ * A button that can sit in a {@link MenuHolder}.
+ * @param <MH> the specific MenuHolder type
+ */
+public interface MenuButton<MH extends MenuHolder<?>> {
 
-    default void onClick(MenuHolder<?> holder, InventoryClickEvent event) {
+    /**
+     * Callback that is called when this button is clicked.
+     * <p>
+     * The default implementation does nothing.
+     *
+     * @param holder the MenuHolder
+     * @param event the InventoryClickEvent
+     */
+    public default void onClick(MH holder, InventoryClickEvent event) {
     }
 
-    default ItemStack getIcon() {
+    /**
+     * The icon of the button.
+     * <p>
+     * The default implementation returns null.
+     *
+     * @return the icon
+     */
+    public default ItemStack getIcon() {
         return null;
     }
 
-    default boolean onAdd(MenuHolder<?> menuHolder, int slot) {
+    /**
+     * Called when the button is added to the menu.
+     *
+     * @param menuHolder the menu
+     * @param slot the position in the menu
+     * @return whether the button could be added, true by default
+     * @see MenuHolder#setButton(int, MenuButton)
+     */
+    public default boolean onAdd(MH menuHolder, int slot) {
         return true;
     }
 
-    default boolean onRemove(MenuHolder<?>  menuHolder, int slot) {
+    /**
+     * Called when the button is removed from the menu.
+     *
+     * @param menuHolder the menu
+     * @param slot the position in the menu
+     * @return whether the button could be removed, true by default
+     * @see MenuHolder#unsetButton(int) 
+     */
+    public default boolean onRemove(MH menuHolder, int slot) {
         return true;
     }
+    
 }

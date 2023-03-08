@@ -1,21 +1,14 @@
 package github.rainbowmori.rainbowapi;
 
-import com.google.common.base.Charsets;
-import github.rainbowmori.rainbowapi.object.commandapi.*;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIConfig;
+import github.rainbowmori.rainbowapi.listener.BlockBreak;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Map;
 
 /**
  * RainbowAPI Plugin の main class
  */
 public class RMHome extends JavaPlugin {
-
 
     private static RMHome plugin;
 
@@ -31,51 +24,22 @@ public class RMHome extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        RainbowAPI.init(this);
         plugin = this;
         rainbowAPI = new RainbowAPI(this, "<gray>[<red>RM<gray>] ");
+        RainbowAPI.manager.registerEvents(BlockBreak.getInstance(), plugin);
+        
         CommandAPI.onEnable(this);
     }
 
     @Override
     public void onDisable() {
         CommandAPI.onDisable();
+        RainbowAPI.getGlowAPI().disable();
     }
 
     @Override
     public void onLoad() {
-        CommandAPI.config = new InternalConfig(createFile(), new File(getDataFolder(), "command_registration.json"));
-
-        // Check dependencies for CommandAPI
-        CommandAPIHandler.getInstance().checkDependencies();
-
-        // Convert all plugins to be converted
-        for (Map.Entry<JavaPlugin, String[]> pluginToConvert : CommandAPI.config.getPluginsToConvert()) {
-            if (pluginToConvert.getValue().length == 0) {
-                Converter.convert(pluginToConvert.getKey());
-            } else {
-                for (String command : pluginToConvert.getValue()) {
-                    new AdvancedConverter(pluginToConvert.getKey(), command).convert();
-                }
-            }
-        }
-
-        // Convert all arbitrary commands
-        for (String commandName : CommandAPI.config.getCommandsToConvert()) {
-            new AdvancedConverter(commandName).convertCommand();
-        }
-    }
-
-    private static final String CommandAPIConfig = "CommandAPI.yml";
-
-    public FileConfiguration createFile() {
-        saveResource(CommandAPIConfig,false);
-        FileConfiguration newConfig = YamlConfiguration.loadConfiguration(
-            new File(getDataFolder(),CommandAPIConfig));
-        final InputStream defConfigStream = getResource(CommandAPIConfig);
-        if (defConfigStream == null) {
-            return null;
-        }
-        newConfig.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream, Charsets.UTF_8)));
-        return newConfig;
+        CommandAPI.onLoad(new CommandAPIConfig());
     }
 }

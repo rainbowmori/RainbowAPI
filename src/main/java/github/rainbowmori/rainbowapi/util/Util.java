@@ -4,8 +4,10 @@ import github.rainbowmori.rainbowapi.RMHome;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -25,11 +27,15 @@ public class Util {
 	
 	public static Component mm(Object str) {
 		return IsObjectUtil.IsComponent(str) ? ((Component) str) :
-			MiniMessage.miniMessage().deserialize(vanillaToMM(String.valueOf(str))).decoration(TextDecoration.ITALIC, false);
+			MiniMessage.miniMessage().deserialize(String.valueOf(str)).decoration(TextDecoration.ITALIC, false);
 	}
 	
 	public static void consoleCommand(String command) {
 		Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+	}
+	
+	public static Component component(String str) {
+		return Util.mm(vanillaToMM(str));
 	}
 	
 	public static void send(UUID uuid, String str) {
@@ -39,6 +45,16 @@ public class Util {
 	public static void send(CommandSender sender, String str) {
 		if (sender != null) {
 			sender.sendMessage(Util.mm(str));
+		}
+	}
+	
+	public static void send(UUID uuid, Component str) {
+		send(Bukkit.getPlayer(uuid), str);
+	}
+	
+	public static void send(CommandSender sender, Component str) {
+		if (sender != null) {
+			sender.sendMessage(str);
 		}
 	}
 	
@@ -56,76 +72,41 @@ public class Util {
 	}
 	
 	public static String vanillaToMM(String str) {
-        if (str.contains("&0")) {
-            str = str.replace("&0", "<black>");
-        }
-        if (str.contains("&1")) {
-            str = str.replace("&1", "<dark_blue>");
-        }
-        if (str.contains("&2")) {
-            str = str.replace("&2", "<dark_green>");
-        }
-        if (str.contains("&3")) {
-            str = str.replace("&3", "<dark_aqua>");
-        }
-        if (str.contains("&4")) {
-            str = str.replace("&4", "<dark_red>");
-        }
-        if (str.contains("&5")) {
-            str = str.replace("&5", "<dark_purple>");
-        }
-        if (str.contains("&6")) {
-            str = str.replace("&6", "<gold>");
-        }
-        if (str.contains("&7")) {
-            str = str.replace("&7", "<gray>");
-        }
-        if (str.contains("&8")) {
-            str = str.replace("&8", "<dark_gray>");
-        }
-        if (str.contains("&9")) {
-            str = str.replace("&9", "<blue>");
-        }
-        if (str.contains("&a")) {
-            str = str.replace("&a", "<green>");
-        }
-        if (str.contains("&b")) {
-            str = str.replace("&b", "<aqua>");
-        }
-        if (str.contains("&c")) {
-            str = str.replace("&c", "<red>");
-        }
-        if (str.contains("&d")) {
-            str = str.replace("&d", "<light_purple>");
-        }
-        if (str.contains("&e")) {
-            str = str.replace("&e", "<yellow>");
-        }
-        if (str.contains("&f")) {
-            str = str.replace("&f", "<white>");
-        }
-        if (str.contains("&g")) {
-            str = str.replace("&g", "<color:#DDD605>");
-        }
-        if (str.contains("&k")) {
-            str = str.replace("&k", "<obfuscated>");
-        }
-        if (str.contains("&l")) {
-            str = str.replace("&l", "<bold>");
-        }
-        if (str.contains("&m")) {
-            str = str.replace("&m", "<strikethrough>");
-        }
-        if (str.contains("&n")) {
-            str = str.replace("&n", "<underlined>");
-        }
-        if (str.contains("&o")) {
-            str = str.replace("&o", "<italic>");
-        }
-        if (str.contains("&r")) {
-            str = str.replace("&r", "<reset>");
-        }
-		return str;
+		StringBuilder builder = new StringBuilder();
+		char[] b = str.toCharArray();
+		for (int i = 0; i < b.length-1; i++) {
+			char c = b[i + 1];
+			if (b[i] == '&' && "0123456789AaBbCcDdEeFfKkLlMmNnOoRrXx".indexOf(c) > -1) {
+				builder.append('<').append(ChatColor.getByChar(c).name().toLowerCase()).append('>');
+				continue;
+			}
+			if (i-1 > -1 && b[i - 1] != '&') {
+				builder.append(b[i]);
+			}
+		}
+		if (b.length-2 > -1 && b[b.length-2] != '&') {
+			builder.append(b[b.length-1]);
+		}
+		return builder.toString();
+	}
+	
+	public static Component legacy(String str) {
+		return LegacyComponentSerializer.legacyAmpersand().deserializeOrNull(str);
+	}
+	
+	public static String cc(String str) {
+		return ChatColor.translateAlternateColorCodes('&', str);
+	}
+	
+	public static String toAndChatColor(String str) {
+		char[] b = str.toCharArray();
+		for (int i = 0; i < b.length - 1; i++) {
+			if (b[i] == ChatColor.COLOR_CHAR && "0123456789AaBbCcDdEeFfKkLlMmNnOoRrXx".indexOf(b[i + 1]) > -1) {
+				b[i] = '&';
+				b[i + 1] = Character.toLowerCase(b[i + 1]);
+			}
+		}
+		return new String(b);
 	}
 	
 	/**
@@ -149,7 +130,18 @@ public class Util {
 	 */
 	
 	public static String serialize(Component str) {
-		return MiniMessage.miniMessage().serialize(str);
+		String serialize = MiniMessage.miniMessage().serialize(str);
+		if (serialize.startsWith("\\u003c!italic\\u003e")) {
+			return serialize.substring("\\u003c!italic\\u003e".length());
+		}
+		if (serialize.startsWith("<!italic>")) {
+			return serialize.substring("<!italic>".length());
+		}
+		return serialize;
+	}
+	
+	public static String serializeLegacy(Component str) {
+		return LegacyComponentSerializer.legacyAmpersand().serializeOrNull(str);
 	}
 	
 	/**

@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
 import org.bukkit.inventory.meta.tags.ItemTagType;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -31,6 +32,10 @@ public class ItemBuilder {
 
     public ItemBuilder(ItemStack itemStack) {
         this.itemStack = Objects.requireNonNull(itemStack, "ItemStack cannot be null").clone();
+    }
+    
+    public static ItemStack createSkull(String skullOwner) {
+        return new ItemBuilder(Material.PLAYER_HEAD).changeMeta((Consumer<SkullMeta>) skullMeta -> skullMeta.setOwner(skullOwner)).build();
     }
 
     public ItemBuilder amount(int amount) {
