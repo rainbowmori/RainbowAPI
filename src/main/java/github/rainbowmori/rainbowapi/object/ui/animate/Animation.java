@@ -6,78 +6,78 @@ import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 /**
- * An Animation is a container of {@link Frame}s.
- * Animations can be executed using an {@link AnimationRunner}.
+ * アニメーションは、{@link Frame}のコンテナです。
+ * アニメーションは、{@link AnimationRunner}を使って実行することができます。
  */
 public interface Animation {
 
     /**
-     * Resets the animation to its initial state.
+     * アニメーションを初期状態に戻す。
      */
     public void reset();
 
     /**
-     * Get the next frame of the animation.
+     * アニメーションの次のフレームを取得します
      * @return the next frame
      */
     public Frame<?, ?> nextFrame();
 
     /**
-     * Tests whether this animation has another frame.
-     * @return true if this animation has at least one more frame, otherwise false
+     * このアニメーションに別のフレームがあるかどうかをテストします。
+     * このアニメーションに少なくとも1つのフレームがあればtrueを、そうでなければfalseを返す。
      */
     public boolean hasNextFrame();
 
     /**
-     * Create an Animation from an array of frames.
-     * @param frames the frames
-     * @return a new Animation
+     * フレームの配列からアニメーションを作成する。
+     * @param frames フレームを指定します。
+     * @return 新しいアニメーションを返す
      */
     public static Animation ofFrames(Frame<?, ?>... frames) {
         return new SimpleAnimation(List.of(frames));
     }
 
     /**
-     * Create an animation from a list of frames.
-     * @param frames the frames
-     * @return a new Animation
+     * フレーム一覧からアニメーションを作成する。
+     * @param frames フレーム
+     * @return 新アニメーション
      */
     public static Animation ofFrames(List<? extends Frame<?, ?>> frames) {
         return new SimpleAnimation(frames);
     }
 
     /**
-     * Create an animation that lazily generates an infinite number of frames.
-     * @param seed the first frame
-     * @param nextFrame the function that knows how to compute the next frame
-     * @param <F> the type of Frames
-     * @return a new Animation
+     * 無限のフレーム数をゆったりと生成するアニメーションを作成する。
+     * @param seed 第1フレーム
+     * @param nextFrame 次のフレームを計算する方法を知っている関数です。
+     * @param <F> フレームの種類
+     * @return 新アニメーション
      */
     public static <F extends Frame<?, ?>> Animation infinite(F seed, UnaryOperator<F> nextFrame) {
         return new InfiniteAnimation<>(seed, nextFrame);
     }
 
     /**
-     * Turn the animation into an auto-resetting animation, so that it automatically starts over when this animation is at its end.
-     * @return an animation that loops this animation
+     * このアニメーションをオートリセットアニメーションにして、このアニメーションが終了したときに自動的にやり直すようにします。
+     * @return このアニメーションをループさせるアニメーション
      */
     public default Animation continuously() {
         return new ContinuousAnimation(this);
     }
 
     /**
-     * Append another animation to this animation.
-     * @param next the appended animation
-     * @return an animation that first steps through the current animation, and then through the next animation
+     * このアニメーションに別のアニメーションを追加する。
+     * @param next 附属アニメーション
+     * @return 現在のアニメーションから次のアニメーションに進むアニメーションです。
      */
     public default Animation andThen(Animation next) {
         return new ConcatAnimation(this, next);
     }
 
     /**
-     * Limit the animation to a fixed number of frames.
-     * @param numberOfFrames the maximum number of frames
-     * @return an animation that is the same as this animation, except that it is limited {@code numberOfFrames} frames
+     * アニメーションを固定フレーム数で制限する。
+     * @param numberOfFrames 最大フレーム数
+     * @return このアニメーションと同じで、{@code numberOfFrames}フレーム数だけ制限されるアニメーション。
      */
     public default Animation limit(int numberOfFrames) {
         return new LimitAnimation(numberOfFrames, this);

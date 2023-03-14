@@ -10,15 +10,15 @@ import org.bukkit.plugin.Plugin;
 import java.util.function.Supplier;
 
 /**
- * A button that redirects back to the inventory supplied by the supplier given in the constructor.
- * The material of the icon is an iron door.
+ * コンストラクタで指定されたサプライヤが提供するインベントリにリダイレクトするボタンです。
+ * アイコンの素材は鉄の扉です。
  */
 public class BackButton<P extends Plugin> extends RedirectItemButton<MenuHolder<P>> {
 
     private static final ItemStack BACK_BUTTON = new ItemBuilder(Material.IRON_DOOR).name("Back").build();
 
     /**
-     * Creates a BackButton that redirects to the inventory supplied by the supplier
+     * サプライヤーが提供するインベントリにリダイレクトするBackButtonを作成します。
      * @param to the inventory supplier
      */
     public BackButton(Supplier<? extends Inventory> to) {
@@ -26,8 +26,8 @@ public class BackButton<P extends Plugin> extends RedirectItemButton<MenuHolder<
     }
 
     /**
-     * Creates a BackButton that redirects to the inventory supplied by the supplier.
-     * @param name the display name of the icon
+     * サプライヤーが提供するインベントリにリダイレクトするBackButtonを作成します。
+     * @param name アイコンの名前
      * @param to the inventory supplier
      */
     public BackButton(String name, Supplier<? extends Inventory> to) {

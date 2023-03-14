@@ -5,31 +5,31 @@ import java.util.Objects;
 import java.util.OptionalLong;
 
 /**
- * A schedule for playing animations.
+ * アニメーションを再生するためのスケジュールです。
  */
 public interface Schedule {
 
     /**
-     * Resets the schedule to its initial state.
+     * スケジュールを初期状態に戻す。
      */
     public void reset();
 
     /**
-     * Get number of ticks until the next frame is up for display.
-     * @return the empty OptionalLong if this schedule is finished, otherwise an OptionalLong containing the number of ticks until the next frame
+     * 次のフレームが表示されるまでのティック数を取得する。
+     * @return このスケジュールが終了した場合は空のOptionalLong、そうでない場合は次のフレームまでのティック数を含むOptionalLong。
      */
     public OptionalLong next();
 
     /**
-     * Get a copy of this schedule.
-     * @return a new Schedule
+     * このスケジュールのコピーを入手する。
+     * @return 新スケジュール
      */
     public Schedule clone();
 
     /**
-     * A schedule that serves frames seperated by a delays.
-     * @param delays the delays between frames
-     * @return a new Schedule
+     * ディレイで区切られたフレームを提供するスケジュールです。
+     * @param delays フレーム間のディレイ
+     * @return 新スケジュール
      */
     public static Schedule of(long... delays) {
         if (delays.length == 1) {
@@ -44,9 +44,9 @@ public interface Schedule {
     }
 
     /**
-     * A schedule that only serves one frame, after an initial delay
-     * @param delay the initial delay in ticks
-     * @return a new Schedule
+     * 最初の遅延を経て、1フレームのみ提供するスケジュール
+     * @param delay 刻みの初期遅延
+     * @return 新スケジュール
      */
     public static Schedule once(long delay) {
         if (delay < 0L) throw new IllegalArgumentException("Negative delay: " + delay);
@@ -55,17 +55,17 @@ public interface Schedule {
     }
 
     /**
-     * A schedule that only serves one frame
-     * @return a new Schedule
+     * 1枠しかないスケジュール
+     * @return 新スケジュール
      */
     public static Schedule now() {
         return once(0L);
     }
 
     /**
-     * A schedule that serves frames at a fixed rate
-     * @param period the number of ticks between frames
-     * @return a new schedule
+     * フレームを固定料金で提供するスケジュール
+     * @param period フレーム間の刻み数
+     * @return しんこうけいかく
      */
     public static Schedule fixedRate(long period) {
         if (period < 0L) throw new IllegalArgumentException("Negative period: " + period);
@@ -74,9 +74,9 @@ public interface Schedule {
     }
 
     /**
-     * A schedule that serves a limited number of frames, limited by the number of ticks passed.
-     * @param totalTicks the upper bound of ticks passed
-     * @return a new Schedule
+     * 通過したティック数によって制限されたフレーム数を提供するスケジュール。
+     * @param totalTicks 通過したティックの上限値
+     * @return 新スケジュール
      */
     public default Schedule limitTime(long totalTicks) {
         if (totalTicks < 0) throw new IllegalArgumentException("Negative time limit: " + totalTicks);
@@ -85,9 +85,9 @@ public interface Schedule {
     }
 
     /**
-     * A schedule that servers a limited number of frames, limited by the number of frames passed.
-     * @param totalSteps the upper bound of frames passed
-     * @return a new Schedule
+     * 通過したコマ数だけ限定してサーバーにかけるスケジュール。
+     * @param totalSteps 渡されるフレームの上限値
+     * @return 新スケジュール
      */
     public default Schedule limitSteps(long totalSteps) {
         if (totalSteps < 0) throw new IllegalArgumentException("Negative step limit: " + totalSteps);
@@ -96,9 +96,9 @@ public interface Schedule {
     }
 
     /**
-     * A schedule that first serves up frames according to the current schedule, and then according to the second schedule.
-     * @param andThen the second schedule
-     * @return a new Schedule, or the current schedule if it is infinite
+     * まず現在のスケジュールに従ってフレームを提供し、次に第2のスケジュールに従ってフレームを提供するスケジュール。
+     * @param andThen にばんめ
+     * @return 新しいスケジュール、または現在のスケジュールが無限の場合は、現在のスケジュール
      */
     public default Schedule append(Schedule andThen) {
         return new ConcatSchedule(this, andThen);

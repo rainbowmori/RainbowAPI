@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 /**
- * A button that resets buttons in the menu in which it is clicked.
+ * クリックされたメニューのボタンをリセットするボタンです。
  * @param <MH> the menu holder type
  */
 public class ResetButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
@@ -21,9 +21,9 @@ public class ResetButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     private IntFunction<? extends MenuButton<? super MH>> mapper;
 
     /**
-     * Creates the reset button without slot providers and a slot-to-button mapping.
-     * Subclasses that use this method need to call either {@link #setMapping(Supplier, IntFunction)} )} or any of its overloads,
-     * or it needs to override {@link #getResetSlots()} and {@link #getButtonFor(int)}.
+     * スロットプロバイダとスロットからボタンへのマッピングがないリセットボタンを作成します。
+     * このメソッドを使用するサブクラスは、{@link #setMapping(Supplier, IntFunction)} )} またはそのオーバーロードのいずれかを呼び出す必要があります。
+     * または、{@link #getResetSlots()}と{@link #getButtonFor(int)}をオーバーライドする必要があります。
      *
      * @param icon the button's icon
      */
@@ -32,7 +32,7 @@ public class ResetButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Creates the reset button.
+     * リセットボタンを作成します。
      *
      * @param icon the icon
      * @param newContents the slot-to-button mapping
@@ -43,7 +43,7 @@ public class ResetButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Creates the reset button.
+     * リセットボタンを作成します。
      *
      * @param icon the icon
      * @param newContents the slot-to-button mapping
@@ -54,7 +54,7 @@ public class ResetButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Creates the reset button.
+     * リセットボタンを作成する.
      *
      * @param icon the icon
      * @param newContents the slot-to-button mapping
@@ -65,11 +65,11 @@ public class ResetButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Creates the reset button.
+     * リセットボタンを作成します。
      *
      * @param icon the icon
-     * @param slots the slots for which this button will perform a reset
-     * @param mapper the mapping function that calculates which button needs to be reset at which slot
+     * @param slots このボタンがリセットを実行するスロットを示します。
+     * @param mapper どのボタンがどのスロットでリセットされる必要があるかを計算するマッピング機能
      */
     public ResetButton(ItemStack icon, Supplier<IntStream> slots, IntFunction<? extends MenuButton<? super MH>> mapper) {
         super(icon);
@@ -77,8 +77,8 @@ public class ResetButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Set the mapping.
-     * @param newContents the slot-to-button mapping
+     * マッピングを設定します。
+     * @param newContents スロットとボタンの対応表
      */
     public void setMapping(Map<Integer, ? extends MenuButton<? super MH>> newContents) {
         Objects.requireNonNull(newContents, "NewContents cannot be null");
@@ -117,7 +117,7 @@ public class ResetButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Get the slots for which new buttons need to be calculated.
+     * 新しいボタンの計算が必要なスロットを取得します。
      * @return the stream of slots
      */
     protected IntStream getResetSlots() {
@@ -125,7 +125,7 @@ public class ResetButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Get the button that needs to be set at the given slot.
+     * 指定されたスロットに設定する必要があるボタンを取得します。
      * @param slot the slot
      * @return the new button, or null if there shouldn't be a button at the slot
      */

@@ -13,40 +13,44 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 /**
- * A Mask can be used in combination with a {@link Pattern} to apply bulk operations to item-containers such as inventories or menus.
- * This makes it easier to construct menus with the same items but with different layouts.
- * Another use case for Masks and Patterns are animations.
- * @param <Symbol> the symbol used by the mask. Typically this is Boolean, Integer, Character or an enum.
- * @param <Item> the type of the item in the container.
+ * マスクは {@link Pattern} と組み合わせて、インベントリやメニューなどのアイテムコンテナに対して一括操作を適用することができます。
+ * これにより、同じ項目でレイアウトが異なるメニューを簡単に構築することができます。
+ * マスクとパターンのもう一つの使用例として、アニメーションがあります。
+ * @param <Symbol> マスクが使用するシンボルです。一般的には、Boolean、Integer、Character、またはenumです。
+ * @param <Item> コンテナ内のアイテムの種類を示す。
  * @see Inventory
  * @see github.rainbowmori.rainbowapi.object.ui.menu.MenuHolder
  */
 public interface Mask<Symbol, Item> {
 
     /**
-     * Get the item that is mapped to by a symbol.
+     * シンボルがマッピングされている項目を取得する。
      * @param symbol a symbol value, or null
-     * @return an Option containing the mapped value, or an empty Option if the symbol is not supported by this Mask.
+     * @return マップされた値を含む Option、またはシンボルがこの Mask でサポートされていない場合は、空の Option を指定します。
      */
     public Option<Item> getItem(Symbol symbol);
 
     /**
-     * Create a Mask from a Map.
-     * @param map the mapping that will be used by the Mask
-     * @param <Symbol> the symbol type
-     * @param <Item> the item type
-     * @return a new Mask
+     * 地図からマスクを作成する。
+     * @param map Maskで使用されるマッピングです。
+     * @param <Symbol> symbol type
+     * @param <Item> item type
+     * @return 新マスク
      */
     public static <Symbol, Item> Mask<Symbol, Item> ofMap(Map<Symbol, Item> map) {
         return new MapMask<>(map);
     }
+    
+    public static <Symbol, Item> Mask<Symbol, Item> ofSingle(Symbol symbol,Item item) {
+        return new SingleMask<>(symbol,item);
+    }
 
     /**
-     * Apply a mask and a pattern to a container.
+     * 容器にマスクとパターンを貼る。
      * @param mask the mask
      * @param pattern the pattern
-     * @param indexGenerator the generator that decided which slots to update
-     * @param updater the setter function of the container
+     * @param indexGenerator どのスロットを更新するかを決定するジェネレータ
+     * @param updater コンテナのセッター機能
      * @param <Symbol> the symbol type
      * @param <Item> element type
      */
@@ -59,7 +63,7 @@ public interface Mask<Symbol, Item> {
     }
 
     /**
-     * Apply a bulk update to an inventory. All the inventory slots that are supported by the pattern and mask will get an update.
+     * インベントリに一括更新を適用します。パターンとマスクがサポートされているすべてのインベントリスロットが更新されます。
      * @param mask the mask
      * @param pattern the pattern
      * @param inventory the inventory
@@ -74,7 +78,7 @@ public interface Mask<Symbol, Item> {
     }
 
     /**
-     * Apply a bulk update to a menu. All the menu slots that are supported by the pattern and mask will get an update.
+     * メニューに一括更新を適用する。パターンとマスクが対応しているすべてのメニュースロットが更新されます。
      * @param mask the mask
      * @param pattern the pattern
      * @param menu the inventory
@@ -92,6 +96,43 @@ public interface Mask<Symbol, Item> {
 
 }
 
+class SingleMask<Symbol, Item> implements Mask<Symbol, Item> {
+    
+    private final Symbol symbol;
+    private final Item item;
+    
+    public SingleMask(Symbol symbol,Item item) {
+        this.symbol = Objects.requireNonNull(symbol, "symbol cannot be null");
+        this.item = Objects.requireNonNull(item, "item cannot be null");
+    }
+    
+    public Option<Item> getItem(Symbol symbol) {
+        if (this.symbol.equals(symbol)) return Option.some(item);
+        else return Option.none();
+    }
+    
+    
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(symbol) + Objects.hashCode(item);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof SingleMask)) return false;
+    
+        SingleMask that = (SingleMask) obj;
+        return Objects.equals(this.symbol, that.symbol) && Objects.equals(this.item, that.item);
+    }
+    
+    @Override
+    public String toString() {
+        return "SingleMask(symbol=" + symbol + ",item=" + item + ")";
+    }
+}
+
+
 class MapMask<Symbol, Item> implements Mask<Symbol, Item> {
     private final Map<Symbol, Item> mapper;
 
@@ -104,9 +145,9 @@ class MapMask<Symbol, Item> implements Mask<Symbol, Item> {
     }
 
     /**
-     * Get the item that is mapped to by a symbol.
+     * シンボルがマッピングされている項目を取得する。
      * @param symbol a symbol value, or null
-     * @return Some(item) if this mask contains a mapping, otherwise None
+     * @return このマスクがマッピングを含む場合はSome(item)、それ以外はNone
      */
     public Option<Item> getItem(Symbol symbol) {
         if (mapper.containsKey(symbol)) return Option.some(mapper.get(symbol));

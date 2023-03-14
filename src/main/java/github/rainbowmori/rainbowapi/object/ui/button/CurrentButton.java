@@ -7,6 +7,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.function.Consumer;
 
+/**
+ * カーソルで持っているアイテムに{@link #stack}を変え
+ * 変えたアイテムでconsumerを実行します
+ * @param <MH> the MenuHolder type
+ */
 public class CurrentButton<MH extends MenuHolder<?>> extends ItemButton<MH>{
 	
 	private final Consumer<ItemStack> itemStackConsumer;
@@ -21,6 +26,7 @@ public class CurrentButton<MH extends MenuHolder<?>> extends ItemButton<MH>{
 		ItemStack cursor = event.getCursor();
 		if (cursor == null || cursor.getType() == Material.AIR) {
 			event.getInventory().setItem(event.getSlot(), stack);
+			itemStackConsumer.accept(stack);
 			return;
 		}
 		event.setCurrentItem(cursor);

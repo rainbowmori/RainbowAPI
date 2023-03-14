@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A button that executes a command when clicked.
+ * クリックされるとコマンドを実行するボタンです。
  * @param <MH> the menu holder type
  */
 public class CommandButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
@@ -20,8 +20,8 @@ public class CommandButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     private CommandResultHandler<MH> resultHandler;
 
     /**
-     * Protected constructor for command buttons that wish to use non-constant commands and arguments.
-     * Subclasses that use this super constructor must override {@link #getArguments()} or {@link #getCommand} or their overloads.
+     * 定数でないコマンドや引数を使用したいコマンドボタンのためのプロテクテッドコンストラクタです。
+     * このスーパーコンストラクタを使用するサブクラスは、{@link #getArguments()}または{@link #getCommand}またはそのオーバーロードをオーバーライドする必要があります。
      * @param icon the icon
      */
     protected CommandButton(ItemStack icon) {
@@ -29,10 +29,10 @@ public class CommandButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Creates the CommandButton.
+     * CommandButtonを作成します。
      * @param icon the icon of the button
-     * @param command the command to be executed
-     * @param arguments the arguments used to execute the command
+     * @param command 実行されるコマンド
+     * @param arguments コマンドの実行に使用される引数
      */
     public CommandButton(ItemStack icon, Command command, String... arguments) {
         super(icon);
@@ -41,11 +41,11 @@ public class CommandButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Creates the CommandButton.
+     * CommandButtonを作成します。
      * @param icon the icon of the button
-     * @param command the command to be executed
-     * @param arguments the arguments used to execute the command
-     * @param resultHandler the handler that is executed after the command has run
+     * @param command 実行されるコマンド
+     * @param arguments コマンドの実行に使用される引数
+     * @param resultHandler コマンドが実行された後に実行されるハンドラ
      */
     public CommandButton(ItemStack icon, Command command, CommandResultHandler<MH> resultHandler, String... arguments) {
         this(icon, command, arguments);
@@ -53,8 +53,8 @@ public class CommandButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Executes the command obtained by {@link #getCommand()} using the arguments provided by {@link #getArguments()}.
-     * If a {@link CommandResultHandler} is present, then its {@link CommandResultHandler#afterCommand(HumanEntity, Command, String[], boolean, MenuHolder, InventoryClickEvent)} executed too.
+     * getCommand()} で取得したコマンドを、{@link #getArguments()} で指定した引数で実行します。
+     * もし{@link CommandResultHandler}があれば、その{@link CommandResultHandler#afterCommand(HumanEntity, Command, String[], boolean, MenuHolder, InventoryClickEvent)}も実行します。
      * @param menuHolder the menu holder
      * @param event the InventoryClickEvent
      */
@@ -70,7 +70,7 @@ public class CommandButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Set the command.
+     * コマンドを設定します。
      * @param command the command
      */
     public void setCommand(Command command) {
@@ -78,7 +78,7 @@ public class CommandButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Set the arguments.
+     * 引数を設定します。
      * @param arguments the arguments
      */
     public void setArguments(String... arguments) {
@@ -86,7 +86,7 @@ public class CommandButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Set the result handler.
+     * 結果ハンドラーを設定する。
      * @param resultHandler the result handler
      */
     public void setResultHandler(CommandResultHandler<MH> resultHandler) {
@@ -94,9 +94,9 @@ public class CommandButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Computes the command to be used from the MenuHolder and InventoryClickEvent.
-     * This method is called by {@link #onClick(MenuHolder, InventoryClickEvent)}.
-     * The default implementation delegates to {@link #getCommand()}.
+     * MenuHolderとInventoryClickEventから使用するコマンドを算出する。
+     * このメソッドは{@link #onClick(MenuHolder, InventoryClickEvent)}によって呼び出されます。
+     * デフォルトの実装では、{@link #getCommand()}に委譲されます。
      *
      * @param menuHolder the menu holder
      * @param event the InventoryClickEvent
@@ -107,13 +107,13 @@ public class CommandButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Computes the arguments to be used from the MenuHolder and InventoryClickEvent.
-     * This method is called by {@link #onClick(MenuHolder, InventoryClickEvent)}.
-     * The default implementation delegates to {@link #getArguments()}.
+     * MenuHolderとInventoryClickEventから使用する引数を計算する。
+     * このメソッドは{@link #onClick(MenuHolder, InventoryClickEvent)}によって呼び出されます。
+     * デフォルトの実装では、{@link #getArguments()}に委ねられます。
      *
      * @param menuHolder the menu holder
      * @param event the InventoryClickEvent
-     * @return the arguments with which to execute command
+     * @return コマンドを実行するための引数
      */
     protected String[] getArguments(MH menuHolder, InventoryClickEvent event) {
         return getArguments();
@@ -137,14 +137,14 @@ public class CommandButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
 
     /**
      * Get the result handler.
-     * @return an Optional containing the {@link CommandResultHandler} if one is present, otherwise the empty Optional.
+     * @return {@link CommandResultHandler}が存在する場合はそれを含むOptional、そうでない場合は空のOptionalです。
      */
     public Optional<? extends CommandResultHandler<MH>> getResultHandler() {
         return Optional.ofNullable(resultHandler);
     }
 
     /**
-     * A callback that is executed after a command is run from the {@link #onClick(MenuHolder, InventoryClickEvent)} method.
+     * コマンド実行後に{@link #onClick(MenuHolder, InventoryClickEvent)}メソッドから実行されるコールバックです。
      * @param <MH> the menu holder type
      */
     @FunctionalInterface
@@ -152,12 +152,12 @@ public class CommandButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
 
         /**
          * The callback method.
-         * @param player the player that executed the command
-         * @param command the command that was executed
-         * @param arguments the arguments the command was executed with
-         * @param wasExecutedSuccessFully whether the command was executed successfully
+         * @param player コマンドを実行したプレイヤー
+         * @param command 実行されたコマンド
+         * @param arguments コマンドが実行されたときの引数
+         * @param wasExecutedSuccessFully コマンドが正常に実行されたかどうか
          * @param menuHolder the menu holder
-         * @param event the event that caused the command to execute
+         * @param event コマンドを実行する原因となったイベント
          */
         public void afterCommand(HumanEntity player, Command command, String[] arguments, boolean wasExecutedSuccessFully, MH menuHolder, InventoryClickEvent event);
 

@@ -95,5 +95,17 @@ public class Frame<Symbol, Item> {
     public String toString() {
         return "Frame(pattern=" + pattern + ",mask=" + mask + ",activeSlots=" + activeSlots + ")";
     }
-
+    
+    public Pattern<Symbol> getPattern() {
+        return pattern;
+    }
+    
+    public Mask<Symbol, Item> getMask() {
+        return mask;
+    }
+    
+    public IntGenerator getActiveSlots() {
+        return activeSlots;
+    }
+    
 }

@@ -8,7 +8,7 @@ import java.util.ListIterator;
 import java.util.function.UnaryOperator;
 
 /**
- * A button that can update it's internal state to a previous state (on right click), or next state (on left click).
+ * 右クリックで前の状態に、左クリックで次の状態に、内部状態を更新できるボタン。
  * @param <T> the state's type
  * @param <MH> the menu holder's type
  */
@@ -17,9 +17,10 @@ public class TwoWayIteratingButton<T, MH extends MenuHolder<?>> extends Iteratin
     private UnaryOperator<T> backwardsFunction;
 
     /**
-     * Creates the TwoWayIteratingButton with just the icon.
-     * Using this constructor requires the subclass to initialize the fields {@link #backwardsFunction}, {@link #stateUpdater} and {@link #currentState} on construction.
-     * Alternatively they must override {@link #updateStateForwards(MenuHolder, InventoryClickEvent)}, {@link #updateStateBackwards(MenuHolder, InventoryClickEvent)} and {@link #getCurrentState()}.
+     * アイコンのみを持つTwoWayIteratingButtonを作成します。
+     * このコンストラクタを使用すると、サブクラスは構築時にフィールド{@link #backwardsFunction}、{@link #stateUpdater}、{@link #currentState}を初期化することが必要になります。
+     * あるいは、{@link #updateStateForwards(MenuHolder, InventoryClickEvent)}、{@link #updateStateBackwards(MenuHolder, InventoryClickEvent)}、
+     * {@link #getCurrentState()} をオーバーライドしなければならない。
      * @param icon the icon of this button
      */
     protected TwoWayIteratingButton(ItemStack icon) {
@@ -27,7 +28,7 @@ public class TwoWayIteratingButton<T, MH extends MenuHolder<?>> extends Iteratin
     }
 
     /**
-     * Creates the TwoWayIteratingButton.
+     * TwoWayIteratingButtonを作成します。
      * @param icon the icon of this button
      * @param initialState the initial current state
      * @param forwardsFunction the function that provides next states
@@ -39,7 +40,7 @@ public class TwoWayIteratingButton<T, MH extends MenuHolder<?>> extends Iteratin
     }
 
     /**
-     * Creates a new TwoWayIteratingButton from a list iterator.
+     * リスト・イテレータから新しいTwoWayIteratingButtonを作成します。
      * @param icon the icon
      * @param listIterator the iterator providing the states
      * @param <T> the state type
@@ -75,8 +76,8 @@ public class TwoWayIteratingButton<T, MH extends MenuHolder<?>> extends Iteratin
     }
 
     /**
-     * Updates the current state. If the click is a left-click the it updates to the next state.
-     * If it is a right-click it updates to the previous state.
+     * 現在の状態を更新します。左クリックの場合、次の状態に更新されます。
+     * 右クリックの場合は、前の状態に更新されます。
      * @param menuHolder the MenuHolder
      * @param event the event that caused the state update
      */
@@ -90,7 +91,7 @@ public class TwoWayIteratingButton<T, MH extends MenuHolder<?>> extends Iteratin
     }
 
     /**
-     * Updates the internal state to the next state.
+     * 内部状態を次の状態に更新する。
      * @param menuHolder the menu holder
      * @param event the click event that caused the state update
      */
@@ -99,7 +100,7 @@ public class TwoWayIteratingButton<T, MH extends MenuHolder<?>> extends Iteratin
     }
 
     /**
-     * Updates the internal state to the previous state.
+     * 内部状態を前の状態に更新する。
      * @param menuHolder the menu holder
      * @param event the click event that caused the state update
      */

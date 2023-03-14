@@ -8,19 +8,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 /**
- * A MenuButton that closes the Inventory when clicked.
+ * クリックするとインベントリを閉じるMenuButtonです。
  */
 public class CloseButton<P extends Plugin> extends ItemButton<MenuHolder<P>> {
 
     /**
-     * Creates the close button with an oak door icon and "Close" as the display name.
+     * オークドアのアイコンと表示名 "Close "を持つクローズボタンを作成します。
      */
     public CloseButton() {
         this(Material.OAK_DOOR);
     }
 
     /**
-     * Creates the close button with a custom material and "Close" as the display name.
+     * カスタム素材を使用し、表示名を「閉じる」とした閉じるボタンを作成します。
      * @param material the icon material
      */
     public CloseButton(Material material) {
@@ -28,7 +28,7 @@ public class CloseButton<P extends Plugin> extends ItemButton<MenuHolder<P>> {
     }
 
     /**
-     * Creates the close button with the custom icon.
+     * カスタムアイコンを持つクローズボタンを作成します。
      * @param icon the icon
      */
     public CloseButton(ItemStack icon) {
@@ -36,7 +36,7 @@ public class CloseButton<P extends Plugin> extends ItemButton<MenuHolder<P>> {
     }
 
     /**
-     * Creates the close button with a custom material and custom display name.
+     * カスタムマテリアルとカスタム表示名を持つクローズボタンを作成します。
      * @param material the icon material
      * @param displayName the display name
      */
@@ -45,7 +45,7 @@ public class CloseButton<P extends Plugin> extends ItemButton<MenuHolder<P>> {
     }
 
     /**
-     * Closes the inventory after one tick.
+     * 1ティック後にインベントリを閉じます。
      * @param holder the MenuHolder
      * @param event the InventoryClickEvent
      */

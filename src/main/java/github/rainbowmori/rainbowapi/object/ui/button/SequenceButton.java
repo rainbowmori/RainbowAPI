@@ -8,11 +8,11 @@ import org.bukkit.plugin.Plugin;
 import java.util.Objects;
 
 /**
- * A button that composes two buttons sequentially.
- * @param <P> the Plugin for the buttons
- * @param <MH1> the menu holder type of the first button
- * @param <MH2> the menu holder type of the second button
- * @param <MHR> the super type of both {@code MH1} and {@code MH2}
+ * 2つのボタンを順次合成していくボタンです。
+ * @param <P> ボタン用プラグイン
+ * @param <MH1> 第1ボタンのメニューホルダタイプ
+ * @param <MH2> 第2ボタンのメニューホルダーの種類
+ * @param <MHR> {@code MH1}と{@code MH2}の両方のスーパータイプである。
  */
 public class SequenceButton<P extends Plugin, MHR extends MenuHolder<P>, MH1 extends MHR, MH2 extends MHR>
         implements MenuButton<MHR> {
@@ -26,7 +26,7 @@ public class SequenceButton<P extends Plugin, MHR extends MenuHolder<P>, MH1 ext
     }
 
     /**
-     * Get the first button in the sequence.
+     * シーケンスの最初のボタンを取得します。
      * @return the first button
      */
     protected MenuButton<MH1> getFirst() {
@@ -34,7 +34,7 @@ public class SequenceButton<P extends Plugin, MHR extends MenuHolder<P>, MH1 ext
     }
 
     /**
-     * Get the second button in the sequence.
+     * 順番に2つ目のボタンを取得します。
      * @return the second button
      */
     protected MenuButton<MH2> getSecond() {
@@ -42,8 +42,8 @@ public class SequenceButton<P extends Plugin, MHR extends MenuHolder<P>, MH1 ext
     }
 
     /**
-     * Delegates the click event to the first button, and then to the second button.
-     * The menu holder {@link MHR} is down-casted to both {@link MH1} and {@link MH2}.
+     * クリックイベントを第1ボタンに委譲し、次に第2ボタンに委譲します。
+     * メニューホルダー{@link MHR}は{@link MH1}と{@link MH2}の両方にダウンキャストされます。
      *
      * @param holder the MenuHolder
      * @param event the InventoryClickEvent
@@ -55,7 +55,7 @@ public class SequenceButton<P extends Plugin, MHR extends MenuHolder<P>, MH1 ext
     }
 
     /**
-     * Get the icon stack.
+     * アイコンスタックを取得します。
      * @return the icon of the first button
      */
     @Override
@@ -64,10 +64,10 @@ public class SequenceButton<P extends Plugin, MHR extends MenuHolder<P>, MH1 ext
     }
 
     /**
-     * Delegates the onAdd callback to the first and second button - in that order.
-     * @param holder the holder to which this button is added
-     * @param slot the position in the menu
-     * @return whether both buttons' onAdd callbacks returned true
+     * onAddコールバックを第1ボタンと第2ボタンに委譲する（順不同）。
+     * @param holder このボタンが追加されるホルダー
+     * @param slot メニューの中の位置
+     * @return 両ボタンのonAddコールバックがtrueを返したかどうか
      * @see MenuHolder#setButton(int, MenuButton) 
      */
     @Override
@@ -77,10 +77,10 @@ public class SequenceButton<P extends Plugin, MHR extends MenuHolder<P>, MH1 ext
     }
 
     /**
-     * Delegates the onRemove callback to the second and first button - in that order.
-     * @param holder the holder from which this button is removed
-     * @param slot the position in the menu
-     * @return whether both buttons' onRemove callbacks returned true
+     * onRemoveコールバックを第2ボタンと第1ボタンの順に委譲する。
+     * @param holder このボタンが取り出されるホルダー
+     * @param slot メニューの中の位置
+     * @return 両ボタンのonRemoveコールバックがtrueを返したかどうか
      * @see MenuHolder#unsetButton(int)
      */
     @Override

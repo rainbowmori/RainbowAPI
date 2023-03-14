@@ -6,7 +6,6 @@ import github.rainbowmori.rainbowapi.object.ui.button.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.Plugin;
 
 import java.lang.ref.WeakReference;
@@ -14,9 +13,9 @@ import java.util.*;
 import java.util.function.BiConsumer;
 
 /**
- * A GuiInventoryHolder that only responds to clicks in the top inventory of the {@link InventoryView}.
+ * {@link org.bukkit.inventory.InventoryView}のトップインベントリのクリックにのみ反応するGuiInventoryHolderです。
  * <br>
- * Functionality of clicks is passed to the registered {@link MenuButton}s through their {@link MenuButton#onClick(MenuHolder, InventoryClickEvent)} methods.
+ * クリックの機能は、登録された{@link MenuButton}の{@link MenuButton#onClick(MenuHolder, InventoryClickEvent)}メソッドで渡されます。
  * @param <P> your plugin
  *
  * @see #setButton(int, MenuButton)
@@ -40,7 +39,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     private final LinkedList<WeakReference<ButtonRemoveCallback>> removeButtonCallbacks = new LinkedList<>();
 
     /**
-     * Creates the MenuHolder with the given InventoryType and title.
+     * 指定されたInventoryTypeとタイトルを持つMenuHolderを作成します。
      * @param plugin your plugin
      * @param type the inventory type
      * @param title the title
@@ -50,7 +49,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Creates the MenuHolder with the given InventoryType and title.
+     * 指定されたInventoryTypeとタイトルを持つMenuHolderを作成します。
      * @param plugin your plugin
      * @param type the inventory type
      * @param title the title
@@ -63,7 +62,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Creates the MenuHolder with the given size and title.
+     * 指定されたサイズとタイトルを持つMenuHolderを作成します。
      * @param plugin your plugin
      * @param size the chest size (should be a multiple of 9 and between 9 - 54 (inclusive)
      * @param title the title
@@ -73,7 +72,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Creates the MenuHolder with the given size and title.
+     * 指定されたサイズとタイトルを持つMenuHolderを作成します。
      * @param plugin your plugin
      * @param size the chest size (should be a multiple of 9 and between 9 - 54 (inclusive)
      * @param title the title
@@ -86,7 +85,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Creates the MenuHolder with the given InventoryType.
+     * 指定されたInventoryTypeを持つMenuHolderを作成します。
      * @param plugin your plugin
      * @param type the inventory type
      */
@@ -95,7 +94,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Creates the MenuHolder with the given InventoryType.
+     * 指定されたInventoryTypeを持つMenuHolderを作成します。
      * @param plugin your plugin
      * @param type the inventory type
      * @param guiListener the gui listener that calls the onOpen, onClick and onClose methods
@@ -107,7 +106,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Creates the MenuHolder with the given size.
+     * 指定されたサイズのMenuHolderを作成します。
      * @param plugin your plugin
      * @param size the chest size (should be a multiple of 9 and between 9 - 54 (inclusive)
      */
@@ -116,7 +115,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Creates the MenuHolder with the given size.
+     * 指定されたサイズのMenuHolderを作成します。
      * @param plugin your plugin
      * @param size the chest size (should be a multiple of 9 and between 9 - 54 (inclusive)
      * @param guiListener the gui listener that calls the onOpen, onClick and onClose methods
@@ -128,7 +127,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Creates the MenuHolder with the given inventory.
+     * 指定されたインベントリを持つMenuHolderを作成します。
      * @param plugin your Plugin
      * @param inventory the Inventory
      * @see GuiInventoryHolder#GuiInventoryHolder(Plugin, Inventory)
@@ -138,7 +137,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Creates the MenuHolder with the given inventory.
+     * 指定されたインベントリを持つMenuHolderを作成します。
      * @param plugin your Plugin
      * @param inventory the Inventory
      * @param guiListener the gui listener that calls the onOpen, onClick and onClose methods
@@ -151,9 +150,9 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Called by the framework. Delegates the event to a registered button on the slot, if one is present.
+     * フレームワークから呼び出される。スロットに登録されたボタンがあれば、そのボタンにイベントを委譲する。
      * <p>
-     * Subclasses that override this method should always call {@code super.onClick(event);}.
+     * このメソッドをオーバーライドするサブクラスは、常に {@code super.onClick(event);} を呼び出す必要があります。
      * @param event the inventory click event
      */
     @Override
@@ -166,12 +165,12 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Set a button on a slot.
-     * Subclasses that override this method must either call {@link MenuButton#onAdd(MenuHolder, int)} or call super.setButton(slot, button).
+     * スロットにボタンを設定する。
+     * このメソッドをオーバーライドするサブクラスは、{@link MenuButton#onAdd(MenuHolder, int)}を呼び出すか、super.setButton(slot, button)を呼び出す必要がある。
      *
      * @param slot the slot number
      * @param button the button
-     * @return true if the button could be added to this menu, otherwise false
+     * @return ボタンを追加できる場合はtrue、そうでない場合はfalseを指定する。
      */
     public boolean setButton(int slot, MenuButton<?> button) {
         if (!unsetButton(slot)) return false;
@@ -184,7 +183,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
             var nextReference = iterator.next();
             var nextCallback = nextReference.get();
             if (nextCallback == null) {
-                iterator.remove(); //if a callback was garbage collected, remove it from our list
+                iterator.remove(); //コールバックがガベージコレクションされた場合、リストから削除する。
             } else {
                 if (!nextCallback.onAdd(slot, button)) return false;
             }
@@ -201,9 +200,9 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Gets the button at the given slot.
+     * 指定されたスロットにあるボタンを取得します。
      * @param slot the slot index
-     * @return a button if one is present at the given slot, otherwise null
+     * @return 与えられたスロットにボタンがある場合はボタン、そうでない場合はnull
      */
     public MenuButton<?> getButton(int slot) {
         if (slot < 0 || slot >= buttons.length) return null;
@@ -212,16 +211,16 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Gets the button at the given slot.
+     * 指定されたスロットにあるボタンを取得します。
      * @param slot the slot index
-     * @return the Optional containing a button if one is present at the given slot, otherwise the empty Optional
+     * @return 与えられたスロットにボタンがある場合はそのボタンを含むオプショナル、そうでない場合は空のオプショナル。
      */
     public Optional<MenuButton<?>> getButtonOptionally(int slot) {
         return Optional.ofNullable(getButton(slot));
     }
 
     /**
-     * Get a snapshot of all registered buttons. If no buttons are registered an empty map is returned.
+     * 登録されているすべてのボタンのスナップショットを取得します。ボタンが登録されていない場合は、空のマップが返されます。
      * @return a new SortedMap containing the buttons
      */
     public SortedMap<Integer, MenuButton<?>> getButtons() {
@@ -234,11 +233,12 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Remove a button from a slot.
-     * Subclasses that override this method must either call {@link MenuButton#onRemove(MenuHolder, int)} when a button is removed, or call super.unsetButton(slot).
+     * スロットからボタンを取り外す。
+     * このメソッドをオーバーライドするサブクラスは、ボタンが削除されるときに{@link MenuButton#onRemove(MenuHolder, int)}
+     * を呼び出すか、super.unsetButton(slot)を呼び出す必要がある。
      *
      * @param slot the slot number
-     * @return whether a button was removed successfully from the slot
+     * @return ボタンがスロットから正常に取り出されたかどうか
      */
     public boolean unsetButton(int slot) {
         MenuButton menuButton = this.buttons[slot];
@@ -249,7 +249,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
             var nextReference = iterator.next();
             var nextCallback = nextReference.get();
             if (nextCallback == null) {
-                iterator.remove(); //if a callback was garbage collected, remove it from our list
+                iterator.remove(); //コールバックがガベージコレクションされた場合、リストから削除する。
             } else {
                 if (!nextCallback.onRemove(slot, menuButton)) return false;
             }
@@ -266,8 +266,9 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Removes all buttons from the menu.
-     * Subclasses that override this method must either call {@link MenuButton#onRemove(MenuHolder, int)} when a button is removed, or call super.unsetButton(slot).
+     * メニューからすべてのボタンを削除します。
+     * このメソッドをオーバーライドするサブクラスは、ボタンが削除されるときに{@link MenuButton#onRemove(MenuHolder, int)}
+     * を呼び出すか、super.unsetButton(slot)を呼び出す必要がある。
      */
     public void clearButtons() {
         for (int i = 0; i < this.buttons.length; i++) {
@@ -276,9 +277,9 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Get an iterator that iterates over all buttons in this menu.
+     * すべてのボタンを反復処理するイテレータを取得します。
      * @return a new Iterator
-     * @apiNote Slots without a button are not covered by this iterator.
+     * @apiNote ボタンのないスロットは、このイテレータの対象外です。
      */
     @Override
     public ListIterator<MenuButton<?>> iterator() {
@@ -320,7 +321,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
 
             @Override
             public MenuButton<?> next() {
-                advanceTillNextButton(); //no-op if hasNext has been called before us
+                advanceTillNextButton(); //hasNextが先に呼び出された場合は無効です。
 
                 if (cursor == buttons.length) throw new NoSuchElementException();   //there are no elements to explore
                 if (lastFound == lastReturned) throw new NoSuchElementException();  //if after advancing till the next button we still didn't find a new one
@@ -380,7 +381,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Get a spliterator that covers every button in the menu.
+     * メニューのすべてのボタンをカバーするスプリッタを入手する。
      * @return a new Spliterator that has the characteristics SIZED, SUBSIZED, NONNULL and ORDERED
      * @apiNote Slots without a button are not covered by this spliterator.
      */
@@ -390,10 +391,10 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Perform an action for every button in this menu.
+     * このメニューの各ボタンに対してアクションを実行します。
      *
-     * This action can set or remove buttons in this menu,
-     * meaning that this method will not throw a ConcurrentModificationException when doing so.
+     * このアクションは、このメニューのボタンを設定または削除することができます。
+     * というのは、このメソッドはその際にConcurrentModificationExceptionを投げないという意味です。
      *
      * @param action the action
      */
@@ -405,7 +406,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Add a callback that is invoked when a button is added to this menu.
+     * ボタンが追加されたときに呼び出されるコールバックを追加します。
      *
      * @param buttonAddListener the callback
      * @see #removeButtonAddCallback(ButtonAddCallback)
@@ -416,7 +417,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Add a callback that is invoked when a button is removed from this menu.
+     * ボタンが削除されたときに呼び出されるコールバックを追加します。
      *
      * @param buttonRemoveListener the callback
      * @see #removeButtonRemoveCallback(ButtonRemoveCallback)
@@ -427,31 +428,31 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * Remove a callback that is (no longer) invoked when a button is added to this menu.
+     * ボタンが追加されたときに呼び出されるコールバックを削除します（もうありません）。
      *
      * @param buttonAddListener the callback
      */
     public void removeButtonAddCallback(ButtonAddCallback buttonAddListener) {
         Objects.requireNonNull(buttonAddListener, "Button-Add callback cannot be null");
-        //need to use removeIf since WeakReference doesn't override equals.
-        //this doesn't matter though as the remove operation of LinkedList is O(n) anyway.
+        //WeakReferenceがequalsをオーバーライドしないため、removeIfを使用する必要がある。
+        //LinkedListのremove操作はO(n)なので、これは重要ではありません。
         addButtonCallbacks.removeIf(ref -> buttonAddListener.equals(ref.get()));
     }
 
     /**
-     * Remove a callback that is (no longer) invoked when a button is removed from this menu.
+     * ボタンがメニューから削除されたときに呼び出されるコールバックを削除する（もはや）。
      *
      * @param buttonRemoveListener the callback
      */
     public void removeButtonRemoveCallback(ButtonRemoveCallback buttonRemoveListener) {
         Objects.requireNonNull(buttonRemoveListener, "Button-Remove callback cannot be null");
-        //need to use removeIf since WeakReference doesn't override equals.
-        //this doesn't matter though as the remove operation of LinkedList is O(n) anyway.
+        //WeakReferenceがequalsをオーバーライドしないため、removeIfを使用する必要がある。
+        //LinkedListのremove操作はO(n)なので、これは重要ではありません。
         removeButtonCallbacks.removeIf(ref -> buttonRemoveListener.equals(ref.get()));
     }
 
     /**
-     * A callback that - when registered - is invoked when buttons are added to a menu.
+     * 登録すると、メニューにボタンが追加されたときに呼び出されるコールバックです。
      * @see #addButtonAddCallback(ButtonAddCallback)
      */
     @FunctionalInterface
@@ -462,7 +463,7 @@ public class MenuHolder<P extends Plugin> extends GuiInventoryHolder<P> implemen
     }
 
     /**
-     * A callback that - when registered - is invoked when buttons are removed from a menu.
+     * 登録されている場合、メニューからボタンが削除されたときに呼び出されるコールバックです。
      * @see #addButtonRemoveCallback(ButtonRemoveCallback)
      */
     @FunctionalInterface

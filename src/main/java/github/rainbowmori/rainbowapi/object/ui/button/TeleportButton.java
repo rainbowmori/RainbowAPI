@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Objects;
 
 /**
- * A button that teleports the player to a location when clicked.
+ * クリックすると、プレイヤーをある場所にテレポートさせるボタンです。
  * @param <MH> the menu holder type
  */
 public class TeleportButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
@@ -17,8 +17,8 @@ public class TeleportButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     private Location location;
 
     /**
-     * Protected constructor for TeleportButtons that don't have a fixed destination location.
-     * Subclasses that use this button must override either {@link #getTo()} or {@link #getTo(MenuHolder, InventoryClickEvent)}.
+     * 固定された目的地を持たないTeleportButtonsのためのプロテクテッドコンストラクタです。
+     * このボタンを使用するサブクラスは、{@link #getTo()}または{@link #getTo(MenuHolder, InventoryClickEvent)}のいずれかをオーバーライドする必要があります。
      * @param icon the icon
      */
     protected TeleportButton(ItemStack icon) {
@@ -26,9 +26,9 @@ public class TeleportButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Creates the TeleportButton.
+     * TeleportButtonを作成します。
      * @param icon the icon
-     * @param to the location the player will be teleported to.
+     * @param to プレイヤーがテレポートする場所を指定します。
      */
     public TeleportButton(ItemStack icon, Location to) {
         super(icon);
@@ -36,19 +36,19 @@ public class TeleportButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Teleports the player.
+     * プレイヤーをテレポートさせる。
      * @param menuHolder the menu holder
      * @param event the InventoryClickEvent
      */
     @Override
     public void onClick(MH menuHolder, InventoryClickEvent event) {
         HumanEntity player = event.getWhoClicked();
-        //I bet that teleporting the player closes the inventory, so I better put this in a task.
+        //プレイヤーをテレポートさせるとインベントリが閉じるのは間違いないので、これをタスクに入れたほうがいい。
         player.getServer().getScheduler().runTask(menuHolder.getPlugin(), () -> player.teleport(getTo(menuHolder, event)));
     }
 
     /**
-     * Set the location to which this button will teleport players.
+     * このボタンがプレイヤーをテレポートさせる場所を設定します。
      * @param to the destination location.
      */
     public void setTo(Location to) {
@@ -56,9 +56,9 @@ public class TeleportButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Get the location to which the player will be teleported when the button is clicked.
-     * Subclasses can override this method to use non-constant locations.
-     * The default implementation delegates to {@link #getTo()}.
+     * ボタンがクリックされたときに、プレイヤーがテレポートする場所を取得します。
+     * サブクラスはこのメソッドをオーバーライドして、定数でない位置を使用することができます。
+     * デフォルトの実装では、{@link #getTo()}に委譲されます。
      *
      * @param menuHolder the menu holder
      * @param event the InventoryClickEvent
@@ -69,7 +69,7 @@ public class TeleportButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Get the location to which the player will be teleported.
+     * プレイヤーのテレポート先となる場所を取得します。
      * @return the location
      */
     public Location getTo() {

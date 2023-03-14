@@ -5,8 +5,8 @@ import github.rainbowmori.rainbowapi.object.ui.mask.Pattern;
 import java.util.Objects;
 
 /**
- * This pattern highlights all the edges of an inventory grid as {@link Border#OUTER}.
- * The slots that are not at the edge are marked as {@link Border#INNER}.
+ * このパターンは、インベントリグリッドのすべてのエッジを {@link Border#OUTER}としてハイライトします。
+ * 端にないスロットは {@link Border#INNER}と表示されます。
  */
 public class BorderPattern implements Pattern<BorderPattern.Border> {
 
@@ -26,9 +26,9 @@ public class BorderPattern implements Pattern<BorderPattern.Border> {
     private final int width, height;
 
     /**
-     * Construct a BorderPattern
-     * @param width the width of the inventory grid
-     * @param height the height of the inventory grid
+     * BorderPatternを構築する
+     * @param width インベントリグリッドの幅
+     * @param height インベントリグリッドの高さを指定します。
      */
     public BorderPattern(int width, int height) {
         if (width < 0) throw new IllegalArgumentException("Negative width: " + width);
@@ -39,9 +39,9 @@ public class BorderPattern implements Pattern<BorderPattern.Border> {
     }
 
     /**
-     * Get the symbol.
-     * @param index the inventory slot
-     * @return {@link Border#OUTER} if the slot is at the edge of the grid, {@code null} if the index is out of bounds, otherwise {@link Border#INNER}
+     * シンボルを取得します。
+     * @param index インベントリスロット
+     * @return スロットがグリッドの端にある場合は {@link Border#OUTER}、インデックスが範囲外の場合は {@code null}、それ以外は {@link Border#INNER}となります。
      */
     @Override
     public Border getSymbol(int index) {

@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Represents the shape of an inventory.
+ * インベントリの形状を表します。
  */
 public interface Shape {
 
@@ -87,8 +87,8 @@ public interface Shape {
             case STONECUTTER: return STONECUTTER;
             case WORKBENCH: return WORKBENCH;
             default:
-                //there does not seem to be any horse- or llama inventory type.
-                //I think bukkit should have these. (with isCreatable() returning false).
+                //馬やリャマのインベントリータイプはないようです。
+                //bukkit はこれらを持つべきだと思う。(isCreatable()がfalseを返すように)。
 
                 if (inventory instanceof LlamaInventory) {
                     if (((Llama) inventory.getHolder()).isCarryingChest()) {

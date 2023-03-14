@@ -1,132 +1,196 @@
 package github.rainbowmori.rainbowapi.object.ui.mask;
 
+import github.rainbowmori.rainbowapi.object.ui.button.MenuButton;
 import github.rainbowmori.rainbowapi.object.ui.mask.patterns.BorderPattern;
 import github.rainbowmori.rainbowapi.object.ui.mask.patterns.CheckerboardPattern;
+import github.rainbowmori.rainbowapi.object.ui.menu.MenuHolder;
+import github.rainbowmori.rainbowapi.object.ui.util.IntBiConsumer;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 /**
  * <p>
- * A Pattern represents a mapping from slot to some kind of object.
- * This object type MUST have a proper equals and hashCode implementation.
+ * パターンは、スロットからある種のオブジェクトへのマッピングを表します。
+ * このオブジェクトタイプは、適切なequalsとhashCodeの実装を持たなければなりません（MUST）。
  * </p>
- * <p> Patterns are best used in conjunction with Masks, see {@link Mask#applyInventory(Mask, Pattern, Inventory)},
+ * <p> パターンはマスクと組み合わせて使用するのが最適です, see {@link Mask#applyInventory(Mask, Pattern, Inventory)},
  * {@link Mask#applyMenu(Mask, Pattern, github.rainbowmori.rainbowapi.object.ui.menu.MenuHolder)}.
  * </p>
- * @param <Symbol> the type of object. Typically this is Boolean, Integer, Character or an enum.
+ *
+ * @param <Symbol> オブジェクトの種類を表します。一般的には、Boolean、Integer、Character、またはenumです。
+ *
  * @see Mask
  */
 public interface Pattern<Symbol> {
-
-    /**
-     * Get the symbol. {@code null} may be returned for slots outside this pattern.
-     * @param location the inventory slot index
-     * @return the symbol
-     */
-    public Symbol getSymbol(int location);
-
-    /**
-     * Creates a pattern that is backed by a Map. The returned Pattern will look up its symbols in the map.
-     * @param symbols the map
-     * @param <Symbol> the type of symbols provided by the pattern
-     * @return the pattern
-     */
-    public static <Symbol> Pattern<Symbol> ofMap(Map<Integer, Symbol> symbols) {
-        Objects.requireNonNull(symbols, "symbols map cannot be null");
-
-        return symbols::get;
-    }
-
-    /**
-     * Creates a pattern that is backed by an array. The returned Pattern will look up its symbols in the array.
-     * @param symbols the array
-     * @param <Symbol> the type of symbols provided by the pattern
-     * @return the pattern
-     */
-    public static <Symbol> Pattern<Symbol> ofArray(Symbol[] symbols) {
-        Objects.requireNonNull(symbols, "symbols array cannot be null");
-
-        return i -> symbols[i];
-    }
-
-    /**
-     * Creates a pattern that is backed by a list. The returned Pattern will look up its symbols in the list.
-     * @param symbols the array
-     * @param <Symbol> the type of symbols provided by the pattern
-     * @return the pattern
-     */
-    public static <Symbol> Pattern<Symbol> ofList(List<Symbol> symbols) {
-        Objects.requireNonNull(symbols, "symbols array cannot be null");
-
-        return symbols::get;
-    }
-
-
-    /**
-     * Creates a pattern that maps indices to characters in the provided string.
-     * The newline characters '\r' and '\n' are not counted, making this method ideal to use with Java's Text Blocks.
-     *
-     * @param grid the string-literal form of the pattern
-     * @return the pattern
-     */
-    public static Pattern<Character> ofGrid(String grid) {
-        Objects.requireNonNull(grid, "grid cannot be null");
-
-        Map<Integer, Character> map = new HashMap<>();
-
-        int slot = 0;
-        for (int i = 0; i < grid.length(); i++) {
-            char x = grid.charAt(i);
-            if (x == '\r' || x == '\n') continue;
-            map.put(slot++, x);
-        }
-
-        return ofMap(map);
-    }
-
-    /**
-     * Creates a pattern that maps a slot to {@link BorderPattern.Border#OUTER} if the slot is at the edge of inventory grid.
-     * Other slots are mapped to {@link BorderPattern.Border#INNER}.
-     * Slot indices outside the grid are mapped to null.
-     * @param width the width of the inventory grid
-     * @param height the height of the inventory grid
-     * @return the pattern
-     */
-    public static BorderPattern border(int width, int height) {
-        return new BorderPattern(width, height);
-    }
-
-    /**
-     * A pattern that maps every even slot to {@link CheckerboardPattern.Tile#BLACK} and every odd slot to {@link CheckerboardPattern.Tile#WHITE}.
-     * @param size the size of the inventory
-     * @return the checkerboard pattern
-     */
-    public static CheckerboardPattern checkerboard(int size) {
-        return new CheckerboardPattern(size, CheckerboardPattern.Tile.BLACK);
-    }
-
-    /**
-     * A pattern that maps every slot to its index.
-     * @return the pattern
-     */
-    public static Pattern<Integer> ofIndex() {
-        return Integer::valueOf;
-    }
-
-    /**
-     * A pattern that maps every slot to its slot type.
-     * Indices outside the inventory are mapped to {@link SlotType#OUTSIDE}.
-     * @param shape the shape of the inventory.
-     * @return the pattern
-     */
-    public static Pattern<SlotType> ofShape(Shape shape) {
-        return shape.toPattern();
-    }
+	
+	public static <Symbol> Pattern<Symbol> ofSingle(int location,Symbol symbol) {
+		Objects.requireNonNull(symbol, "symbols map cannot be null");
+		return i -> i == location ? symbol : null;
+	}
+	
+	/**
+	 * Mapで裏打ちされたパターンを作成する。返されたPatternは、そのシンボルをMapで検索します。
+	 *
+	 * @param symbols  the map
+	 * @param <Symbol> パターンが提供するシンボルの種類
+	 *
+	 * @return 名文句
+	 */
+	public static <Symbol> Pattern<Symbol> ofMap(Map<Integer, Symbol> symbols) {
+		Objects.requireNonNull(symbols, "symbols map cannot be null");
+		
+		return symbols::get;
+	}
+	
+	/**
+	 * 配列で裏打ちされたパターンを作成します。返されたパターンは、そのシンボルを配列で検索します。
+	 *
+	 * @param symbols  the array
+	 * @param <Symbol> パターンが提供するシンボルの種類
+	 *
+	 * @return the pattern
+	 */
+	public static <Symbol> Pattern<Symbol> ofArray(Symbol[] symbols) {
+		Objects.requireNonNull(symbols, "symbols array cannot be null");
+		
+		return i -> symbols[i];
+	}
+	
+	/**
+	 * リストで裏打ちされたパターンを作成する。返されたPatternは、そのシンボルをリストで検索します。
+	 *
+	 * @param symbols  the array
+	 * @param <Symbol> パターンが提供するシンボルの種類
+	 *
+	 * @return the pattern
+	 */
+	public static <Symbol> Pattern<Symbol> ofList(List<Symbol> symbols) {
+		Objects.requireNonNull(symbols, "symbols array cannot be null");
+		
+		return symbols::get;
+	}
+	
+	/**
+	 * インデックスを指定された文字列の文字に対応させるパターンを作成します。
+	 * 改行文字である '\r'、'\n'はカウントされないので、Javaのテキストブロックとの併用に適しています。
+	 *
+	 * @param grid パターンの文字列-リテラル形式
+	 *
+	 * @return the pattern
+	 */
+	public static Pattern<Character> ofGrid(String grid) {
+		Objects.requireNonNull(grid, "grid cannot be null");
+		
+		Map<Integer, Character> map = new HashMap<>();
+		
+		int slot = 0;
+		for (int i = 0; i < grid.length(); i++) {
+			char x = grid.charAt(i);
+            if (x == '\r' || x == '\n') {
+                continue;
+            }
+			map.put(slot++, x);
+		}
+		
+		return ofMap(map);
+	}
+	
+	/**
+	 * スロットがインベントリグリッドの端にある場合、スロットを{@link BorderPattern.Border#OUTER}にマップするパターンを作成する。
+	 * その他のスロットは{@link BorderPattern.Border#INNER}にマッピングされます。
+	 * グリッド外のスロットインデックスはNULLにマッピングされます。
+	 *
+	 * @param width  インベントリグリッドの幅
+	 * @param height インベントリグリッドの高さ
+	 *
+	 * @return the pattern
+	 */
+	public static BorderPattern border(int width, int height) {
+		return new BorderPattern(width, height);
+	}
+	
+	/**
+	 * すべての偶数スロットを{@link CheckerboardPattern.Tile#BLACK} に、すべての奇数スロットを{@link CheckerboardPattern.Tile#WHITE} にマッピングするパターンです。
+	 *
+	 * @param size 在庫の大きさ
+	 *
+	 * @return the checkerboard pattern
+	 */
+	public static CheckerboardPattern checkerboard(int size) {
+		return new CheckerboardPattern(size, CheckerboardPattern.Tile.BLACK);
+	}
+	
+	/**
+	 * すべてのスロットをそのインデックスに対応させるパターン。
+	 *
+	 * @return the pattern
+	 */
+	public static Pattern<Integer> ofIndex() {
+		return Integer::valueOf;
+	}
+	
+	/**
+	 * すべてのスロットをそのスロットタイプに対応させるパターンです。
+	 * インベントリ外のインデックスは{@link SlotType#OUTSIDE}にマッピングされます。
+	 *
+	 * @param shape the shape of the inventory.
+	 *
+	 * @return the pattern
+	 */
+	public static Pattern<SlotType> ofShape(Shape shape) {
+		return shape.toPattern();
+	}
+	
+	/**
+	 * シンボルを取得します。このパターン以外のスロットの場合、{@code null}が返されることがある。
+	 *
+	 * @param location the inventory slot index
+	 *
+	 * @return the symbol
+	 */
+	public Symbol getSymbol(int location);
+	
+	default public <Item> void apply(Mask<Symbol, Item> mask,
+									 IntStream indexGenerator, IntBiConsumer<Item> updater) {
+		indexGenerator.forEach(index -> {
+			Symbol symbol = getSymbol(index);
+			var item = mask.getItem(symbol);
+            if (item.isPresent()) {
+                updater.accept(index, item.get());
+            }
+		});
+	}
+	
+	default public void applyInventory(Mask<Symbol, ItemStack> mask,
+									   Inventory inventory) {
+		for (int slot = 0; slot < inventory.getSize(); slot++) {
+			Symbol symbol = getSymbol(slot);
+			var item = mask.getItem(symbol);
+            if (item.isPresent()) {
+                inventory.setItem(slot, item.get());
+            }
+		}
+	}
+	
+	default public <P extends Plugin, MH extends MenuHolder<P>> void applyMenu(Mask<Symbol, ?
+		extends MenuButton<MH>> mask, MH menu) {
+		for (int slot = 0; slot < menu.getInventory().getSize(); slot++) {
+			Symbol symbol = getSymbol(slot);
+			var button = mask.getItem(symbol);
+            if (button.isPresent()) {
+                menu.setButton(slot, button.get());
+            }
+		}
+	}
+	
 }
 
 

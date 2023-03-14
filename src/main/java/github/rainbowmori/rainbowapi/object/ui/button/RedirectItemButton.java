@@ -10,7 +10,7 @@ import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 /**
- * A button that redirects to a different menu and has an icon.
+ * 別メニューにリダイレクトするボタンで、アイコンが付いているもの。
  * @param <MH> the type of your MenuHolder
  */
 public class RedirectItemButton<MH extends MenuHolder<?>> extends ItemButton<MH> implements RedirectButton<MH> {
@@ -18,7 +18,7 @@ public class RedirectItemButton<MH extends MenuHolder<?>> extends ItemButton<MH>
     private final BiFunction<MH, InventoryClickEvent, ? extends Inventory> redirect;
 
     /**
-     * Creates the button with the given icon and redirect.
+     * 指定されたアイコンとリダイレクトを持つボタンを作成します。
      * @param icon the icon
      * @param redirect the redirect
      */
@@ -28,7 +28,7 @@ public class RedirectItemButton<MH extends MenuHolder<?>> extends ItemButton<MH>
     }
 
     /**
-     * Creates the button with the given icon and redirect function.
+     * 指定されたアイコンとリダイレクト関数を持つボタンを作成します。
      * @param icon the icon
      * @param redirect the redirect function
      */
@@ -38,7 +38,7 @@ public class RedirectItemButton<MH extends MenuHolder<?>> extends ItemButton<MH>
     }
 
     /**
-     * Evaluates the redirect.
+     * リダイレクトを評価する。
      * @param menuHolder the MenuHolder
      * @param event the InventoryClickEvent
      * @return the Inventory the player is redirected towards.
@@ -49,9 +49,9 @@ public class RedirectItemButton<MH extends MenuHolder<?>> extends ItemButton<MH>
     }
 
     /**
-     * Redirects the player to the inventory supplied by {@link #to(MenuHolder, InventoryClickEvent)}.
+     * リンク {@link #to(MenuHolder, InventoryClickEvent)}によって供給されるインベントリにプレイヤーをリダイレクトします。
      * <p>
-     * Subclasses that override this method should always call {@code super.onClick(menuHolder, event);}.
+     * このメソッドをオーバーライドするサブクラスは、常に{@code super.onClick(menuHolder, event);}を呼び出す必要があります。
      * @param menuHolder the MenuHolder
      * @param event the InventoryClickEvent
      */

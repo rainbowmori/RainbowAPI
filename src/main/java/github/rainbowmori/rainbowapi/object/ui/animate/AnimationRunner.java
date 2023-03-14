@@ -11,8 +11,8 @@ import java.util.Objects;
 import java.util.OptionalLong;
 
 /**
- * A player for {@link Animation}s.
- * @param <Item> the type of item in the container this animation player is used on
+ * {@link Animation}のプレイヤーです。
+ * @param <Item> このアニメーションプレーヤーが使用されるコンテナ内のアイテムの種類。
  */
 public final class AnimationRunner<Item> {
 
@@ -24,11 +24,11 @@ public final class AnimationRunner<Item> {
     private BukkitTask task = null;
 
     /**
-     * Creates the AnimationRunner.
-     * @param plugin the plugin used to run the animation task
-     * @param animation the animation
-     * @param container the container. This is usually {@link org.bukkit.inventory.Inventory#setItem(int, ItemStack)}
-     *                 or {@link github.rainbowmori.rainbowapi.object.ui.menu.MenuHolder#setButton(int, MenuButton)}.
+     * AnimationRunnerを作成する。
+     * @param plugin アニメーションタスクの実行に使用されるプラグイン
+     * @param animation アニメ
+     * @param container コンテナを設定します。これは通常 {@link org.bukkit.inventory.Inventory#setItem(int, ItemStack)}
+     *                  または {@link github.rainbowmori.rainbowapi.object.ui.menu.MenuHolder#setButton(int, MenuButton)} です。
      */
     public AnimationRunner(Plugin plugin, Animation animation, IntBiConsumer<Item> container) {
         this.plugin = Objects.requireNonNull(plugin, "plugin cannot be null");
@@ -37,8 +37,8 @@ public final class AnimationRunner<Item> {
     }
 
     /**
-     * Get the status of this AnimationRunner.
-     * @return the status
+     * このAnimationRunnerのステータスを取得します。
+     * @return ステータス
      */
     public AnimationState getStatus() {
         if (animation.hasNextFrame()) {
@@ -55,10 +55,10 @@ public final class AnimationRunner<Item> {
     }
 
     /**
-     * Play the animation frames according to a schedule.
-     * @param schedule the schedule
-     * @return true if the animation started successfully, otherwise false
-     * @throws IllegalStateException if the animation is already running.
+     * アニメーションフレームをスケジュールに従って再生する。
+     * @param schedule スケジュール
+     * @return アニメーションが正常に開始された場合はtrue、そうでない場合はfalse
+     * @throws IllegalStateException アニメーションがすでに実行されている場合.
      * @see #getStatus()
      */
     public boolean play(Schedule schedule) {
@@ -73,8 +73,8 @@ public final class AnimationRunner<Item> {
     }
 
     /**
-     * Makes the animation stop playing.
-     * This method does nothing if the animation is already paused or finished.
+     * アニメーションの再生を停止させる。
+     * このメソッドは、アニメーションがすでに一時停止または終了している場合は何もしません。
      */
     public void stop() {
         if (status != AnimationState.FINISHED) {
@@ -84,7 +84,7 @@ public final class AnimationRunner<Item> {
     }
 
     /**
-     * Resets the animation, making the player ready again to start over from the beginning.
+     * アニメーションをリセットして、もう一度最初からやり直せる状態にします。
      */
     public void reset() {
         cancelTask();
@@ -93,17 +93,17 @@ public final class AnimationRunner<Item> {
     }
 
     private boolean runSchedule(Schedule schedule) {
-        //try to short-circuit a few common schedule structures
+        //一般的なスケジュール構造をショートカットしてみる
         CommonRunnable sr = tryComputeCommonRunnable(schedule);
         boolean specialCased = false;
         if (sr != null) {
-            //at least we got a ScheduleRunnable successfully
-            //now let's try to run it (this might fail)
+            //少なくともScheduleRunnableは正常に取得できました。
+            //(失敗するかもしれません)
             specialCased = trySpecialCaseRun(sr, schedule);
         }
 
         if (!specialCased) {
-            //fallback, we couldn't special-case a working CommonRunnable for the schedule.
+            //fallback では、スケジュール用の CommonRunnable を特別に用意することができませんでした。
             tryFallbackRun(schedule);
         }
 

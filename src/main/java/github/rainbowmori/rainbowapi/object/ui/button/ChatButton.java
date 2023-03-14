@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Objects;
 
 /**
- * A button that makes the player who clicks it say a message in chat.
+ * クリックしたプレイヤーにチャットでメッセージを言わせるボタンです。
  *
  * @param <MH> the menu holder type
  */
@@ -19,8 +19,8 @@ public class ChatButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     private String message;
 
     /**
-     * Protected constructor for ChatButtons that wish to use non-constant chat messages.
-     * Subclasses that use this constructor must override either {@link #getMessage()} or {@link #getMessage(MenuHolder, InventoryClickEvent)}.
+     * 定数でないチャットメッセージを使用したい ChatButtons のためのプロテクテッドコンストラクタです。
+     * このコンストラクタを使用するサブクラスは、{@link #getMessage()}または{@link #getMessage(MenuHolder, InventoryClickEvent)}のいずれかをオーバーライドしなければならない。
      * @param icon the icon
      */
     protected ChatButton(ItemStack icon) {
@@ -28,7 +28,7 @@ public class ChatButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Creates the ChatButton.
+     * ChatButtonを作成します。
      *
      * @param icon the icon
      * @param message the chat message
@@ -39,7 +39,7 @@ public class ChatButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Creates the ChatButton. The display name of the icon will be set to the message.
+     * ChatButtonを作成します。アイコンの表示名は、メッセージに設定されます。
      *
      * @param material the icon material
      * @param message the chat message
@@ -49,7 +49,7 @@ public class ChatButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Makes the player who clicked the button say the message in chat.
+     * ボタンをクリックしたプレイヤーに、チャットでメッセージを言わせる。
      *
      * @param menuHolder the menu holder
      * @param event the InventoryClickEvent
@@ -63,7 +63,7 @@ public class ChatButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Set the chat message.
+     * チャットメッセージを設定します。
      * @param message the message
      */
     public void setMessage(String message) {
@@ -71,9 +71,9 @@ public class ChatButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     }
 
     /**
-     * Compute the chat message that will be sent by {@link #onClick(MenuHolder, InventoryClickEvent)}.
-     * Subclasses can override this method for chat messages that are not constant.
-     * The default implementation delegates to {@link #getMessage()}.
+     * {@link #onClick(MenuHolder, InventoryClickEvent)}によって送信されるチャットメッセージを計算します。
+     * サブクラスは、一定でないチャットメッセージのためにこのメソッドをオーバーライドすることができます。
+     * デフォルトの実装では、{@link #getMessage()}に委譲されます。
      *
      * @param menuHolder the menu holder
      * @param event the InventoryClickEvent

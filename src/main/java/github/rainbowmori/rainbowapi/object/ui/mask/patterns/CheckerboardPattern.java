@@ -5,8 +5,8 @@ import github.rainbowmori.rainbowapi.object.ui.mask.Pattern;
 import java.util.Objects;
 
 /**
- * A checkerboard pattern alternates between black and white tiles.
- * This implementation is very naive because it uses the fact that all inventory grids in minecraft have an odd number of columns (width).
+ * checkerboardのタイルが白と黒で交互に並んでいます。
+ * この実装は、マインクラフトのすべてのインベントリグリッドの列数（幅）が奇数であるという事実を利用しているため、非常に素朴なものです。
  */
 public class CheckerboardPattern implements Pattern<CheckerboardPattern.Tile> {
 
@@ -42,9 +42,9 @@ public class CheckerboardPattern implements Pattern<CheckerboardPattern.Tile> {
     }
 
     /**
-     * Construct a CheckerboardPattern.
-     * @param size the size of the inventory grid
-     * @param startWith the colour of the first tile.
+     * CheckerboardPatternを構築する。
+     * @param size インベントリグリッドの大きさ
+     * @param startWith 最初のタイルの色です。
      */
     public CheckerboardPattern(int size, Tile startWith) {
         if (size < 0) throw new IllegalArgumentException("negative size: " + size);
@@ -55,9 +55,9 @@ public class CheckerboardPattern implements Pattern<CheckerboardPattern.Tile> {
     }
 
     /**
-     * Get the tile at a given index.
-     * @param index the slot's index
-     * @return the tile at the slot, or null if the index is below 0 or larger than the grid size
+     * 指定されたインデックスのタイルを取得する。
+     * @param index スロットのインデックス
+     * @return スロットのタイル，またはインデックスが0以下またはグリッドサイズより大きい場合はNULL．
      */
     @Override
     public Tile getSymbol(int index) {
@@ -66,8 +66,8 @@ public class CheckerboardPattern implements Pattern<CheckerboardPattern.Tile> {
     }
 
     /**
-     * Get a checkerboard pattern that is the inverse of this pattern (all white and black tiles are swapped).
-     * @return the inverse pattern
+     * このパターンの逆（白と黒のタイルがすべて入れ替わる）であるチェッカーボードパターンを取得します。
+     * @return 逆パターン
      */
     public CheckerboardPattern inverse() {
         if (inverse == null) {

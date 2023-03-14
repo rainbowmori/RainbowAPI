@@ -8,9 +8,9 @@ import org.bukkit.inventory.Inventory;
 public interface RedirectButton<MH extends MenuHolder<?>> extends MenuButton<MH> {
 
     /**
-     * Callback that is invoked when the button is clicked.
-     * After one tick the player's inventory will close and the inventory supplied by
-     * {@link #to(MenuHolder, InventoryClickEvent)} will be opened.
+     * ボタンがクリックされたときに呼び出されるコールバックです。
+     * 1回クリックすると、プレイヤーのインベントリは閉じられ、インベントリに供給された
+     * {@link #to(MenuHolder, InventoryClickEvent)}が開かれます。
      *
      * @param holder the MenuHolder
      * @param event the InventoryClickEvent
@@ -27,7 +27,7 @@ public interface RedirectButton<MH extends MenuHolder<?>> extends MenuButton<MH>
     }
 
     /**
-     * Get the inventory to which this button redirects.
+     * このボタンがリダイレクトするインベントリを取得します。
      *
      * @param MenuHolder the MenuHolder
      * @param event the InventoryClickEvent

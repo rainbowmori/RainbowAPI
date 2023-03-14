@@ -7,14 +7,14 @@ import org.bukkit.conversations.ConversationAbandonedListener;
 import org.bukkit.conversations.ConversationFactory;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerChatInput implements ConversationAbandonedListener {
 
     private final ConversationFactory factory;
 
-    public PlayerChatInput(JavaPlugin plugin, String prefix, boolean cancelable, Prompt prompt) {
+    public PlayerChatInput(Plugin plugin, String prefix, boolean cancelable, Prompt prompt) {
         var factory = new ConversationFactory(plugin).withPrefix(context -> prefix).withFirstPrompt(prompt).
                 withLocalEcho(false);
         if (cancelable) {
@@ -24,15 +24,15 @@ public class PlayerChatInput implements ConversationAbandonedListener {
         this.factory = factory;
     }
 
-    public PlayerChatInput(JavaPlugin plugin, boolean cancelable, Prompt prompt) {
+    public PlayerChatInput(Plugin plugin, boolean cancelable, Prompt prompt) {
         this(plugin, RainbowAPI.apis.get(plugin).prefix, cancelable, prompt);
     }
 
-    public PlayerChatInput(JavaPlugin plugin, boolean cancelable, Prompt prompt, int timeout) {
+    public PlayerChatInput(Plugin plugin, boolean cancelable, Prompt prompt, int timeout) {
         this(plugin, RainbowAPI.apis.get(plugin).prefix, cancelable, prompt, timeout);
     }
 
-    public PlayerChatInput(JavaPlugin plugin, String prefix, boolean cancelable, Prompt prompt, int timeout) {
+    public PlayerChatInput(Plugin plugin, String prefix, boolean cancelable, Prompt prompt, int timeout) {
         this(plugin, prefix, cancelable, prompt);
         this.factory.withTimeout(timeout);
     }

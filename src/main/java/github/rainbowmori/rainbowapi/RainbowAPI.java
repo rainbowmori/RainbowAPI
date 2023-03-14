@@ -59,11 +59,6 @@ public final class RainbowAPI {
 	static void init(RMHome rmHome) {
 		manager.registerEvents(guiListener = GuiListener.getInstance(), rmHome);
 		glowAPI = new GlowingEntities(rmHome);
-		Bukkit.getScheduler().runTask(rmHome, () -> isAllPluginLoaded = true);
-	}
-	
-	public static boolean isIsAllPluginLoaded() {
-		return isAllPluginLoaded;
 	}
 	
 	public static GlowingEntities getGlowAPI() {

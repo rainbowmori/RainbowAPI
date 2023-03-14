@@ -12,8 +12,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * A button that sends a plugin message to the player when clicked.
- * Note that the sendingPlugin still needs to be registered using {@link Server#getMessenger()}.
+ * クリックされるとプレイヤーにプラグインメッセージを送信するボタンです。
+ * なお、sendingPluginは、{@link Server#getMessenger()}を使用して登録する必要があります。
  * @param <MH> the menu holder type.
  */
 public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
@@ -23,9 +23,9 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     private byte[] pluginMessage;
 
     /**
-     * Protected constructor for PluginMessageButtons without a constant plugin message.
-     * Subclasses that use this constructor must override {@link #getSendingPlugin()}, {@link #getChannel(MenuHolder, InventoryClickEvent)}
-     * and {@link #getPluginMessage(MenuHolder, InventoryClickEvent)}, or their corresponding no-arg equivalents.
+     * 定数のプラグインメッセージを持たない PluginMessageButtons のためのプロテクテッドコンストラクタです。
+     * このコンストラクタを使用するサブクラスは、{@link #getSendingPlugin()}, {@link #getChannel(MenuHolder, InventoryClickEvent)}をオーバーライドしなければなりません。
+     * と{@link #getPluginMessage(MenuHolder, InventoryClickEvent)}、またはそれに対応する引数なしの同等品。
      * @param icon the icon of the buoon
      */
     protected PluginMessageButton(ItemStack icon) {
@@ -33,8 +33,8 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     }
 
     /**
-     * Protected constructor for PluginMessageButtons without a constant plugin message.
-     * Subclasses that use this constructor must override either {@link #getPluginMessage()} or {@link #getPluginMessage(MenuHolder, InventoryClickEvent)}.
+     * 定数のプラグインメッセージを持たない PluginMessageButtons のためのプロテクテッドコンストラクタです。
+     * このコンストラクタを使用するサブクラスは、{@link #getPluginMessage()} または {@link #getPluginMessage(MenuHolder, InventoryClickEvent)} のいずれかをオーバーライドしなければならない。
      * @param icon the icon of the button
      * @param sendingPlugin the plugin that sends the plugin message
      * @param channel the channel on which the plugin message is sent
@@ -46,7 +46,7 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     }
 
     /**
-     * Creates the PluginMessageButton.
+     * PluginMessageButton を作成します。
      * @param icon the icon of the button
      * @param plugin the plugin that sends the plugin message
      * @param channel the channel on which the plugin message is sent
@@ -58,7 +58,7 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     }
 
     /**
-     * Sends the plugin message to the player.
+     * プレイヤーにプラグインメッセージを送信します。
      * @param menuHolder the menu holder
      * @param event the InventoryClickEvent
      */
@@ -73,7 +73,7 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     }
 
     /**
-     * Set the plugin message
+     * プラグインメッセージを設定する
      * @param pluginMessage the plugin message
      */
     public void setPluginMessage(byte[] pluginMessage) {
@@ -81,7 +81,7 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     }
 
     /**
-     * Set the plugin that sends the plugin messages.
+     * プラグインメッセージを送信するプラグインを設定します。
      * @param sendingPlugin the sending plugin
      */
     public void setSendingPlugin(Plugin sendingPlugin) {
@@ -89,7 +89,7 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     }
 
     /**
-     * Set the channel over which plugin messages are sent.
+     * プラグインメッセージを送信するチャンネルを設定します。
      * @param channel the channel
      */
     public void setChannel(String channel) {
@@ -97,7 +97,7 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     }
 
     /**
-     * Get the plugin message.
+     * プラグインメッセージを取得します。
      * @param menuHolder the menu holder
      * @param event the InventoryClickEvent
      * @return the plugin message
@@ -107,7 +107,7 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     }
 
     /**
-     * Compute the sending plugin for non-constant plugin messages.
+     * 定数でないプラグインメッセージの送信プラグインを計算する。
      * @param menuHolder the menu holder
      * @param event the InventoryClickEvent
      * @return the plugin that sends the plugin message.
@@ -117,7 +117,7 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     }
 
     /**
-     * Computes the channel for non-constant plugin messages.
+     * 定数でないプラグインメッセージのチャネルを計算する。
      * @param menuHolder the menu holder
      * @param event the InventoryClickEvent
      * @return the channel
@@ -127,7 +127,7 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     }
 
     /**
-     * Get the plugin message.
+     * プラグインメッセージを取得します。
      * @return the plugin message
      */
     public byte[] getPluginMessage() {
@@ -135,7 +135,7 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     }
 
     /**
-     * Get the plugin that sends the plugin message.
+     * プラグインメッセージを送信するプラグインを取得します。
      * @return the plugin
      */
     public Plugin getSendingPlugin() {
@@ -143,7 +143,7 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     }
 
     /**
-     * Get the channel over which plugin messages are sent.
+     * プラグインメッセージが送信されるチャンネルを取得します。
      * @return the channel
      */
     public String getChannel() {
@@ -151,7 +151,7 @@ public class PluginMessageButton<MH extends MenuHolder<?>> extends ItemButton<MH
     }
 
     /**
-     * Commands that can be sent to BungeeCord.
+     * BungeeCordに送ることができるコマンドです。
      * @see <a href="https://www.spigotmc.org/wiki/bukkit-bungee-plugin-messaging-channel/">BungeeCord plugin messaging channel wiki</a>
      */
     public static class BungeeCord {

@@ -5,15 +5,15 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * A button that can sit in a {@link MenuHolder}.
- * @param <MH> the specific MenuHolder type
+ * {@link MenuHolder} に置くことができるボタン。
+ * @param <MH> the menu holder type
  */
 public interface MenuButton<MH extends MenuHolder<?>> {
 
     /**
-     * Callback that is called when this button is clicked.
+     * このボタンがクリックされたときに呼び出されるコールバック
      * <p>
-     * The default implementation does nothing.
+     * デフォルトの実装では、何もしません
      *
      * @param holder the MenuHolder
      * @param event the InventoryClickEvent
@@ -22,9 +22,9 @@ public interface MenuButton<MH extends MenuHolder<?>> {
     }
 
     /**
-     * The icon of the button.
+     * ボタンのアイコン
      * <p>
-     * The default implementation returns null.
+     * デフォルトの実装ではnullが返されます
      *
      * @return the icon
      */
@@ -33,11 +33,11 @@ public interface MenuButton<MH extends MenuHolder<?>> {
     }
 
     /**
-     * Called when the button is added to the menu.
+     * メニューにボタンが追加されたときに呼び出される
      *
      * @param menuHolder the menu
-     * @param slot the position in the menu
-     * @return whether the button could be added, true by default
+     * @param slot 設置するslot
+     * @return ボタンが追加されたかどうか、デフォルトでは true
      * @see MenuHolder#setButton(int, MenuButton)
      */
     public default boolean onAdd(MH menuHolder, int slot) {
@@ -45,12 +45,12 @@ public interface MenuButton<MH extends MenuHolder<?>> {
     }
 
     /**
-     * Called when the button is removed from the menu.
+     * ボタンがメニューから削除されたときに呼び出される
      *
      * @param menuHolder the menu
-     * @param slot the position in the menu
-     * @return whether the button could be removed, true by default
-     * @see MenuHolder#unsetButton(int) 
+     * @param slot 削除するslot
+     * @return ボタンが削除される可能性がある、デフォルトはtrue
+     * @see MenuHolder#unsetButton(int)
      */
     public default boolean onRemove(MH menuHolder, int slot) {
         return true;

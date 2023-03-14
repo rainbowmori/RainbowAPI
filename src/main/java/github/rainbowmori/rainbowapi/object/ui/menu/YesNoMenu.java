@@ -14,9 +14,9 @@ import org.bukkit.plugin.Plugin;
 import java.util.function.Consumer;
 
 /**
- * A menu that prompts the player to confirm or cancel an action.
- * This menu closes when the yes-button or no-button is clicked.
- * If the action to be performed is null, nothing will happen.
+ * アクションの確認やキャンセルを促すメニューのこと。
+ * このメニューは、「はい」ボタンまたは「いいえ」ボタンがクリックされたときに閉じます。
+ * 実行するアクションがNULLの場合、何も起こりません。
  * @param <P> your plugin's type
  */
 public class YesNoMenu<P extends Plugin> extends MenuHolder<P> {
@@ -26,7 +26,7 @@ public class YesNoMenu<P extends Plugin> extends MenuHolder<P> {
     private static final ItemStack NO_STACK = new ItemBuilder(Material.RED_CONCRETE).name("No - cancel").build();
 
     /**
-     * Callbacks for the yes-button and no-button
+     * はいボタン、いいえボタンのコールバックについて
      */
     protected Consumer<InventoryClickEvent> yesAction, noAction;
 

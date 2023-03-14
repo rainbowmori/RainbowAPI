@@ -8,8 +8,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * A button that can be toggled.
- * The button can be in the enabled or disabled state.
+ * トグル可能なボタンです。
+ * ボタンは、有効な状態でも無効な状態でもかまいません。
  *
  * @param <MH> the menu holder type
  * @see #beforeToggle(MenuHolder, InventoryClickEvent)
@@ -19,7 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class ToggleButton<MH extends MenuHolder<?>> extends CycleButton<Boolean, MH> {
 
     /**
-     * Creates the toggle button with the given icon. The button is toggled off by default.
+     * 指定されたアイコンのトグルボタンを作成します。デフォルトではトグルボタンはオフになっています。
      * @param icon the icon
      */
     public ToggleButton(ItemStack icon) {
@@ -27,7 +27,7 @@ public class ToggleButton<MH extends MenuHolder<?>> extends CycleButton<Boolean,
     }
 
     /**
-     * Creates the toggle button with the given icon and toggle-state.
+     * 指定されたアイコンとtoggle-stateを持つトグルボタンを作成します。
      * @param icon the icon
      * @param enabled whether the icon is enabled from the start
      */
@@ -36,7 +36,7 @@ public class ToggleButton<MH extends MenuHolder<?>> extends CycleButton<Boolean,
     }
 
     /**
-     * Get whether this button is toggled on.
+     * このボタンがトグルオンになっているかどうかを取得します。
      * @return true if this button is toggled on, otherwise false
      */
     public final boolean isEnabled() {
@@ -44,10 +44,10 @@ public class ToggleButton<MH extends MenuHolder<?>> extends CycleButton<Boolean,
     }
 
     /**
-     * Determines what the icon should look like.
-     * Implementations can override this method.
+     * アイコンの外観を決定します。
+     * 実装では、このメソッドをオーバーライドすることができます。
      * @param menuHolder the inventory holder for the menu
-     * @param event the InventoryClickEvent that caused the button to toggle
+     * @param event ボタンがトグルする原因となった InventoryClickEvent。
      * @return the updated icon.
      */
     @Override

@@ -1,24 +1,24 @@
 package github.rainbowmori.rainbowapi.object.ui.animate;
 
 /**
- * A status for a {@link AnimationRunner}.
+ * {@link AnimationRunner}のステータスです。
  */
 public enum AnimationState {
 
     /**
-     * Indicates that the animation runner has not started playing the animation yet.
+     * アニメーションランナーがまだアニメーションの再生を開始していないことを示す。
      */
     NOT_STARTED,
     /**
-     * Indicates that the animation runner is currently busy running the animation.
+     * アニメーションランナーが、現在アニメーションの実行に追われていることを示す。
      */
     RUNNING,
     /**
-     * Indicates that the animation has been interrupted using a call to {@link AnimationRunner#stop()}.
+     * アニメーションが{@link AnimationRunner#stop()}の呼び出しで中断されたことを示す。
      */
     PAUSED,
     /**
-     * Indicates that the animation is done playing. This can happen when the animation is out of frames.
+     * アニメーションの再生が終了したことを示す。これは、アニメーションのフレームが切れたときに起こることがある。
      */
     FINISHED;
 

@@ -25,39 +25,61 @@ public class Util {
 	
 	public static final PrefixUtil util = RMHome.getRainbowAPI().prefixUtil;
 	
+	/**
+	 * Object を String に変換してから{@link Component}に変換します
+	 * @param str 変換対象
+	 * @return 変換物
+	 */
 	public static Component mm(Object str) {
 		return IsObjectUtil.IsComponent(str) ? ((Component) str) :
 			MiniMessage.miniMessage().deserialize(String.valueOf(str)).decoration(TextDecoration.ITALIC, false);
 	}
 	
+	/**
+	 * コマンドをコンソールで実行
+	 * @param command command string (no /)
+	 */
+	
 	public static void consoleCommand(String command) {
 		Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
 	}
 	
+	/**
+	 * <red>と&cのadventureとvanillaに対応したものです
+	 * @param str str
+	 * @return component
+	 */
 	public static Component component(String str) {
 		return Util.mm(vanillaToMM(str));
 	}
 	
-	public static void send(UUID uuid, String str) {
+	/**
+	 * send to uuid's player
+	 * @param uuid player's uuid
+	 * @param str send text
+	 */
+	
+	public static void send(UUID uuid, Object str) {
 		send(Bukkit.getPlayer(uuid), str);
 	}
 	
-	public static void send(CommandSender sender, String str) {
+	
+	/**
+	 * send to sender
+	 * @param sender sender
+	 * @param str send text
+	 */
+	public static void send(CommandSender sender, Object str) {
 		if (sender != null) {
 			sender.sendMessage(Util.mm(str));
 		}
 	}
 	
-	public static void send(UUID uuid, Component str) {
-		send(Bukkit.getPlayer(uuid), str);
-	}
-	
-	public static void send(CommandSender sender, Component str) {
-		if (sender != null) {
-			sender.sendMessage(str);
-		}
-	}
-	
+	/**
+	 * execute command
+	 * @param execute player
+	 * @param command command
+	 */
 	public static void executeCommand(Player execute, String command) {
 		if (execute.isOp()) {
 			execute.performCommand(command);
@@ -71,32 +93,60 @@ public class Util {
 		}
 	}
 	
+	/**
+	 * &c to <red>
+	 * @param str string
+	 * @return change
+	 */
+	
 	public static String vanillaToMM(String str) {
 		StringBuilder builder = new StringBuilder();
 		char[] b = str.toCharArray();
-		for (int i = 0; i < b.length-1; i++) {
+		for (int i = 0; i < b.length - 1; i++) {
 			char c = b[i + 1];
 			if (b[i] == '&' && "0123456789AaBbCcDdEeFfKkLlMmNnOoRrXx".indexOf(c) > -1) {
 				builder.append('<').append(ChatColor.getByChar(c).name().toLowerCase()).append('>');
 				continue;
 			}
-			if (i-1 > -1 && b[i - 1] != '&') {
+			if (i - 1 > -1) {
+				if (b[i - 1] != '&') {
+					builder.append(b[i]);
+				}
+			} else {
 				builder.append(b[i]);
 			}
 		}
-		if (b.length-2 > -1 && b[b.length-2] != '&') {
-			builder.append(b[b.length-1]);
+		if (b.length - 2 > -1 && b[b.length - 2] != '&') {
+			builder.append(b[b.length - 1]);
 		}
 		return builder.toString();
 	}
+	
+	/**
+	 * &c to component
+	 * @param str string
+	 * @return component
+	 */
 	
 	public static Component legacy(String str) {
 		return LegacyComponentSerializer.legacyAmpersand().deserializeOrNull(str);
 	}
 	
+	/**
+	 * vanilla color convert
+	 * @param str string
+	 * @return convert
+	 */
+	
 	public static String cc(String str) {
 		return ChatColor.translateAlternateColorCodes('&', str);
 	}
+	
+	/**
+	 * § to &
+	 * @param str string
+	 * @return convert
+	 */
 	
 	public static String toAndChatColor(String str) {
 		char[] b = str.toCharArray();
@@ -140,6 +190,12 @@ public class Util {
 		return serialize;
 	}
 	
+	
+	/**
+	 * component <red> to &c
+	 * @param str component
+	 * @return string
+	 */
 	public static String serializeLegacy(Component str) {
 		return LegacyComponentSerializer.legacyAmpersand().serializeOrNull(str);
 	}
@@ -171,6 +227,14 @@ public class Util {
 		}
 	}
 	
+	
+	/**
+	 * show time of seconds title
+	 * @param player player
+	 * @param title tile
+ 	 * @param subtitle subtitle
+	 * @param seconds seconds
+	 */
 	public static void title(Player player, Object title, Object subtitle, int seconds) {
 		if (player != null && player.isOnline()) {
 			player.showTitle(Title.title(Util.mm(Objects.requireNonNullElse(title, "")),

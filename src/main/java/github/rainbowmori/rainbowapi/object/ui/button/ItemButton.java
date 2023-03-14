@@ -8,29 +8,30 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 /**
- * A button with an icon.
+ * アイコンが付いたボタンです。
  *
- * @param <MH> the type of the menu
+ * @param <MH> the menu holder type
  */
 public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
 
     /**
-     * The representation of this button.
-     * Buttons that wish to update their inventories should use {@link #setIcon(ItemStack)} instead.
+     * このボタンのアイコンです
+     * アイコンを更新するには
+     * inventoryを更新したいボタンは、代わりに {@link #setIcon(ItemStack)} を使用してください。
      */
     protected ItemStack stack;
 
     private final WeakHashMap<MH, Set<Integer>> inventoriesContainingMe = new WeakHashMap<>();
 
     /**
-     * Creates an ItemButton without an icon.
+     * アイコンを持たないItemButtonを作成します。
      */
     protected ItemButton() {
     }
 
     /**
-     * Creates the ItemButton with the given ItemStack.
-     * The button uses a clone of the ItemStack.
+     * 指定されたItemStackを持つItemButtonを作成します。
+     * ボタンはItemStackのクローンを使用します。
      * @param stack the icon
      */
     public ItemButton(ItemStack stack) {
@@ -38,8 +39,8 @@ public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
     }
 
     /**
-     * Gets the icon.
-     * @return a clone of the ItemStack that was provided in the constructor, or null if there is no icon.
+     * アイコンを取得します
+     * @return コンストラクタで提供されたItemStackのクローン、またはアイコンがない場合はnull。
      */
     @Override
     public final ItemStack getIcon() {
@@ -47,7 +48,7 @@ public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
     }
 
     /**
-     * Set the icon stack. Menus that contain this button will have their inventories update accordingly.
+     * アイコンスタックを設定します。このボタンを含むメニューは、それに応じてインベントリが更新されます。
      * @param icon the icon
      */
     public final void setIcon(ItemStack icon) {
@@ -56,13 +57,13 @@ public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
     }
 
     /**
-     * Called when this button is added to the menu.
-     * The ItemButton maintains a cache of menus that it is contained in.
-     * When the icon is updated though {@link #setIcon(ItemStack)}, it updates the item stack in those inventories.
+     * このボタンがメニューに追加されたときに呼び出される。
+     * ItemButton は、自身が含まれるメニューのキャッシュを保持する。
+     * また、{@link #setIcon(ItemStack)} によってアイコンが更新されると、それらのインベントリ内のアイテムスタックが更新されます。
      *
      * @param menuHolder the menu
-     * @param slot the position in the menu
-     * @return whether the button can be added to the menu
+     * @param slot 設置するslot
+     * @return ボタンがメニューに追加できるかどうか
      */
     @Override
     public final boolean onAdd(MH menuHolder, int slot) {
@@ -70,11 +71,11 @@ public class ItemButton<MH extends MenuHolder<?>> implements MenuButton<MH> {
     }
 
     /**
-     * Removes the menu from the cache of menus that it is contained in.
+     * メニューが含まれているメニューのキャッシュからメニューを削除する。
      *
-     * @param menuHolder the menu from which this button is removed
-     * @param slot the position in the menu
-     * @return whether the button can be removed from the menu
+     * @param menuHolder the menu
+     * @param slot 削除するslot
+     * @return ボタンがメニューから外せるかどうか
      */
     @Override
     public final boolean onRemove(MH menuHolder, int slot) {
