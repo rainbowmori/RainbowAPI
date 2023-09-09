@@ -1,0 +1,214 @@
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
+import java.nio.file.FileSystem
+import java.nio.file.FileSystemAlreadyExistsException
+import java.nio.file.FileSystems
+import java.nio.file.Files
+
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'maven-publish'
+}
+
+group = 'github.rainbowmori'
+version = '3.0.0'
+description = 'Rainbow API'
+
+def targetJavaVersion = 17
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release = targetJavaVersion
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = "https://repo.papermc.io/repository/maven-public/" }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven { url = "https://repo.codemc.org/repository/maven-public/" }
+}
+
+def paperAPI = 'io.papermc.paper:paper-api:1.20-R0.1-SNAPSHOT'
+def anvilGUI = 'net.wesjd:anvilgui:1.6.5-SNAPSHOT'
+def commandAPI = 'dev.jorel:commandapi-bukkit-shade:9.0.3'
+def paperLib = 'io.papermc:paperlib:1.0.8'
+def nbtAPI = 'de.tr7zw:item-nbt-api:2.11.3'
+
+def relocates = [
+        'dev.jorel.commandapi': 'github.rainbowmori.rainbowapi.dependencies.commandapi',
+        'io.papermc.lib'      : 'github.rainbowmori.rainbowapi.dependencies.paperlib',
+        'net.wesjd.anvilgui'  : 'github.rainbowmori.rainbowapi.dependencies.anvilgui',
+        'de.tr7zw.changeme.nbtapi'  : 'github.rainbowmori.rainbowapi.dependencies.nbtapi'
+]
+
+dependencies {
+    compileOnly paperAPI
+    testCompileOnly paperAPI
+
+    implementation anvilGUI
+    implementation commandAPI
+    implementation paperLib
+    implementation nbtAPI
+
+    shadow anvilGUI
+    shadow commandAPI
+    shadow paperLib
+    shadow nbtAPI
+}
+
+def buildFileName = "${project.name}.jar"
+
+def multipleDirectory = [
+        projectDir.getParentFile().getParentFile().toString() + '\\1.20_TestServer\\plugins',
+]
+
+tasks.register("copyJar") {
+    doLast {
+        multipleDirectory.each { outputDir ->
+            copy {
+                from "$buildDir\\libs\\$buildFileName"
+                into outputDir
+            }
+        }
+    }
+}
+
+static void withFileSystem(URI uri, callback) {
+    FileSystem fileSystem = null
+    try {
+        fileSystem = FileSystems.newFileSystem(uri, [:])
+        callback(fileSystem)
+    } catch (FileSystemAlreadyExistsException ignored) {
+        fileSystem = FileSystems.getFileSystem(uri)
+        callback(fileSystem)
+    } finally {
+        if (fileSystem != null) {
+            fileSystem.close()
+        }
+    }
+}
+
+task shadowSources {
+    doLast{
+        Charset sourceCharset = StandardCharsets.UTF_8
+        java.nio.file.Path shadowedSourceDir = file("build/tmp/src").toPath()
+
+        delete shadowedSourceDir
+
+        sourceSets.main.java.srcDirs.forEach(srcDir -> {
+            copy{
+                from srcDir
+                into shadowedSourceDir
+            }
+        })
+
+        fileTree(shadowedSourceDir).each { file ->
+            if(file.name.endsWith('.java')) {
+                def content = file.getText('UTF-8')
+                for (Map.Entry<String, String> entry : relocates.entrySet()) {
+                    String originalPackage = entry.getKey()
+                    String shadowedPackage = entry.getValue()
+                    content = content.replaceAll(originalPackage, shadowedPackage)
+                }
+                file.setText(content)
+            }
+        }
+
+        def componentIds = configurations.shadow.incoming.resolutionResult.allDependencies.collect { it.selected.id }
+        def result = dependencies.createArtifactResolutionQuery()
+                .forComponents(componentIds)
+                .withArtifacts(JvmLibrary, SourcesArtifact, JavadocArtifact)
+                .execute()
+
+        for (component in result.resolvedComponents) {
+            component.getArtifacts(SourcesArtifact).each {
+                println "Processing sources for ${component.id}: ${it.file}"
+
+                int sourceFileCounter = 0
+
+                withFileSystem(new URI("jar:" + it.file.toURI())) { sourceJarFileSystem ->
+
+                    zipTree(it.file).visit { element ->
+                        String relativePath = element.relativePath.toString()
+                        if (relativePath.startsWith("META-INF") || element.file.isDirectory() ||
+                                !element.file.getName().endsWith(".java")) {
+                            return
+                        }
+
+                        String content = new String(Files.readAllBytes(element.file.toPath()), sourceCharset)
+                        for (Map.Entry<String, String> entry : relocates.entrySet()) {
+                            String originalPackage = entry.getKey()
+                            String shadowedPackage = entry.getValue()
+                            String originalPath = originalPackage.replace('.', '/')
+                            String shadowedPath = shadowedPackage.replace('.', '/')
+                            if (relativePath.startsWith(originalPath)) {
+                                String shadowedRelativePath = relativePath.replace(originalPath, shadowedPath)
+                                java.nio.file.Path shadowedFile = shadowedSourceDir.resolve(shadowedRelativePath)
+                                if (!Files.exists(shadowedFile.getParent())) {
+                                    Files.createDirectories(shadowedFile.getParent())
+                                }
+                                sourceFileCounter++
+                                content = content.replaceAll(originalPackage, shadowedPackage)
+                                Files.write(shadowedFile, content.getBytes(sourceCharset))
+                            }
+                        }
+                    }
+                }
+
+                println "  added ${sourceFileCounter} files"
+            }
+        }
+
+    }
+}
+
+task sourceJar(type: Jar, dependsOn: shadowSources) {
+    archiveName("${project.name}-sources.jar")
+    from files("build/tmp/src")
+}
+
+
+shadowJar {
+    archiveName(buildFileName)
+    classifier('')
+
+    configurations = [project.configurations.shadow]
+
+    relocates.each { originalPackage, relocatedPackage -> relocate originalPackage, relocatedPackage }
+
+    finalizedBy(/* copyJar,*/ sourceJar)
+}
+
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->
+            project.shadow.component(publication)
+
+            artifact sourceJar { classifier "sources" }
+        }
+    }
+}
+
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}

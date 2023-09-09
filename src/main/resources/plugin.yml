@@ -1,0 +1,8 @@
+name: RainbowAPI
+version: '${version}'
+main: github.rainbowmori.rainbowapi.RainbowAPI
+api-version: '1.20'
+author: rainbowmori
+load: STARTUP
+prefix: RainbowAPI
+description: rainbowmoriが使うライブラリPlugin
