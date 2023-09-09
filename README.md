@@ -45,7 +45,7 @@ repositories {
     maven { url = 'https://jitpack.io' }
 }
 dependencies {
-	implementation 'com.github.rainbowmori:RainbowAPI:master-SNAPSHOT'
+	implementation 'com.github.rainbowmori:RainbowAPI:main-SNAPSHOT'
 }
 ```
 
