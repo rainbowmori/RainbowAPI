@@ -15,16 +15,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 public abstract class RMPlugin extends JavaPlugin {
 
   /**
-   * {@link CustomItem#register(String, Class)},{@link CustomBlock#register(String, Class)} を
+   * {@link CustomItem#register(String, Class)},{@link
+   * CustomBlock#register(String, Class)} を
    * {@link RainbowAPI} が完全にロードされてから読み込むための一時保存先
    */
   static final Map<String, Class<? extends CustomItem>> customItems = new HashMap<>();
   static final Map<String, Class<? extends CustomBlock>> customBlocks = new HashMap<>();
 
-  //CommandAPIで登録されたコマンドまとめ
+  // CommandAPIで登録されたコマンドまとめ
   static final Set<String> registeredCommands = new HashSet<>();
 
-  //プラグイン独自の PrefixUtil
+  // プラグイン独自の PrefixUtil
   protected final PrefixUtil prefixUtil;
 
   /**
@@ -36,22 +37,27 @@ public abstract class RMPlugin extends JavaPlugin {
   }
 
   /**
-   * プラグイン起動時に {@link CustomItem} の登録をする場合はこちらを使用してください
+   * プラグイン起動時に {@link CustomItem}<br>
+   * の登録をする場合はこちらを使用してください
    *
    * @param identifier CustomItemの識別子
    * @param clazz      登録するCustomItemのクラス
    */
-  public void registerItem(String identifier, Class<? extends CustomItem> clazz) {
+  public void registerItem(String identifier,
+      Class<? extends CustomItem> clazz) {
     customItems.put(identifier, clazz);
   }
 
   /**
-   * プラグイン起動時に {@link CustomBlock} の登録をする場合はこちらを使用してください
+   * プラグイン起動時に {@link CustomBlock}
+   * の登録をする場合はこちらを使用してください <br>
+   * {@link RainbowAPI} が完全にロードされてから読み込むための一時保存先
    *
    * @param identifier CustomBlockの識別子
    * @param clazz      登録するCustomBlockのクラス
    */
-  public void registerBlock(String identifier, Class<? extends CustomBlock> clazz) {
+  public void registerBlock(String identifier,
+      Class<? extends CustomBlock> clazz) {
     customBlocks.put(identifier, clazz);
   }
 
@@ -68,7 +74,8 @@ public abstract class RMPlugin extends JavaPlugin {
   public void registerCommand(CommandAPICommand commandAPICommand) {
     registeredCommands.add(commandAPICommand.getName());
     commandAPICommand.register();
-    getPrefixUtil().logDebug("<blue>REGISTER COMMAND " + commandAPICommand.getName());
+    getPrefixUtil().logDebug("<blue>REGISTER COMMAND " +
+        commandAPICommand.getName());
   }
 
   /**
@@ -99,5 +106,4 @@ public abstract class RMPlugin extends JavaPlugin {
   public PrefixUtil getPrefixUtil() {
     return prefixUtil;
   }
-
 }

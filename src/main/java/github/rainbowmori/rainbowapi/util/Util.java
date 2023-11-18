@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -36,8 +37,10 @@ public class Util {
    * @return 変換物
    */
   public static Component mm(Object str) {
-    return str instanceof Component ? ((Component) str) :
-        MiniMessage.miniMessage().deserialize(String.valueOf(str))
+    return str instanceof Component
+        ? ((Component) str)
+        : MiniMessage.miniMessage()
+            .deserialize(String.valueOf(str))
             .decoration(TextDecoration.ITALIC, false);
   }
 
@@ -71,7 +74,6 @@ public class Util {
   public static void send(UUID uuid, Object str) {
     send(Bukkit.getPlayer(uuid), str);
   }
-
 
   /**
    * send to sender
@@ -206,7 +208,6 @@ public class Util {
     return serialize;
   }
 
-
   /**
    * component <red> to &c
    *
@@ -243,7 +244,6 @@ public class Util {
           Util.mm(Objects.requireNonNullElse(subtitle, ""))));
     }
   }
-
 
   /**
    * show time of seconds title

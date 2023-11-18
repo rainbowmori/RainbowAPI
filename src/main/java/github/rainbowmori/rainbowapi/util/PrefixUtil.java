@@ -22,9 +22,9 @@ public class PrefixUtil {
     this.loggerPrefix = Util.mm(loggerPrefix);
   }
 
-
   /**
    * consoleにmessageを送信します
+   * 
    * @param message 送信するメッセージ
    */
   protected final void log(Object message) {
@@ -33,29 +33,34 @@ public class PrefixUtil {
 
   /**
    * 引数のbooleanに寄って送信するかを選択します
-   * @param message 送信するメッセージ
+   * 
+   * @param message  送信するメッセージ
    * @param loggable メッセージを送信するか
    */
-  protected final void log(Object message,boolean loggable) {
+  protected final void log(Object message, boolean loggable) {
     if (loggable) {
       log(message);
     }
   }
 
   /**
-   * consoleにmessageを送信しますが {@link #isInfoEnabled()} がfalseの場合は送信しません
+   * consoleにmessageを送信しますが {@link #isInfoEnabled()}
+   * がfalseの場合は送信しません
+   * 
    * @param message 送信するメッセージ
    */
   public final void logInfo(Object message) {
-    log(getLoggerPrefix().append(Util.mm(message)),isInfoEnabled());
+    log(getLoggerPrefix().append(Util.mm(message)), isInfoEnabled());
   }
 
   /**
    * consoleに[prefix + "DEBUG" + message] を送信します
+   * 
    * @param message 送信するメッセージ
    */
   public final void logWarn(Object message) {
-    log(loggerPrefix.append(getWarn()).append(Util.mm(message)),isWarnEnabled());
+    log(loggerPrefix.append(getWarn()).append(Util.mm(message)),
+        isWarnEnabled());
   }
 
   protected Component getWarn() {
@@ -64,10 +69,12 @@ public class PrefixUtil {
 
   /**
    * consoleに[prefix + "TRACE" + message] を送信します
+   * 
    * @param message 送信するメッセージ
    */
   public final void logTrace(Object message) {
-    log(loggerPrefix.append(getTrace()).append(Util.mm(message)),isTraceEnabled());
+    log(loggerPrefix.append(getTrace()).append(Util.mm(message)),
+        isTraceEnabled());
   }
 
   protected Component getTrace() {
@@ -76,10 +83,12 @@ public class PrefixUtil {
 
   /**
    * consoleに[prefix + "DEBUG" + message] を送信します
+   * 
    * @param message 送信するメッセージ
    */
   public final void logDebug(Object message) {
-    log(loggerPrefix.append(getDebug()).append(Util.mm(message)),isDebugEnabled());
+    log(loggerPrefix.append(getDebug()).append(Util.mm(message)),
+        isDebugEnabled());
   }
 
   protected Component getDebug() {
@@ -88,10 +97,12 @@ public class PrefixUtil {
 
   /**
    * consoleに[prefix + "ERROR" + message] を送信します
+   * 
    * @param message 送信するメッセージ
    */
   public final void logError(Object message) {
-    log(loggerPrefix.append(getError()).append(Util.mm(message)),isErrorEnabled());
+    log(loggerPrefix.append(getError()).append(Util.mm(message)),
+        isErrorEnabled());
   }
 
   protected Component getError() {
@@ -100,6 +111,7 @@ public class PrefixUtil {
 
   /**
    * {@link #logInfo(Object)}
+   * 
    * @return infoを許可するかどうか (default = true)
    */
   public boolean isInfoEnabled() {
@@ -108,6 +120,7 @@ public class PrefixUtil {
 
   /**
    * {@link #logWarn(Object)}
+   * 
    * @return warnを許可するかどうか (default = true)
    */
   public boolean isWarnEnabled() {
@@ -116,6 +129,7 @@ public class PrefixUtil {
 
   /**
    * {@link #logTrace(Object)}
+   * 
    * @return traceを許可するかどうか (default = true)
    */
   public boolean isTraceEnabled() {
@@ -124,6 +138,7 @@ public class PrefixUtil {
 
   /**
    * {@link #logDebug(Object)}
+   * 
    * @return debugを許可するかどうか (default = true)
    */
   public boolean isDebugEnabled() {
@@ -132,6 +147,7 @@ public class PrefixUtil {
 
   /**
    * {@link #logError(Object)}
+   * 
    * @return errorを許可するかどうか (default = true)
    */
   public boolean isErrorEnabled() {
@@ -150,6 +166,7 @@ public class PrefixUtil {
 
   /**
    * {@link #send}
+   * 
    * @return sendを許可するかどうか
    */
   public boolean isSendEnabled() {
@@ -164,6 +181,7 @@ public class PrefixUtil {
 
   /**
    * {@link #Cast(String)}
+   * 
    * @return castを許可するかどうか
    */
   public boolean isCastEnabled() {
@@ -177,5 +195,4 @@ public class PrefixUtil {
   public final Component getLoggerPrefix() {
     return loggerPrefix;
   }
-
 }

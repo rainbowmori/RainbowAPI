@@ -15,21 +15,8 @@ group = 'github.rainbowmori'
 version = '3.0.0'
 description = 'Rainbow API'
 
-def targetJavaVersion = 17
 java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        options.release = targetJavaVersion
-    }
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 repositories {
@@ -40,13 +27,14 @@ repositories {
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
     maven { url = "https://repo.codemc.org/repository/maven-public/" }
+    maven { url "https://libraries.minecraft.net" }
 }
 
-def paperAPI = 'io.papermc.paper:paper-api:1.20-R0.1-SNAPSHOT'
-def anvilGUI = 'net.wesjd:anvilgui:1.6.5-SNAPSHOT'
-def commandAPI = 'dev.jorel:commandapi-bukkit-shade:9.0.3'
+def paperAPI = 'io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT'
+def anvilGUI = 'net.wesjd:anvilgui:1.9.0-SNAPSHOT'
+def commandAPI = 'dev.jorel:commandapi-bukkit-shade:9.2.0'
 def paperLib = 'io.papermc:paperlib:1.0.8'
-def nbtAPI = 'de.tr7zw:item-nbt-api:2.11.3'
+def nbtAPI = 'de.tr7zw:item-nbt-api:2.12.0'
 
 def relocates = [
         'dev.jorel.commandapi': 'github.rainbowmori.rainbowapi.dependencies.commandapi',
@@ -59,10 +47,11 @@ dependencies {
     compileOnly paperAPI
     testCompileOnly paperAPI
 
-    implementation anvilGUI
-    implementation commandAPI
-    implementation paperLib
-    implementation nbtAPI
+    compileOnly anvilGUI
+    compileOnly commandAPI
+    compileOnly paperLib
+    compileOnly nbtAPI
+    compileOnly 'com.mojang:brigadier:1.0.18'
 
     shadow anvilGUI
     shadow commandAPI
@@ -71,21 +60,6 @@ dependencies {
 }
 
 def buildFileName = "${project.name}.jar"
-
-def multipleDirectory = [
-        projectDir.getParentFile().getParentFile().toString() + '\\1.20_TestServer\\plugins',
-]
-
-tasks.register("copyJar") {
-    doLast {
-        multipleDirectory.each { outputDir ->
-            copy {
-                from "$buildDir\\libs\\$buildFileName"
-                into outputDir
-            }
-        }
-    }
-}
 
 static void withFileSystem(URI uri, callback) {
     FileSystem fileSystem = null
@@ -190,17 +164,7 @@ shadowJar {
 
     relocates.each { originalPackage, relocatedPackage -> relocate originalPackage, relocatedPackage }
 
-    finalizedBy(/* copyJar,*/ sourceJar)
-}
-
-publishing {
-    publications {
-        shadow(MavenPublication) { publication ->
-            project.shadow.component(publication)
-
-            artifact sourceJar { classifier "sources" }
-        }
-    }
+    finalizedBy(sourceJar)
 }
 
 
@@ -210,5 +174,15 @@ processResources {
     filteringCharset 'UTF-8'
     filesMatching('plugin.yml') {
         expand props
+    }
+}
+
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->
+            project.shadow.component(publication)
+
+            artifact sourceJar { classifier "sources" }
+        }
     }
 }

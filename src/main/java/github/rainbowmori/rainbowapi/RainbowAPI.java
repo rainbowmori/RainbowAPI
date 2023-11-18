@@ -8,12 +8,12 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import github.rainbowmori.rainbowapi.api.serializer.ItemStackSerializer;
 import github.rainbowmori.rainbowapi.api.serializer.LocationSerializer;
 import github.rainbowmori.rainbowapi.commnad.RainbowAPICommand;
+import github.rainbowmori.rainbowapi.dependencies.ui.GuiListener;
 import github.rainbowmori.rainbowapi.listener.BlockBreak;
 import github.rainbowmori.rainbowapi.listener.CustomListeners;
 import github.rainbowmori.rainbowapi.object.DataManager;
 import github.rainbowmori.rainbowapi.object.customblock.CustomBlock;
 import github.rainbowmori.rainbowapi.object.cutomitem.CustomItem;
-import github.rainbowmori.rainbowapi.dependencies.ui.GuiListener;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -24,11 +24,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 public final class RainbowAPI extends RMPlugin {
 
   /**
-   * {@link Location} and {@link ItemStack} を Serializer and Deserializer できる {@link Gson}
+   * {@link Location} and {@link ItemStack} を Serializer and Deserializer
+   * できる {@link Gson}
    */
-  public static final Gson gson = new GsonBuilder().
-      registerTypeAdapter(ItemStack.class, new ItemStackSerializer()).
-      registerTypeAdapter(Location.class, new LocationSerializer()).create();
+  public static final Gson gson = new GsonBuilder()
+      .registerTypeAdapter(ItemStack.class, new ItemStackSerializer())
+      .registerTypeAdapter(Location.class, new LocationSerializer())
+      .create();
 
   private static DataManager dataManager;
   private static GuiListener guiListener;
@@ -75,7 +77,7 @@ public final class RainbowAPI extends RMPlugin {
 
   @Override
   public void onLoad() {
-    CommandAPI.onLoad(new CommandAPIBukkitConfig(this).initializeNBTAPI(NBTContainer.class, NBTContainer::new));
+    CommandAPI.onLoad(new CommandAPIBukkitConfig(this).initializeNBTAPI(
+        NBTContainer.class, NBTContainer::new));
   }
-
 }
