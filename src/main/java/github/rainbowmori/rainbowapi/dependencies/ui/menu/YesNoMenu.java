@@ -17,7 +17,8 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * アクションの確認やキャンセルを促すメニューのこと。 このメニューは、「はい」ボタンまたは「いいえ」ボタンがクリックされたときに閉じます。 実行するアクションがNULLの場合、何も起こりません。
+ * アクションの確認やキャンセルを促すメニューのこと。 このメニューは、「はい」ボタンまたは「いいえ」ボタンがクリックされたときに閉じます。
+ * 実行するアクションがNULLの場合、何も起こりません。
  *
  * @param <P> your plugin's type
  */
@@ -79,7 +80,7 @@ public class YesNoMenu<P extends Plugin> extends MenuHolder<P> {
    * @param yesAction the action to perform when the yes-button is clicked
    * @param noAction  the action to perform when the no-button is clicked
    * @see GuiInventoryHolder#GuiInventoryHolder(Plugin,
-   * Inventory)
+   *      Inventory)
    */
   public YesNoMenu(P plugin, Inventory inventory, Consumer<InventoryClickEvent> yesAction,
       Consumer<InventoryClickEvent> noAction) {
@@ -89,7 +90,6 @@ public class YesNoMenu<P extends Plugin> extends MenuHolder<P> {
     this.noAction = noAction;
     setupButtons();
   }
-
 
   /**
    * Creates the YesNoMenu.
@@ -105,7 +105,8 @@ public class YesNoMenu<P extends Plugin> extends MenuHolder<P> {
   }
 
   /**
-   * Creates the YesNoMenu. The inventory title defaults to {@code "Are you sure?"}.
+   * Creates the YesNoMenu. The inventory title defaults to
+   * {@code "Are you sure?"}.
    *
    * @param plugin    the plugin
    * @param yesAction the action to perform when the yes-button is clicked
@@ -142,7 +143,8 @@ public class YesNoMenu<P extends Plugin> extends MenuHolder<P> {
   protected void setupButtons() {
     setButton(0, makeButton(true));
     setButton(getInventory().getSize() - 1, makeButton(false));
-    getMiddleItem().ifPresent(itemStack -> setButton((int) (getInventory().getSize() / 2.0), new ItemButton<>(itemStack)));
+    getMiddleItem()
+        .ifPresent(itemStack -> setButton((int) (getInventory().getSize() / 2.0), new ItemButton<>(itemStack)));
   }
 
   public Optional<ItemStack> getMiddleItem() {

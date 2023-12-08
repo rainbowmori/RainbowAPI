@@ -46,7 +46,7 @@ public class GuiListener implements Listener {
    */
   public boolean registerGui(GuiInventoryHolder<?> holder, Inventory inventory) {
     if (holder == inventory.getHolder()) {
-      return true; //yes, reference equality
+      return true; // yes, reference equality
     }
 
     return guiInventories.putIfAbsent(inventory, new WeakReference<>(holder)) == null;
@@ -69,7 +69,7 @@ public class GuiListener implements Listener {
       return null;
     }
 
-    return reference.get(); //can still be null
+    return reference.get(); // can still be null
   }
 
   /**
@@ -80,7 +80,7 @@ public class GuiListener implements Listener {
    * @return ホルダーとインベントリーが登録されているかどうか
    */
   public boolean isGuiRegistered(GuiInventoryHolder<?> holder, Inventory inventory) {
-    return getHolder(inventory) == holder; //そうです、参照等価です。
+    return getHolder(inventory) == holder; // そうです、参照等価です。
   }
 
   /**

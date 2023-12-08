@@ -71,6 +71,7 @@ public class TestCommandExecutor implements TabExecutor, Listener {
 		
 		private final Inventory inventory;
 		
+		@SuppressWarnings("deprecation")
 		public TestInventoryHolder(Server server) {
 			this.inventory = server.createInventory(this, 3 * 9, "Test Inventory");
 		}

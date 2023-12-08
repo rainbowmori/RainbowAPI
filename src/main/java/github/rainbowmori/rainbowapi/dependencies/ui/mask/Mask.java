@@ -127,13 +127,11 @@ class SingleMask<Symbol, Item> implements Mask<Symbol, Item> {
     }
   }
 
-
   @Override
   public int hashCode() {
     return Objects.hashCode(symbol) + Objects.hashCode(item);
   }
 
-  @SuppressWarnings("rawtypes")
   @Override
   public boolean equals(Object obj) {
     if (obj == this) {
@@ -152,7 +150,6 @@ class SingleMask<Symbol, Item> implements Mask<Symbol, Item> {
   }
 
 }
-
 
 class MapMask<Symbol, Item> implements Mask<Symbol, Item> {
 
@@ -181,13 +178,11 @@ class MapMask<Symbol, Item> implements Mask<Symbol, Item> {
     }
   }
 
-
   @Override
   public int hashCode() {
     return Objects.hashCode(mapper);
   }
 
-  @SuppressWarnings("rawtypes")
   @Override
   public boolean equals(Object obj) {
     if (obj == this) {

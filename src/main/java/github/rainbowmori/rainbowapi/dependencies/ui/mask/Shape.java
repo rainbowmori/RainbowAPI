@@ -18,7 +18,7 @@ import java.util.Objects;
  */
 public interface Shape {
 
-  //InventoryType shapes
+  // InventoryType shapes
   Shape ANVIL = combine(generic(2, SlotType.CRAFTING), generic(1, SlotType.RESULT));
   Shape BARREL = grid(9, 3, SlotType.CONTAINER);
   Shape BEACON = generic(1, SlotType.CRAFTING);
@@ -31,7 +31,7 @@ public interface Shape {
   Shape CHEST4 = chest(4);
   Shape CHEST5 = chest(5);
   Shape CHEST6 = chest(6);
-  Shape CHISELED_BOOKSHELF = generic(6, SlotType.CONTAINER/*TODO SlotType.BOOK?*/);
+  Shape CHISELED_BOOKSHELF = generic(6, SlotType.CONTAINER/* TODO SlotType.BOOK? */);
   Shape COMPOSTER = generic(1, SlotType.CONTAINER);
   Shape CRAFTING = combine(grid(2, 2, SlotType.CRAFTING), generic(1, SlotType.RESULT));
   Shape CREATIVE = grid(9, 1, SlotType.QUICKBAR);
@@ -43,10 +43,11 @@ public interface Shape {
   Shape GRINDSTONE = combine(generic(2, SlotType.CRAFTING), generic(1, SlotType.RESULT));
   Shape HOPPER = grid(5, 1, SlotType.CONTAINER);
   Shape JUKEBOX = generic(1, SlotType.CONTAINER);
-  Shape LECTERN = generic(1, SlotType.CONTAINER/*TODO SlotType.BOOK*/);
+  Shape LECTERN = generic(1, SlotType.CONTAINER/* TODO SlotType.BOOK */);
   Shape LOOM = combine(generic(3, SlotType.CRAFTING), generic(1, SlotType.RESULT));
   Shape MERCHANT = combine(generic(2, SlotType.CRAFTING), generic(1, SlotType.RESULT));
-  Shape PLAYER = combine(grid(9, 1, SlotType.QUICKBAR), grid(9, 3, SlotType.CONTAINER), generic(4, SlotType.ARMOR), generic(1, SlotType.CONTAINER /*off hand*/));
+  Shape PLAYER = combine(grid(9, 1, SlotType.QUICKBAR), grid(9, 3, SlotType.CONTAINER), generic(4, SlotType.ARMOR),
+      generic(1, SlotType.CONTAINER /* off hand */));
   Shape SHULKER_BOX = grid(9, 3, SlotType.CONTAINER);
   Shape SMITHING = combine(generic(2, SlotType.CRAFTING), generic(1, SlotType.RESULT));
   Shape SMITHING_NEW = combine(generic(3, SlotType.CRAFTING), generic(1, SlotType.RESULT));
@@ -54,62 +55,95 @@ public interface Shape {
   Shape STONECUTTER = combine(generic(1, SlotType.CRAFTING), generic(1, SlotType.RESULT));
   Shape WORKBENCH = combine(grid(3, 3, SlotType.CRAFTING), generic(1, SlotType.RESULT));
 
-  //entity inventory shapes
- Shape HORSE = generic(2, SlotType.ARMOR);
- Shape MULE = generic(1, SlotType.ARMOR);
- Shape CHEST_MULE = combine(MULE, grid(5, 3, SlotType.CONTAINER));
- Shape LLAMA = generic(1, SlotType.ARMOR);
- Shape CHEST_LLAMA = combine(LLAMA, grid(3, 3, SlotType.CONTAINER));
- Shape VILLAGER = generic(8, SlotType.CONTAINER);
+  // entity inventory shapes
+  Shape HORSE = generic(2, SlotType.ARMOR);
+  Shape MULE = generic(1, SlotType.ARMOR);
+  Shape CHEST_MULE = combine(MULE, grid(5, 3, SlotType.CONTAINER));
+  Shape LLAMA = generic(1, SlotType.ARMOR);
+  Shape CHEST_LLAMA = combine(LLAMA, grid(3, 3, SlotType.CONTAINER));
+  Shape VILLAGER = generic(8, SlotType.CONTAINER);
 
   static Shape determine(Inventory inventory) {
     switch (inventory.getType()) {
-      case ANVIL: return ANVIL;
-      case BARREL: return BARREL;
-      case BEACON: return BEACON;
-      case BLAST_FURNACE: return BLAST_FURNACE;
-      case BREWING: return BREWING;
-      case CARTOGRAPHY: return CARTOGRAPHY;
+      case ANVIL:
+        return ANVIL;
+      case BARREL:
+        return BARREL;
+      case BEACON:
+        return BEACON;
+      case BLAST_FURNACE:
+        return BLAST_FURNACE;
+      case BREWING:
+        return BREWING;
+      case CARTOGRAPHY:
+        return CARTOGRAPHY;
       case CHEST:
         final int size = inventory.getSize();
         switch (size) {
-          case 9: return CHEST1;
-          case 18: return CHEST2;
-          case 27: return CHEST3;
-          case 36: return CHEST4;
-          case 45: return CHEST5;
-          case 54: return CHEST6;
+          case 9:
+            return CHEST1;
+          case 18:
+            return CHEST2;
+          case 27:
+            return CHEST3;
+          case 36:
+            return CHEST4;
+          case 45:
+            return CHEST5;
+          case 54:
+            return CHEST6;
           default:
             if (size % 9 == 0)
               return chest(size / 9);
             else
-              //can't be sure that it's actually a grid. just return a generic shape.
+              // can't be sure that it's actually a grid. just return a generic shape.
               return generic(size, SlotType.CONTAINER);
         }
-      case CHISELED_BOOKSHELF: return CHISELED_BOOKSHELF;
-      case COMPOSTER: return COMPOSTER;
-      case CRAFTING: return CRAFTING;
-      case CREATIVE: return CREATIVE;
-      case DISPENSER: return DISPENSER;
-      case DROPPER: return DROPPER;
-      case ENCHANTING: return ENCHANTING;
-      case ENDER_CHEST: return ENDER_CHEST;
-      case FURNACE: return FURNACE;
-      case GRINDSTONE: return GRINDSTONE;
-      case HOPPER: return HOPPER;
-      case JUKEBOX: return JUKEBOX;
-      case LECTERN: return LECTERN;
-      case LOOM: return LOOM;
-      case MERCHANT: return MERCHANT;
-      case PLAYER: return PLAYER;
-      case SHULKER_BOX: return SHULKER_BOX;
-      case SMITHING: return SMITHING;
-      case SMOKER: return SMOKER;
-      case STONECUTTER: return STONECUTTER;
-      case WORKBENCH: return WORKBENCH;
+      case CHISELED_BOOKSHELF:
+        return CHISELED_BOOKSHELF;
+      case COMPOSTER:
+        return COMPOSTER;
+      case CRAFTING:
+        return CRAFTING;
+      case CREATIVE:
+        return CREATIVE;
+      case DISPENSER:
+        return DISPENSER;
+      case DROPPER:
+        return DROPPER;
+      case ENCHANTING:
+        return ENCHANTING;
+      case ENDER_CHEST:
+        return ENDER_CHEST;
+      case FURNACE:
+        return FURNACE;
+      case GRINDSTONE:
+        return GRINDSTONE;
+      case HOPPER:
+        return HOPPER;
+      case JUKEBOX:
+        return JUKEBOX;
+      case LECTERN:
+        return LECTERN;
+      case LOOM:
+        return LOOM;
+      case MERCHANT:
+        return MERCHANT;
+      case PLAYER:
+        return PLAYER;
+      case SHULKER_BOX:
+        return SHULKER_BOX;
+      case SMITHING:
+        return SMITHING;
+      case SMOKER:
+        return SMOKER;
+      case STONECUTTER:
+        return STONECUTTER;
+      case WORKBENCH:
+        return WORKBENCH;
       default:
-        //there does not seem to be any horse- or llama inventory type.
-        //I think bukkit should have these. (with isCreatable() returning false).
+        // there does not seem to be any horse- or llama inventory type.
+        // I think bukkit should have these. (with isCreatable() returning false).
 
         if (inventory instanceof LlamaInventory) {
           if (((Llama) inventory.getHolder()).isCarryingChest()) {
@@ -127,8 +161,9 @@ public interface Shape {
           }
         }
 
-        //fallback
-        assert false; return generic(inventory.getSize(), SlotType.CONTAINER);
+        // fallback
+        assert false;
+        return generic(inventory.getSize(), SlotType.CONTAINER);
     }
   }
 
@@ -139,7 +174,8 @@ public interface Shape {
 }
 
 class Shapes {
-  private Shapes() {}
+  private Shapes() {
+  }
 
   static GridShape chest(int rows) {
     return grid(9, rows, SlotType.CONTAINER);
@@ -151,7 +187,8 @@ class Shapes {
 
   static CombinedShape combine(Shape... shapes) {
     Objects.requireNonNull(shapes, "shapes cannot be null");
-    if (shapes.length <= 1) throw new IllegalArgumentException("It is non-sensical to combine less than 2 shapes");
+    if (shapes.length <= 1)
+      throw new IllegalArgumentException("It is non-sensical to combine less than 2 shapes");
 
     return new CombinedShape(shapes);
   }
@@ -181,7 +218,7 @@ final class GenericShape implements Shape {
     return i -> {
       if (0 <= i && i < size()) {
         return getSlotType();
-      } else  {
+      } else {
         return SlotType.OUTSIDE;
       }
     };
@@ -197,8 +234,10 @@ final class GenericShape implements Shape {
 
   @Override
   public boolean equals(Object o) {
-    if (o == this) return true;
-    if (!(o instanceof GenericShape that)) return false;
+    if (o == this)
+      return true;
+    if (!(o instanceof GenericShape that))
+      return false;
 
     return this.getSize() == that.getSize();
   }

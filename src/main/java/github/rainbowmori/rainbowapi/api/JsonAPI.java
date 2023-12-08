@@ -15,7 +15,6 @@ import org.codehaus.plexus.util.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-
 /**
  * .json ファイルを読み込む {@link FileAPI}
  */
@@ -32,7 +31,10 @@ public class JsonAPI extends FileAPI<JsonObject> {
   }
 
   /**
-   * 引数のプラグインのフォルダーの {@link #path} {@link #name} のファイルを読み込みます 例 [plugin=TEST] [path=first/second]
+   * 引数のプラグインのフォルダーの path name
+   * </br>
+   * のファイルを読み込みます 例 [plugin=TEST] [path=first/second]
+   * </br>
    * [path=fileName] -> TEST/first/second/fileName.json のファイルを読み込みます
    *
    * @param plugin 読み込みたいフォルダーのプラグイン
@@ -50,11 +52,13 @@ public class JsonAPI extends FileAPI<JsonObject> {
    * @return 変換後
    */
   public static JsonElement convertElement(Object obj) {
-    return obj instanceof JsonElement ? ((JsonElement) obj) : RainbowAPI.gson.toJsonTree(obj);
+    return obj instanceof JsonElement ? ((JsonElement) obj)
+        : RainbowAPI.gson.toJsonTree(obj);
   }
 
   /**
    * jsonからpathの通りにして{@link JsonObject} を取得します
+   *
    * @param json 取得する対象
    * @param path ["data",1,] など
    * @return pathの通りにあった場合はその値を返しますがない場合はnullを返します
@@ -66,9 +70,11 @@ public class JsonAPI extends FileAPI<JsonObject> {
 
   /**
    * jsonからpathの通りにして{@link JsonObject} を取得します
+   *
    * @param json 取得する対象
    * @param path ["data",1,] など
-   * @return pathの通りにあった場合はその値を返しますがない場合はpathを作成して空のJsonObjectを返します
+   * @return
+   *         pathの通りにあった場合はその値を返しますがない場合はpathを作成して空のJsonObjectを返します
    * @see #getJsonObject(JsonObject, List, boolean )
    */
   public static @NotNull JsonObject getCreateJsonObject(@NotNull JsonObject json, List<Object> path) {
@@ -76,14 +82,20 @@ public class JsonAPI extends FileAPI<JsonObject> {
   }
 
   /**
-   * <p>jsonからpathの通りにして{@link JsonObject} を取得します</p>
+   * <p>
+   * jsonからpathの通りにして{@link JsonObject} を取得します
+   * </p>
    * creatableがtrueの場合に
-   * <p>pathがない場合は空のJsonObjectを追加します</p>
+   * <p>
+   * pathがない場合は空のJsonObjectを追加します
+   * </p>
+   *
    * @param json 取得する対象
    * @param path ["data",1,] など
    * @return pathの通りにある値を返します
    */
-  public static JsonObject getJsonObject(@NotNull JsonObject json,List<Object> path,boolean creatable) {
+  public static JsonObject getJsonObject(@NotNull JsonObject json,
+      List<Object> path, boolean creatable) {
     JsonObject value = json;
     for (Object o : path) {
       String s = o.toString();
@@ -91,7 +103,7 @@ public class JsonAPI extends FileAPI<JsonObject> {
         if (!creatable) {
           return null;
         }
-        value.add(s,new JsonObject());
+        value.add(s, new JsonObject());
       }
       value = value.getAsJsonObject(s);
     }
@@ -116,7 +128,8 @@ public class JsonAPI extends FileAPI<JsonObject> {
       if (FileUtils.fileRead(file).trim().isEmpty()) {
         RainbowAPI.gson.toJson("{}", new FileWriter(file));
       } else {
-        data = RainbowAPI.gson.fromJson(new JsonReader(fileReader), JsonObject.class);
+        data = RainbowAPI.gson.fromJson(new JsonReader(fileReader),
+            JsonObject.class);
       }
     } catch (IOException ignored) {
     } finally {
@@ -140,6 +153,7 @@ public class JsonAPI extends FileAPI<JsonObject> {
 
   /**
    * ファイルにセーブするJsonElementを変更できるように
+   *
    * @return セーブするJsonElement
    */
   public JsonElement getSavaData() {
@@ -159,5 +173,4 @@ public class JsonAPI extends FileAPI<JsonObject> {
       throw new RuntimeException(e);
     }
   }
-
 }

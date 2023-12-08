@@ -18,14 +18,18 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 左クリック、右クリックで処理を受け取るカスタムブロック {@link #clearData(Location)} を自分で拡張して {@link #remove()} でブロックを削除できます
+ * 左クリック、右クリックで処理を受け取るカスタムブロック {@link
+ * #clearData(Location)} を自分で拡張して {@link #remove()}
+ * でブロックを削除できます
  * <p>
- * サーバー起動時に登録する場合は {@link RMPlugin#registerBlock(String, Class)} で登録してください サーバーが起動中に登録する場合は
+ * サーバー起動時に登録する場合は {@link
+ * RMPlugin#registerBlock(String, Class)} で登録してください
+ * サーバーが起動中に登録する場合は
  * {@link #register(String, Class)} で登録してください
  */
 public abstract class CustomBlock {
 
-  //ここでCustomBlockに関するcacheを保存したい場合は使用してください
+  // ここでCustomBlockに関するcacheを保存したい場合は使用してください
   public static final CacheManager<UUID, CacheData<UUID>> blockCache = new CacheManager<>();
 
   private static final TreeMap<String, Class<? extends CustomBlock>> customBlocks = new TreeMap<>();
@@ -47,7 +51,8 @@ public abstract class CustomBlock {
   }
 
   /**
-   * ここで鯖起動もしくは再起動時に独自の値を持たせている場合に{@link #getBlockData()} 保存したものを読み込むためのコンストラクタです
+   * ここで鯖起動もしくは再起動時に独自の値を持たせている場合に{@link
+   * #getBlockData()} 保存したものを読み込むためのコンストラクタです
    *
    * @param location カスタムブロックの位置
    * @param data     ロードするデータ
@@ -84,7 +89,9 @@ public abstract class CustomBlock {
   }
 
   /**
-   * {@link #remove(Location)} では {@link #clearData(Location)} を起こしてしまうのでそれをしないメゾットです
+   * {@link #remove(Location)} では {@link #clearData(Location)}
+   * を起こしてしまうのでそれをしないメゾットです
+   * 
    * @param location 削除する位置
    */
   public static void silentRemove(Location location) {
@@ -92,7 +99,9 @@ public abstract class CustomBlock {
   }
 
   /**
-   * {@link #remove(Location)} では {@link #clearData(Location)} を起こしてしまうのでそれをしないメゾットです
+   * {@link #remove(Location)} では {@link #clearData(Location)}
+   * を起こしてしまうのでそれをしないメゾットです
+   * 
    * @param block block
    */
   public static void silentRemove(Block block) {
@@ -114,11 +123,12 @@ public abstract class CustomBlock {
    * @param identifier ブロックの識別子
    * @param clazz      作成したカスタムブロックのclass
    */
-  public static void register(String identifier, Class<? extends CustomBlock> clazz) {
+  public static void register(String identifier,
+      Class<? extends CustomBlock> clazz) {
     customBlocks.put(identifier, clazz);
     RainbowAPI.getPlugin().getPrefixUtil().logDebug(
-        "<green>REGISTER CUSTOM BLOCK [identifier=\"%s\",class=\"%s\"]".formatted(identifier,
-            clazz.getName()));
+        "<green>REGISTER CUSTOM BLOCK [identifier=\"%s\",class=\"%s\"]"
+            .formatted(identifier, clazz.getName()));
   }
 
   /**
@@ -174,7 +184,8 @@ public abstract class CustomBlock {
     if (isCustomBlock(bLoc)) {
       return getCustomBlock(bLoc).getIdentifier();
     }
-    throw new IllegalArgumentException("そのBlockはCustomBlockではありません(もしくは登録されていません)");
+    throw new IllegalArgumentException(
+        "そのBlockはCustomBlockではありません(もしくは登録されていません)");
   }
 
   /**
@@ -182,7 +193,8 @@ public abstract class CustomBlock {
    *
    * @param block 対象の場所
    * @return 取得したCustomBlock
-   * @throws IllegalArgumentException そのlocationにCustomBlockがない場合はなります
+   * @throws IllegalArgumentException
+   *                                  そのlocationにCustomBlockがない場合はなります
    */
   @NotNull
   public static CustomBlock getCustomBlock(Block block) {
@@ -194,7 +206,8 @@ public abstract class CustomBlock {
    *
    * @param location 取得する場所
    * @return 取得したCustomBlock
-   * @throws IllegalArgumentException そのlocationにCustomBlockがない場合はなります
+   * @throws IllegalArgumentException
+   *                                  そのlocationにCustomBlockがない場合はなります
    */
   @NotNull
   public static CustomBlock getCustomBlock(Location location) {
@@ -205,15 +218,17 @@ public abstract class CustomBlock {
     throw new IllegalArgumentException("そのBlockはCustomBlockではありません");
   }
 
-  static void loadCustomBlock(String identifier, Location location, JsonObject object) {
+  static void loadCustomBlock(String identifier, Location location,
+      JsonObject object) {
     if (!isRegister(identifier)) {
-      throw new IllegalArgumentException(identifier + "のCustomBlockは登録されていません");
+      throw new IllegalArgumentException(identifier +
+          "のCustomBlockは登録されていません");
     }
     try {
       CustomBlock.customBlocks.get(identifier)
-          .getDeclaredConstructor(Location.class, JsonObject.class).newInstance(location, object);
-    } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-             NoSuchMethodException e) {
+          .getDeclaredConstructor(Location.class, JsonObject.class)
+          .newInstance(location, object);
+    } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
       throw new RuntimeException(e);
     }
   }
@@ -233,7 +248,8 @@ public abstract class CustomBlock {
   }
 
   /**
-   * {@link CustomModelBlock#clearData(Location)} のようにブロックを削除する場合の処理
+   * {@link CustomModelBlock#clearData(Location)}
+   * のようにブロックを削除する場合の処理
    *
    * @param Location このブロックのlocation
    */
@@ -254,7 +270,6 @@ public abstract class CustomBlock {
    * @param e event
    */
   public void leftClick(PlayerInteractEvent e) {
-
   }
 
   /**
@@ -263,7 +278,6 @@ public abstract class CustomBlock {
    * @param e event
    */
   public void rightClick(PlayerInteractEvent e) {
-
   }
 
   /**
@@ -292,5 +306,4 @@ public abstract class CustomBlock {
    * @return 識別子
    */
   public abstract String getIdentifier();
-
 }

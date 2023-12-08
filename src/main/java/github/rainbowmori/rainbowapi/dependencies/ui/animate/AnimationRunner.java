@@ -30,7 +30,8 @@ public final class AnimationRunner<Item> {
    * @param plugin    アニメーションタスクの実行に使用されるプラグイン
    * @param animation アニメ
    * @param container コンテナを設定します。これは通常
-   *                  {@link org.bukkit.inventory.Inventory#setItem(int, ItemStack)} または
+   *                  {@link org.bukkit.inventory.Inventory#setItem(int, ItemStack)}
+   *                  または
    *                  {@link MenuHolder#setButton(int,
    *                  MenuButton)} です。
    */
@@ -68,15 +69,15 @@ public final class AnimationRunner<Item> {
    * @see #getStatus()
    */
   public boolean play(Schedule schedule) {
-    //throw IllegalStateException if the AnimationRunner was already busy.
+    // throw IllegalStateException if the AnimationRunner was already busy.
     if (getStatus() == AnimationState.RUNNING) {
       throw new IllegalStateException("Animation already running");
     }
 
-    //update the status
+    // update the status
     status = AnimationState.RUNNING;
 
-    //run the schedule
+    // run the schedule
     return runSchedule(schedule);
   }
 
@@ -100,17 +101,17 @@ public final class AnimationRunner<Item> {
   }
 
   private boolean runSchedule(Schedule schedule) {
-    //一般的なスケジュール構造をショートカットしてみる
+    // 一般的なスケジュール構造をショートカットしてみる
     CommonRunnable sr = tryComputeCommonRunnable(schedule);
     boolean specialCased = false;
     if (sr != null) {
-      //少なくともScheduleRunnableは正常に取得できました。
-      //(失敗するかもしれません)
+      // 少なくともScheduleRunnableは正常に取得できました。
+      // (失敗するかもしれません)
       specialCased = trySpecialCaseRun(sr, schedule);
     }
 
     if (!specialCased) {
-      //fallback では、スケジュール用の CommonRunnable を特別に用意することができませんでした。
+      // fallback では、スケジュール用の CommonRunnable を特別に用意することができませんでした。
       tryFallbackRun(schedule);
     }
 
@@ -196,7 +197,7 @@ public final class AnimationRunner<Item> {
     }
   }
 
-  @SuppressWarnings({"rawtypes","unchecked"})
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   private void showFrame() {
     if (!animation.hasNextFrame()) {
       status = AnimationState.FINISHED;

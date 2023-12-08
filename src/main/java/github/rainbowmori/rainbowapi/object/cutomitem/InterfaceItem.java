@@ -17,11 +17,12 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface InterfaceItem {
 
-  //カスタムアイテムのnbtのpathです
+  // カスタムアイテムのnbtのpathです
   String nbtKey = "customitem";
 
   /**
    * アイテムの識別子を取得します
+   * 
    * @return 識別子
    */
   @NotNull
@@ -29,6 +30,7 @@ public interface InterfaceItem {
 
   /**
    * このカスタムアイテムのインスタンスで使用しているアイテムを返します
+   * 
    * @return itemstack
    */
   @NotNull
@@ -37,6 +39,7 @@ public interface InterfaceItem {
   /**
    * {@link #heldItem()} 中にアクションバーにメッセージを送る文字列を返します
    * {@link Optional#empty()} の場合はメッセージを送りません
+   * 
    * @param player プレイヤーです
    * @return 文字列のoptionalです
    */
@@ -46,6 +49,7 @@ public interface InterfaceItem {
   /**
    * {@link CustomItem#heldOfThis(PlayerItemHeldEvent)} で開始してほかのアイテムに変えた場合に終了する
    * アイテムを持っている間だけ1tickごとにする処理です
+   * 
    * @return 処理
    */
   @NotNull
@@ -58,6 +62,7 @@ public interface InterfaceItem {
 
   /**
    * {@link #heldItem()} を実行中に何かをしたい場合にこれを使用してください
+   * 
    * @return 処理
    */
   @NotNull

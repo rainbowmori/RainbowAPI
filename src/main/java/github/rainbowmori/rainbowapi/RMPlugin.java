@@ -15,8 +15,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public abstract class RMPlugin extends JavaPlugin {
 
   /**
-   * {@link CustomItem#register(String, Class)},{@link
-   * CustomBlock#register(String, Class)} を
+   * {@link CustomItem#register(String, Class)},{@link CustomBlock#register(String, Class)}
+   * を
    * {@link RainbowAPI} が完全にロードされてから読み込むための一時保存先
    */
   static final Map<String, Class<? extends CustomItem>> customItems = new HashMap<>();

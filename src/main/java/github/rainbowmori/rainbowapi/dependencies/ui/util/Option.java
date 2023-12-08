@@ -15,7 +15,7 @@ public interface Option<T> {
    * @param <T>   the type of the value
    * @return a new Option
    */
-  @SuppressWarnings({"rawtypes","unchecked"})
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   static <T> Option<T> some(T value) {
     return new Some(value);
   }
@@ -71,7 +71,6 @@ class Some<T> implements Option<T> {
     return Objects.hashCode(value);
   }
 
-  @SuppressWarnings("rawtypes")
   @Override
   public boolean equals(Object obj) {
     if (obj == this) {

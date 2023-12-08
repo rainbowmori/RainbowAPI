@@ -44,7 +44,8 @@ public class SequenceButton<P extends Plugin, MHR extends MenuHolder<P>, MH1 ext
   }
 
   /**
-   * クリックイベントを第1ボタンに委譲し、次に第2ボタンに委譲します。 メニューホルダー{@link MHR}は{@link MH1}と{@link MH2}の両方にダウンキャストされます。
+   * クリックイベントを第1ボタンに委譲し、次に第2ボタンに委譲します。
+   * メニューホルダー{@link MHR}は{@link MH1}と{@link MH2}の両方にダウンキャストされます。
    *
    * @param holder the MenuHolder
    * @param event  the InventoryClickEvent

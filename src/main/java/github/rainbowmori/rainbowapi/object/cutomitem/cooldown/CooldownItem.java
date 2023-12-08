@@ -14,7 +14,8 @@ public interface CooldownItem extends InterfaceItem {
 
   /**
    * プレイヤーが識別子のクールダウンを持っているか確認します
-   * @param uuid player's uuid
+   * 
+   * @param uuid       player's uuid
    * @param identifier 識別子
    * @return クールダウン中の場合trueを返します
    */
@@ -24,7 +25,8 @@ public interface CooldownItem extends InterfaceItem {
 
   /**
    * プレイヤーの識別子のクールダウンを整数で取得します
-   * @param uuid player's uuid
+   * 
+   * @param uuid       player's uuid
    * @param identifier 識別子
    * @return 残りのクールダウンを返します。(ない場合は0を返します)
    */
@@ -34,7 +36,8 @@ public interface CooldownItem extends InterfaceItem {
 
   /**
    * プレイヤーの識別子のクールダウンを少数まで取得します
-   * @param uuid player's uuid
+   * 
+   * @param uuid       player's uuid
    * @param identifier 識別子
    * @return 残りのクールダウンを返します。(ない場合は0を返します)
    */
@@ -45,10 +48,12 @@ public interface CooldownItem extends InterfaceItem {
   /**
    * プレイヤー識別子のクールダウンの秒数に追加します
    * クールダウンがない場合はクールダウンがその時間になります
-   * @param uuid player's uuid
+   * 
+   * @param uuid       player's uuid
    * @param identifier 識別子
-   * @param cooldown 追加する時間
-   * @return 追加するときにクールダウンが設定されていなかった場合trueが返されます (要するに{@link #hasCooldown(UUID, String)} ってことです)
+   * @param cooldown   追加する時間
+   * @return 追加するときにクールダウンが設定されていなかった場合trueが返されます
+   *         (要するに{@link #hasCooldown(UUID, String)} ってことです)
    */
   static boolean addCooldown(UUID uuid, String identifier, double cooldown) {
     return getPlayerCooldown(uuid).addCooldown(new ItemCooldown(identifier, cooldown));
@@ -56,9 +61,10 @@ public interface CooldownItem extends InterfaceItem {
 
   /**
    * プレイヤーの識別子のクールダウンを設定します
-   * @param uuid player's uuid
+   * 
+   * @param uuid       player's uuid
    * @param identifier 識別子
-   * @param cooldown cooldown
+   * @param cooldown   cooldown
    */
   static void setCooldown(UUID uuid, String identifier, double cooldown) {
     getPlayerCooldown(uuid).setCooldown(new ItemCooldown(identifier, cooldown));
@@ -66,6 +72,7 @@ public interface CooldownItem extends InterfaceItem {
 
   /**
    * プレイヤーのクールダウン情報を取得します
+   * 
    * @param uuid player's uuid
    * @return 情報
    */
@@ -80,9 +87,14 @@ public interface CooldownItem extends InterfaceItem {
   }
 
   /**
-   * <p>クールダウンのありなしの場合で文字を</p>
+   * <p>
+   * クールダウンのありなしの場合で文字を
+   * </p>
    * {@link #getHasCooldownMessage(UUID)},{@link #getReadyMessage(UUID)} に変えます
-   * <p>基本的に変更する場合はそちらを変えてください</p>
+   * <p>
+   * 基本的に変更する場合はそちらを変えてください
+   * </p>
+   * 
    * @param uuid player's uuid
    * @return メッセージ
    */
@@ -93,6 +105,7 @@ public interface CooldownItem extends InterfaceItem {
 
   /**
    * クールダウン中の場合に {@link #getActionBarMessage(Player)} に表示するメッセージ
+   * 
    * @param uuid player's uuid
    * @return クールダウン中のメッセージ
    */
@@ -103,6 +116,7 @@ public interface CooldownItem extends InterfaceItem {
 
   /**
    * {@link #getHasCooldownMessage(UUID)} このときに表示するくーるダウンの秒数の処理
+   * 
    * @param uuid player's uuid
    * @return クールダウンの秒数
    */
@@ -113,6 +127,7 @@ public interface CooldownItem extends InterfaceItem {
 
   /**
    * クールダウンがない場合に {@link #getActionBarMessage(Player)} に表示するメッセージ
+   * 
    * @param uuid player's uuid
    * @return クールダウンがないときのメッセージ
    */
@@ -123,6 +138,7 @@ public interface CooldownItem extends InterfaceItem {
 
   /**
    * クールダウン中かを確認します
+   * 
    * @param uuid player's uuid
    * @return クールダウン中の場合trueを返します
    */
@@ -132,6 +148,7 @@ public interface CooldownItem extends InterfaceItem {
 
   /**
    * クールダウンを整数で取得します
+   * 
    * @param uuid player's uuid
    * @return 整数のクールダウン
    */
@@ -141,6 +158,7 @@ public interface CooldownItem extends InterfaceItem {
 
   /**
    * クールダウンをdouble小数点まで取得します
+   * 
    * @param uuid player's uuid
    * @return 小数点のあるクールダウン
    */
@@ -151,9 +169,11 @@ public interface CooldownItem extends InterfaceItem {
   /**
    * クールダウンの秒数に追加します
    * クールダウンがない場合はクールダウンがその時間になります
-   * @param uuid player's uuid
+   * 
+   * @param uuid     player's uuid
    * @param cooldown 追加する時間
-   * @return 追加するときにクールダウンが設定されていなかった場合trueが返されます (要するに{@link #hasCooldown(UUID, String)} ってことです)
+   * @return 追加するときにクールダウンが設定されていなかった場合trueが返されます
+   *         (要するに{@link #hasCooldown(UUID, String)} ってことです)
    */
   default boolean addCooldown(UUID uuid, double cooldown) {
     return addCooldown(uuid, getIdentifier(), cooldown);
@@ -161,7 +181,8 @@ public interface CooldownItem extends InterfaceItem {
 
   /**
    * プレイヤーのクールダウンを設定します
-   * @param uuid player's uuid
+   * 
+   * @param uuid     player's uuid
    * @param cooldown cooldown
    */
   default void setCooldown(UUID uuid, double cooldown) {

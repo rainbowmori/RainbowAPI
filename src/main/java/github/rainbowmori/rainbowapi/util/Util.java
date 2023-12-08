@@ -37,10 +37,8 @@ public class Util {
    * @return 変換物
    */
   public static Component mm(Object str) {
-    return str instanceof Component
-        ? ((Component) str)
-        : MiniMessage.miniMessage()
-            .deserialize(String.valueOf(str))
+    return str instanceof Component ? ((Component) str)
+        : MiniMessage.miniMessage().deserialize(String.valueOf(str))
             .decoration(TextDecoration.ITALIC, false);
   }
 

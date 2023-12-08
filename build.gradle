@@ -47,11 +47,11 @@ dependencies {
     compileOnly paperAPI
     testCompileOnly paperAPI
 
-    compileOnly anvilGUI
-    compileOnly commandAPI
-    compileOnly paperLib
-    compileOnly nbtAPI
     compileOnly 'com.mojang:brigadier:1.0.18'
+    implementation anvilGUI
+    implementation commandAPI
+    implementation paperLib
+    implementation nbtAPI
 
     shadow anvilGUI
     shadow commandAPI
@@ -184,5 +184,15 @@ publishing {
 
             artifact sourceJar { classifier "sources" }
         }
+    }
+}
+
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
     }
 }

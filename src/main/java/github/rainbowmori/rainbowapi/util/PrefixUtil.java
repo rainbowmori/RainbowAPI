@@ -59,8 +59,7 @@ public class PrefixUtil {
    * @param message 送信するメッセージ
    */
   public final void logWarn(Object message) {
-    log(loggerPrefix.append(getWarn()).append(Util.mm(message)),
-        isWarnEnabled());
+    log(loggerPrefix.append(getWarn()).append(Util.mm(message)), isWarnEnabled());
   }
 
   protected Component getWarn() {
@@ -73,8 +72,7 @@ public class PrefixUtil {
    * @param message 送信するメッセージ
    */
   public final void logTrace(Object message) {
-    log(loggerPrefix.append(getTrace()).append(Util.mm(message)),
-        isTraceEnabled());
+    log(loggerPrefix.append(getTrace()).append(Util.mm(message)), isTraceEnabled());
   }
 
   protected Component getTrace() {
@@ -87,8 +85,7 @@ public class PrefixUtil {
    * @param message 送信するメッセージ
    */
   public final void logDebug(Object message) {
-    log(loggerPrefix.append(getDebug()).append(Util.mm(message)),
-        isDebugEnabled());
+    log(loggerPrefix.append(getDebug()).append(Util.mm(message)), isDebugEnabled());
   }
 
   protected Component getDebug() {
@@ -101,8 +98,7 @@ public class PrefixUtil {
    * @param message 送信するメッセージ
    */
   public final void logError(Object message) {
-    log(loggerPrefix.append(getError()).append(Util.mm(message)),
-        isErrorEnabled());
+    log(loggerPrefix.append(getError()).append(Util.mm(message)), isErrorEnabled());
   }
 
   protected Component getError() {

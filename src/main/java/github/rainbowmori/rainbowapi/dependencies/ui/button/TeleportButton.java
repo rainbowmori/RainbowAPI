@@ -47,13 +47,14 @@ public class TeleportButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
   @Override
   public void onClick(MH menuHolder, InventoryClickEvent event) {
     HumanEntity player = event.getWhoClicked();
-    //プレイヤーをテレポートさせるとインベントリが閉じるのは間違いないので、これをタスクに入れたほうがいい。
+    // プレイヤーをテレポートさせるとインベントリが閉じるのは間違いないので、これをタスクに入れたほうがいい。
     player.getServer().getScheduler()
         .runTask(menuHolder.getPlugin(), () -> player.teleport(getTo(menuHolder, event)));
   }
 
   /**
-   * ボタンがクリックされたときに、プレイヤーがテレポートする場所を取得します。 サブクラスはこのメソッドをオーバーライドして、定数でない位置を使用することができます。
+   * ボタンがクリックされたときに、プレイヤーがテレポートする場所を取得します。
+   * サブクラスはこのメソッドをオーバーライドして、定数でない位置を使用することができます。
    * デフォルトの実装では、{@link #getTo()}に委譲されます。
    *
    * @param menuHolder the menu holder

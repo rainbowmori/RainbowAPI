@@ -173,4 +173,3 @@ class RunConcat extends CommonRunnable {
   }
 
 }
-

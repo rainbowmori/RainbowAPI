@@ -80,7 +80,7 @@ public class GUIs {
       BiFunction<T, StateSnapshot, List<ResponseAction>> no) {
     this.builder = new Builder().plugin(plugin).title(Util.cc(Util.serializeLegacy(Util.mm(title))))
         .itemLeft(new ItemBuilder(Material.PAPER).name("").build())
-        .onClick((slot,state) -> {
+        .onClick((slot, state) -> {
           if (slot != AnvilGUI.Slot.OUTPUT) {
             return Collections.emptyList();
           }

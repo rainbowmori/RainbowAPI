@@ -50,7 +50,8 @@ public interface IntGenerator extends PrimitiveIterator.OfInt {
    *
    * @param startValue   the lower bound (inclusive)
    * @param endExclusive the upper bound (exclusive)
-   * @param step         how much difference between each {@link IntGenerator#nextInt()} call.
+   * @param step         how much difference between each
+   *                     {@link IntGenerator#nextInt()} call.
    * @return a new generator
    */
   static IntGenerator range(int startValue, int endExclusive, int step) {

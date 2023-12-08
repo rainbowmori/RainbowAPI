@@ -53,6 +53,7 @@ public abstract class CustomModelBlock extends CustomBlock {
 
   /**
    * ここでブロックを左クリックし壊した際に使用します
+   * 
    * @return ドロップするアイテム
    */
   public abstract ItemStack getItem();

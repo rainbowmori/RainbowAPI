@@ -117,7 +117,7 @@ public class ExamplePlugin extends JavaPlugin {
 			new ItemButton<>(new ItemStack(Material.GREEN_GLAZED_TERRACOTTA)) {
 				
 				@Override
-				public void onClick(MenuHolder holder, InventoryClickEvent event) {
+				public void onClick(MenuHolder<?> holder, InventoryClickEvent event) {
 					event.getWhoClicked().sendMessage("You have permission " + permission + ".");
 				}
 			},
@@ -129,12 +129,12 @@ public class ExamplePlugin extends JavaPlugin {
 		menu2.setButton(0, new ToggleButton<>(offStack) {
 			
 			@Override
-			public void afterToggle(MenuHolder holder, InventoryClickEvent event) {
+			public void afterToggle(MenuHolder<?> holder, InventoryClickEvent event) {
 				event.getWhoClicked().sendMessage("Is the button enabled? " + (isEnabled() ? "yes" : "no"));
 			}
 			
 			@Override
-			public ItemStack updateIcon(MenuHolder menuHolder, InventoryClickEvent event) {
+			public ItemStack updateIcon(MenuHolder<?> menuHolder, InventoryClickEvent event) {
 				return isEnabled() ? onStack : offStack;
 			}
 		});

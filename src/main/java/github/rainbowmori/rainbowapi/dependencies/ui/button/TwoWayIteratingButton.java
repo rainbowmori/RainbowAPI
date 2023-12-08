@@ -21,7 +21,8 @@ public class TwoWayIteratingButton<T, MH extends MenuHolder<?>> extends Iteratin
    * このコンストラクタを使用すると、サブクラスは構築時にフィールド{@link #backwardsFunction}、{@link #stateUpdater}、{@link
    * #currentState}を初期化することが必要になります。
    * あるいは、{@link #updateStateForwards(MenuHolder, InventoryClickEvent)}、{@link
-   * #updateStateBackwards(MenuHolder, InventoryClickEvent)}、 {@link #getCurrentState()}
+   * #updateStateBackwards(MenuHolder, InventoryClickEvent)}、
+   * {@link #getCurrentState()}
    * をオーバーライドしなければならない。
    *
    * @param icon the icon of this button
@@ -59,7 +60,8 @@ public class TwoWayIteratingButton<T, MH extends MenuHolder<?>> extends Iteratin
     if (!listIterator.hasNext()) {
       throw new IllegalArgumentException("ListIterator must have at least one element");
     }
-    //now that the class is an anonymous class it can't be extended. is that a problem? It might be. I don't want to force the adapter pattern on my users.
+    // now that the class is an anonymous class it can't be extended. is that a
+    // problem? It might be. I don't want to force the adapter pattern on my users.
     return new TwoWayIteratingButton<>(icon) {
 
       {

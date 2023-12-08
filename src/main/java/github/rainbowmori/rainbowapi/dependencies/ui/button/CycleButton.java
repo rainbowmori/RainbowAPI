@@ -121,7 +121,8 @@ public class CycleButton<T, MH extends MenuHolder<?>> extends TwoWayIteratingBut
    * @param <MH>  the MenuHolder type
    * @return a new cycle button
    */
-  //completely redundant since users could just use the collection constructor, but this allows for easier refactoring :-)
+  // completely redundant since users could just use the collection constructor,
+  // but this allows for easier refactoring :-)
   public static <T extends Enum<?>, MH extends MenuHolder<?>> CycleButton<T, MH> fromEnum(
       ItemStack icon, EnumSet<? extends T> items) {
     return new CycleButton<>(icon, items);

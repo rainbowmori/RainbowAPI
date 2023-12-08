@@ -15,10 +15,17 @@ public interface DurabilityItem extends InterfaceItem {
 
   /**
    * 耐久を消費するメゾットです
-   * <p></p>
-   * <p> if(useDurability(Integer)){ </p>
-   * <p>   itemUse() </p>
-   * <p> }</p>
+   * <p>
+   * </p>
+   * <p>
+   * if(useDurability(Integer)){
+   * </p>
+   * <p>
+   * itemUse()
+   * </p>
+   * <p>
+   * }
+   * </p>
    *
    * をすることで耐久値をすべて消費した際に一つアイテムを消費するする処理ができます
    *
@@ -41,6 +48,7 @@ public interface DurabilityItem extends InterfaceItem {
 
   /**
    * 現在のアイテムの耐久を取得します
+   * 
    * @return durability
    */
   default int getDurability() {
@@ -62,6 +70,7 @@ public interface DurabilityItem extends InterfaceItem {
 
   /**
    * クールダウン中に送るメッセージです
+   * 
    * @param uuid プレイヤーのuuidです
    * @return 文字列です
    */
@@ -72,6 +81,7 @@ public interface DurabilityItem extends InterfaceItem {
 
   /**
    * マックスの耐久値です
+   * 
    * @return integer
    */
   int getMaxDurability();

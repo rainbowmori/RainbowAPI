@@ -26,7 +26,6 @@ import org.jetbrains.annotations.NotNull;
 /**
  * アイテムを作成やmodifyするクラス
  */
-@SuppressWarnings("unused")
 public class ItemBuilder {
 
   private final ItemStack itemStack;
@@ -42,9 +41,11 @@ public class ItemBuilder {
 
   /**
    * プレイヤーの頭を作成するクラス
+   * 
    * @param skullOwner プレイヤーの名前
    * @return 作成したアイテムスタック
    */
+  @SuppressWarnings("deprecation")
   public static ItemStack createSkull(String skullOwner) {
     return new ItemBuilder(Material.PLAYER_HEAD).changeMeta(
         (Consumer<SkullMeta>) skullMeta -> skullMeta.setOwner(skullOwner)).build();
@@ -52,6 +53,7 @@ public class ItemBuilder {
 
   /**
    * アイテムの数を変更します
+   * 
    * @param amount 変更する量
    * @return new instance (use {@link #build()} to create)
    */
@@ -61,8 +63,9 @@ public class ItemBuilder {
 
   /**
    * エンチャントを設定
+   * 
    * @param enchantment 追加するエンチャント
-   * @param level エンチャントのレベル (6とか100とかでもok)
+   * @param level       エンチャントのレベル (6とか100とかでもok)
    * @return new instance (use {@link #build()} to create)
    */
   public ItemBuilder enchant(Enchantment enchantment, int level) {
@@ -71,6 +74,7 @@ public class ItemBuilder {
 
   /**
    * エンチャントを削除
+   * 
    * @param enchantment 削除するエンチャント
    * @return new instance (use {@link #build()} to create)
    */
@@ -80,6 +84,7 @@ public class ItemBuilder {
 
   /**
    * 耐久値のダメージを設定
+   * 
    * @param damage ダメージ
    * @return new instance (use {@link #build()} to create)
    */
@@ -89,15 +94,18 @@ public class ItemBuilder {
 
   /**
    * 耐久値の設定
+   * 
    * @param damage 耐久値
    * @return new instance (use {@link #build()} to create)
    */
   public ItemBuilder durability(int damage) {
-    return changeItemMeta(meta -> ((Damageable) meta).setDamage(Math.abs(itemStack.getType().getMaxDurability()-damage)));
+    return changeItemMeta(
+        meta -> ((Damageable) meta).setDamage(Math.abs(itemStack.getType().getMaxDurability() - damage)));
   }
 
   /**
    * マテリアルの変更
+   * 
    * @param type 変更するマテリアル
    * @return new instance (use {@link #build()} to create)
    */
@@ -107,6 +115,7 @@ public class ItemBuilder {
 
   /**
    * アイテムの名前を変更
+   * 
    * @param displayName 変更するアイテム名
    * @return new instance (use {@link #build()} to create)
    */
@@ -116,6 +125,7 @@ public class ItemBuilder {
 
   /**
    * loreの変更
+   * 
    * @param lore 変更するlore
    * @return new instance (use {@link #build()} to create)
    */
@@ -125,6 +135,7 @@ public class ItemBuilder {
 
   /**
    * loreの変更
+   * 
    * @param lore 変更するlore
    * @return new instance (use {@link #build()} to create)
    */
@@ -134,6 +145,7 @@ public class ItemBuilder {
 
   /**
    * loreの追加
+   * 
    * @param str 追加するloreの文
    * @return new instance (use {@link #build()} to create)
    */
@@ -145,8 +157,9 @@ public class ItemBuilder {
 
   /**
    * loreの {@code line} 行目に {@code str} を挿入します
+   * 
    * @param line loreの行 (0の場合は一番最初に入ります)
-   * @param str 挿入するloreの文
+   * @param str  挿入するloreの文
    * @return new instance (use {@link #build()} to create)
    */
   public ItemBuilder insertLore(int line, Object str) {
@@ -157,8 +170,9 @@ public class ItemBuilder {
 
   /**
    * loreの {@code line} 行目に {@code str} を上書きします
+   * 
    * @param line 上書きする行
-   * @param str 上書きする文
+   * @param str  上書きする文
    * @return new instance (use {@link #build()} to create)
    */
   public ItemBuilder setLore(int line, Object str) {
@@ -172,6 +186,7 @@ public class ItemBuilder {
 
   /**
    * loreから {@code line} 行目 を削除
+   * 
    * @param line 削除する行
    * @return new instance (use {@link #build()} to create)
    */
@@ -183,6 +198,7 @@ public class ItemBuilder {
 
   /**
    * {@link #lore(List)} を使用するために簡単にloreを取得できるように
+   * 
    * @return このアイテムのlore
    */
   public List<Component> getLore() {
@@ -197,6 +213,7 @@ public class ItemBuilder {
 
   /**
    * アイテムをエンチャントで光らせます
+   * 
    * @return new instance (use {@link #build()} to create)
    */
   public ItemBuilder glow() {
@@ -205,6 +222,7 @@ public class ItemBuilder {
 
   /**
    * アイテムを {@link #glow()} で光らせてる場合に削除します
+   * 
    * @return new instance (use {@link #build()} to create)
    */
   public ItemBuilder unGlow() {
@@ -213,6 +231,7 @@ public class ItemBuilder {
 
   /**
    * アイテムを壊せるかどうか設定します
+   * 
    * @param unbreakable 壊せるかどうか (true = 不可壊)
    * @return new instance (use {@link #build()} to create)
    */
@@ -222,6 +241,7 @@ public class ItemBuilder {
 
   /**
    * {@link ItemFlag} をアイテムに追加します
+   * 
    * @param flags 追加するフラッグたち
    * @return new instance (use {@link #build()} to create)
    */
@@ -231,6 +251,7 @@ public class ItemBuilder {
 
   /**
    * {@link ItemFlag} をアイテムから削除します
+   * 
    * @param flags 削除するフラッグたち
    * @return new instance (use {@link #build()} to create)
    */
@@ -240,6 +261,7 @@ public class ItemBuilder {
 
   /**
    * {@link ItemMeta#setAttributeModifiers(Multimap)} を見てください
+   * 
    * @param attributeModifiers arg
    * @return new instance (use {@link #build()} to create)
    */
@@ -249,7 +271,8 @@ public class ItemBuilder {
 
   /**
    * {@link Attribute} を追加します
-   * @param attribute 追加する対象
+   * 
+   * @param attribute         追加する対象
    * @param attributeModifier 詳細設定
    * @return new instance (use {@link #build()} to create)
    */
@@ -259,6 +282,7 @@ public class ItemBuilder {
 
   /**
    * マップで {@link #addAttribute(Attribute, AttributeModifier)} をできるように
+   * 
    * @param attributeModifiers arg
    * @return new instance (use {@link #build()} to create)
    */
@@ -270,6 +294,7 @@ public class ItemBuilder {
 
   /**
    * Entryで {@link #addAttribute(Attribute, AttributeModifier)} をできるように
+   * 
    * @param attributeModifiers arg
    * @return new instance (use {@link #build()} to create)
    */
@@ -285,6 +310,7 @@ public class ItemBuilder {
 
   /**
    * カスタムモデルデータを設定します
+   * 
    * @param customModelData 値
    * @return new instance (use {@link #build()} to create)
    */
@@ -294,6 +320,7 @@ public class ItemBuilder {
 
   /**
    * NBTみたいなやつの変更するメゾット
+   * 
    * @param consumer 実行する処理
    * @return new instance (use {@link #build()} to create)
    */
@@ -303,10 +330,11 @@ public class ItemBuilder {
 
   /**
    * 値の追加
-   * @param key 値のキー
-   * @param type 値をどのように扱うか {@link PersistentDataType}
+   * 
+   * @param key   値のキー
+   * @param type  値をどのように扱うか {@link PersistentDataType}
    * @param value 保存する値
-   * @return  new instance (use {@link #build()} to create)
+   * @return new instance (use {@link #build()} to create)
    * @param <T> 指定されたタグに格納されているプライマリ オブジェクト タイプ
    * @param <Z> このタグ タイプを適用するときに取得されたオブジェクト タイプ
    */
@@ -316,8 +344,10 @@ public class ItemBuilder {
   }
 
   /**
-   * byte で {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
-   * @param key 値のキー
+   * byte で {@link #persistentData(NamespacedKey, PersistentDataType, Object)}
+   * を設定します
+   * 
+   * @param key   値のキー
    * @param value 値
    * @return new instance (use {@link #build()} to create)
    */
@@ -326,8 +356,10 @@ public class ItemBuilder {
   }
 
   /**
-   * byte[] で {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
-   * @param key 値のキー
+   * byte[] で {@link #persistentData(NamespacedKey, PersistentDataType, Object)}
+   * を設定します
+   * 
+   * @param key   値のキー
    * @param value 値
    * @return new instance (use {@link #build()} to create)
    */
@@ -336,8 +368,10 @@ public class ItemBuilder {
   }
 
   /**
-   * double で {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
-   * @param key 値のキー
+   * double で {@link #persistentData(NamespacedKey, PersistentDataType, Object)}
+   * を設定します
+   * 
+   * @param key   値のキー
    * @param value 値
    * @return new instance (use {@link #build()} to create)
    */
@@ -346,8 +380,10 @@ public class ItemBuilder {
   }
 
   /**
-   * float で {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
-   * @param key 値のキー
+   * float で {@link #persistentData(NamespacedKey, PersistentDataType, Object)}
+   * を設定します
+   * 
+   * @param key   値のキー
    * @param value 値
    * @return new instance (use {@link #build()} to create)
    */
@@ -356,8 +392,10 @@ public class ItemBuilder {
   }
 
   /**
-   * int で {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
-   * @param key 値のキー
+   * int で {@link #persistentData(NamespacedKey, PersistentDataType, Object)}
+   * を設定します
+   * 
+   * @param key   値のキー
    * @param value 値
    * @return new instance (use {@link #build()} to create)
    */
@@ -366,8 +404,10 @@ public class ItemBuilder {
   }
 
   /**
-   * int[]で {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
-   * @param key 値のキー
+   * int[]で {@link #persistentData(NamespacedKey, PersistentDataType, Object)}
+   * を設定します
+   * 
+   * @param key   値のキー
    * @param value 値
    * @return new instance (use {@link #build()} to create)
    */
@@ -376,8 +416,10 @@ public class ItemBuilder {
   }
 
   /**
-   * long で {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
-   * @param key 値のキー
+   * long で {@link #persistentData(NamespacedKey, PersistentDataType, Object)}
+   * を設定します
+   * 
+   * @param key   値のキー
    * @param value 値
    * @return new instance (use {@link #build()} to create)
    */
@@ -386,8 +428,10 @@ public class ItemBuilder {
   }
 
   /**
-   * long[] で {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
-   * @param key 値のキー
+   * long[] で {@link #persistentData(NamespacedKey, PersistentDataType, Object)}
+   * を設定します
+   * 
+   * @param key   値のキー
    * @param value 値
    * @return new instance (use {@link #build()} to create)
    */
@@ -396,8 +440,10 @@ public class ItemBuilder {
   }
 
   /**
-   * short で {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
-   * @param key 値のキー
+   * short で {@link #persistentData(NamespacedKey, PersistentDataType, Object)}
+   * を設定します
+   * 
+   * @param key   値のキー
    * @param value 値
    * @return new instance (use {@link #build()} to create)
    */
@@ -406,8 +452,10 @@ public class ItemBuilder {
   }
 
   /**
-   * string で {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
-   * @param key 値のキー
+   * string で {@link #persistentData(NamespacedKey, PersistentDataType, Object)}
+   * を設定します
+   * 
+   * @param key   値のキー
    * @param value 値
    * @return new instance (use {@link #build()} to create)
    */
@@ -416,8 +464,10 @@ public class ItemBuilder {
   }
 
   /**
-   * {@link PersistentDataContainer} で {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
-   * @param key 値のキー
+   * {@link PersistentDataContainer} で
+   * {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
+   * 
+   * @param key   値のキー
    * @param value 値
    * @return new instance (use {@link #build()} to create)
    */
@@ -426,8 +476,10 @@ public class ItemBuilder {
   }
 
   /**
-   * {@link PersistentDataContainer[]} で {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
-   * @param key 値のキー
+   * {@link PersistentDataContainer[]} で
+   * {@link #persistentData(NamespacedKey, PersistentDataType, Object)} を設定します
+   * 
+   * @param key   値のキー
    * @param value 値
    * @return new instance (use {@link #build()} to create)
    */
@@ -437,6 +489,7 @@ public class ItemBuilder {
 
   /**
    * {@link #createSkull(String)} のように先にItemMetaのキャストをしたいときに使用してください
+   * 
    * @param consumer 実行する処理
    * @return new instance (use {@link #build()} to create)
    * @param <IM> ItemMeta の サブクラス
@@ -448,6 +501,7 @@ public class ItemBuilder {
 
   /**
    * meta を変更する時に使用します
+   * 
    * @param consumer 実行する処理
    * @return new instance (use {@link #build()} to create)
    */
@@ -461,6 +515,7 @@ public class ItemBuilder {
 
   /**
    * アイテムを変更する際に使用します
+   * 
    * @param consumer 変更する処理
    * @return new instance (use {@link #build()} to create)
    */
@@ -472,6 +527,7 @@ public class ItemBuilder {
 
   /**
    * アイテム自体で処理する際に使用します
+   * 
    * @param function 処理
    * @return new instance (use {@link #build()} to create)
    */

@@ -33,8 +33,9 @@ public class BorderPattern implements Pattern<BorderPattern.Border> {
    * シンボルを取得します。
    *
    * @param index インベントリスロット
-   * @return スロットがグリッドの端にある場合は {@link Border#OUTER}、インデックスが範囲外の場合は {@code null}、それ以外は
-   * {@link Border#INNER}となります。
+   * @return スロットがグリッドの端にある場合は {@link Border#OUTER}、インデックスが範囲外の場合は
+   *         {@code null}、それ以外は
+   *         {@link Border#INNER}となります。
    */
   @Override
   public Border getSymbol(int index) {
@@ -47,19 +48,19 @@ public class BorderPattern implements Pattern<BorderPattern.Border> {
       return null;
     }
 
-    //top border
+    // top border
     if (index < width) {
       return Border.OUTER;
     }
-    //bottom border
+    // bottom border
     if (index > size - width) {
       return Border.OUTER;
     }
-    //left border
+    // left border
     if (index % width == 0) {
       return Border.OUTER;
     }
-    //right border
+    // right border
     if (index % width == width - 1) {
       return Border.OUTER;
     }

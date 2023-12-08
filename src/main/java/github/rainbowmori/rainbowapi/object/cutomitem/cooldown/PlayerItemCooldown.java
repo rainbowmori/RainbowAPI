@@ -56,7 +56,7 @@ public class PlayerItemCooldown implements CacheData<UUID> {
       setCooldown(itemCooldown);
       return false;
     }
-    setCooldown(new ItemCooldown(identifier,itemCooldown.getCooldown() + getCooldown(identifier).getCooldown()));
+    setCooldown(new ItemCooldown(identifier, itemCooldown.getCooldown() + getCooldown(identifier).getCooldown()));
     return true;
   }
 
