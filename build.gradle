@@ -47,12 +47,6 @@ dependencies {
     compileOnly paperAPI
     testCompileOnly paperAPI
 
-    compileOnly 'com.mojang:brigadier:1.0.18'
-    compileOnly anvilGUI
-    compileOnly commandAPI
-    compileOnly paperLib
-    compileOnly nbtAPI
-
     shadow anvilGUI
     shadow commandAPI
     shadow paperLib
@@ -166,8 +160,6 @@ shadowJar {
     configurations = [project.configurations.shadow]
 
     relocates.each { originalPackage, relocatedPackage -> relocate originalPackage, relocatedPackage }
-
-    finalizedBy(sourceJar)
 }
 
 
@@ -182,20 +174,9 @@ processResources {
 
 publishing {
     publications {
-        shadow(MavenPublication) { publication ->
-            project.shadow.component(publication)
-
+        shadow(MavenPublication) {
+            artifact shadowJar
             artifact sourceJar
         }
-    }
-}
-
-
-processResources {
-    def props = [version: version]
-    inputs.properties props
-    filteringCharset 'UTF-8'
-    filesMatching('plugin.yml') {
-        expand props
     }
 }
