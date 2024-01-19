@@ -24,4 +24,9 @@ public class BlockBreak implements Listener {
     PlayerBlockInput.build(uuid, e);
   }
 
+  @Override
+  public String toString() {
+    return "BlockBreak []";
+  }
+
 }

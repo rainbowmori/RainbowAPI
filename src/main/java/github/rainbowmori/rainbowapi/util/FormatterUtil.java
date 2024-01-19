@@ -40,7 +40,6 @@ public class FormatterUtil {
     return sb.toString();
   }
 
-
   /**
    * 文字列をプロパティ名によってフォーマットします。
    *

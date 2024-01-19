@@ -1,13 +1,15 @@
 package github.rainbowmori.rainbowapi.api;
 
-import com.google.gson.JsonObject;
-import github.rainbowmori.rainbowapi.util.PrefixUtil;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import com.google.gson.JsonObject;
+
+import github.rainbowmori.rainbowapi.util.PrefixUtil;
 
 /**
  * ファイルを読み込むabstract class
@@ -27,8 +29,9 @@ public abstract class FileAPI<T> {
 
   /**
    * 引数のプラグインのフォルダーの第一階層からnameのファイルを読み込みます
+   * 
    * @param plugin 読み込みたいフォルダーのプラグイン
-   * @param name 読み込むファイルの名前
+   * @param name   読み込むファイルの名前
    */
   public FileAPI(Plugin plugin, String name) {
     this(plugin, name, null);
@@ -36,10 +39,12 @@ public abstract class FileAPI<T> {
 
   /**
    * 引数のプラグインのフォルダーの {@link #path} {@link #name} のファイルを読み込みます
-   * 例 [plugin=TEST] [path=first/second] [path=fileName] -> TEST/first/second/fileName のファイルを読み込みます
+   * 例 [plugin=TEST] [path=first/second] [path=fileName] ->
+   * TEST/first/second/fileName のファイルを読み込みます
+   * 
    * @param plugin 読み込みたいフォルダーのプラグイン
-   * @param name 読み込むファイルの名前
-   * @param path ファイル階層
+   * @param name   読み込むファイルの名前
+   * @param path   ファイル階層
    */
   public FileAPI(Plugin plugin, String name, String path) {
     Objects.requireNonNull(name);

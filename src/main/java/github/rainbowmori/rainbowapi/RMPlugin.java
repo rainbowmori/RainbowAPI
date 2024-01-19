@@ -1,26 +1,16 @@
 package github.rainbowmori.rainbowapi;
 
-import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.CommandTree;
-import github.rainbowmori.rainbowapi.object.customblock.CustomBlock;
-import github.rainbowmori.rainbowapi.object.cutomitem.CustomItem;
-import github.rainbowmori.rainbowapi.util.PrefixUtil;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public abstract class RMPlugin extends JavaPlugin {
+import dev.jorel.commandapi.CommandAPICommand;
+import dev.jorel.commandapi.CommandTree;
+import github.rainbowmori.rainbowapi.util.PrefixUtil;
 
-  /**
-   * {@link CustomItem#register(String, Class)},{@link CustomBlock#register(String, Class)}
-   * を
-   * {@link RainbowAPI} が完全にロードされてから読み込むための一時保存先
-   */
-  static final Map<String, Class<? extends CustomItem>> customItems = new HashMap<>();
-  static final Map<String, Class<? extends CustomBlock>> customBlocks = new HashMap<>();
+public abstract class RMPlugin extends JavaPlugin {
 
   // CommandAPIで登録されたコマンドまとめ
   static final Set<String> registeredCommands = new HashSet<>();
@@ -34,31 +24,6 @@ public abstract class RMPlugin extends JavaPlugin {
   public RMPlugin() {
     super();
     prefixUtil = new PrefixUtil(getPrefix());
-  }
-
-  /**
-   * プラグイン起動時に {@link CustomItem}<br>
-   * の登録をする場合はこちらを使用してください
-   *
-   * @param identifier CustomItemの識別子
-   * @param clazz      登録するCustomItemのクラス
-   */
-  public void registerItem(String identifier,
-      Class<? extends CustomItem> clazz) {
-    customItems.put(identifier, clazz);
-  }
-
-  /**
-   * プラグイン起動時に {@link CustomBlock}
-   * の登録をする場合はこちらを使用してください <br>
-   * {@link RainbowAPI} が完全にロードされてから読み込むための一時保存先
-   *
-   * @param identifier CustomBlockの識別子
-   * @param clazz      登録するCustomBlockのクラス
-   */
-  public void registerBlock(String identifier,
-      Class<? extends CustomBlock> clazz) {
-    customBlocks.put(identifier, clazz);
   }
 
   /**

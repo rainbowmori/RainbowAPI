@@ -1,6 +1,5 @@
 package github.rainbowmori.rainbowapi.util;
 
-import com.google.common.collect.Multimap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import net.kyori.adventure.text.Component;
+
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
@@ -22,6 +21,10 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
+
+import com.google.common.collect.Multimap;
+
+import net.kyori.adventure.text.Component;
 
 /**
  * アイテムを作成やmodifyするクラス

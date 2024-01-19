@@ -1,7 +1,5 @@
 package github.rainbowmori.rainbowapi.dependencies.anvilgui;
 
-import github.rainbowmori.rainbowapi.util.ItemBuilder;
-import github.rainbowmori.rainbowapi.util.Util;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -9,15 +7,19 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import net.wesjd.anvilgui.AnvilGUI;
-import net.wesjd.anvilgui.AnvilGUI.Builder;
-import net.wesjd.anvilgui.AnvilGUI.ResponseAction;
-import net.wesjd.anvilgui.AnvilGUI.StateSnapshot;
+
 import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.Plugin;
+
+import github.rainbowmori.rainbowapi.util.ItemBuilder;
+import github.rainbowmori.rainbowapi.util.Util;
+import net.wesjd.anvilgui.AnvilGUI;
+import net.wesjd.anvilgui.AnvilGUI.Builder;
+import net.wesjd.anvilgui.AnvilGUI.ResponseAction;
+import net.wesjd.anvilgui.AnvilGUI.StateSnapshot;
 
 public class GUIs {
 

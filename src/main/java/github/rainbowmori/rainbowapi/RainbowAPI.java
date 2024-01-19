@@ -1,22 +1,18 @@
 package github.rainbowmori.rainbowapi;
 
+import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import de.tr7zw.changeme.nbtapi.NBTContainer;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import github.rainbowmori.rainbowapi.api.serializer.ItemStackSerializer;
 import github.rainbowmori.rainbowapi.api.serializer.LocationSerializer;
-import github.rainbowmori.rainbowapi.commnad.RainbowAPICommand;
 import github.rainbowmori.rainbowapi.dependencies.ui.GuiListener;
 import github.rainbowmori.rainbowapi.listener.BlockBreak;
-import github.rainbowmori.rainbowapi.listener.CustomListeners;
-import github.rainbowmori.rainbowapi.object.DataManager;
-import github.rainbowmori.rainbowapi.object.customblock.CustomBlock;
-import github.rainbowmori.rainbowapi.object.cutomitem.CustomItem;
-import org.bukkit.Location;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * プラグインのメインクラス
@@ -32,7 +28,6 @@ public final class RainbowAPI extends RMPlugin {
       .registerTypeAdapter(Location.class, new LocationSerializer())
       .create();
 
-  private static DataManager dataManager;
   private static GuiListener guiListener;
 
   public static GuiListener getGuiListener() {
@@ -46,28 +41,16 @@ public final class RainbowAPI extends RMPlugin {
   @Override
   public void onEnable() {
     registerEvent(BlockBreak.getInstance());
-    registerEvent(CustomListeners.getInstance());
     registerEvent(guiListener = GuiListener.getInstance());
 
     CommandAPI.onEnable();
 
-    registerCommand(new RainbowAPICommand());
-
-    new BukkitRunnable() {
-      @Override
-      public void run() {
-        customItems.forEach(CustomItem::register);
-        customBlocks.forEach(CustomBlock::register);
-        dataManager = new DataManager(RainbowAPI.this);
-      }
-    }.runTaskLater(this, 1L);
   }
 
   @Override
   public void onDisable() {
     registeredCommands.forEach(CommandAPI::unregister);
     CommandAPI.onDisable();
-    dataManager.save();
   }
 
   @Override

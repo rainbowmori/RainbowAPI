@@ -1,19 +1,22 @@
 package github.rainbowmori.rainbowapi.api;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
-import github.rainbowmori.rainbowapi.RainbowAPI;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 import java.util.Objects;
+
 import org.bukkit.plugin.Plugin;
 import org.codehaus.plexus.util.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
+
+import github.rainbowmori.rainbowapi.RainbowAPI;
 
 /**
  * .json ファイルを読み込む {@link FileAPI}
