@@ -123,3 +123,6 @@ run/
 cp.sh
 Makefile
 bin/
+
+#utilties
+copy.sh

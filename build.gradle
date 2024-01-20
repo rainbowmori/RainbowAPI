@@ -151,6 +151,10 @@ task sourceJar(type: Jar, dependsOn: shadowSources) {
     from files("build/tmp/src")
 }
 
+task copyJar(dependsOn: 'shadowJar', type: Exec) {
+    commandLine './copy.sh'
+}
+
 
 shadowJar {
     archiveBaseName.set(buildFileName)
