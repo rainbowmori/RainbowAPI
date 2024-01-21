@@ -52,7 +52,7 @@ public class PrefixUtil {
    * @param message 送信するメッセージ
    */
   public final void logInfo(Object message) {
-    log(getLoggerPrefix().append(Util.mm(message)), isInfoEnabled());
+    log(getLoggerPrefix().append(Util.mm(message)));
   }
 
   /**
@@ -61,7 +61,7 @@ public class PrefixUtil {
    * @param message 送信するメッセージ
    */
   public final void logWarn(Object message) {
-    log(loggerPrefix.append(getWarn()).append(Util.mm(message)), isWarnEnabled());
+    log(loggerPrefix.append(getWarn()).append(Util.mm(message)));
   }
 
   protected Component getWarn() {
@@ -74,7 +74,7 @@ public class PrefixUtil {
    * @param message 送信するメッセージ
    */
   public final void logTrace(Object message) {
-    log(loggerPrefix.append(getTrace()).append(Util.mm(message)), isTraceEnabled());
+    log(loggerPrefix.append(getTrace()).append(Util.mm(message)));
   }
 
   protected Component getTrace() {
@@ -87,7 +87,7 @@ public class PrefixUtil {
    * @param message 送信するメッセージ
    */
   public final void logDebug(Object message) {
-    log(loggerPrefix.append(getDebug()).append(Util.mm(message)), isDebugEnabled());
+    log(loggerPrefix.append(getDebug()).append(Util.mm(message)));
   }
 
   protected Component getDebug() {
@@ -100,56 +100,11 @@ public class PrefixUtil {
    * @param message 送信するメッセージ
    */
   public final void logError(Object message) {
-    log(loggerPrefix.append(getError()).append(Util.mm(message)), isErrorEnabled());
+    log(loggerPrefix.append(getError()).append(Util.mm(message)));
   }
 
   protected Component getError() {
     return Util.mm(" <reset><red>[ERROR]<reset> ");
-  }
-
-  /**
-   * {@link #logInfo(Object)}
-   * 
-   * @return infoを許可するかどうか (default = true)
-   */
-  public boolean isInfoEnabled() {
-    return true;
-  }
-
-  /**
-   * {@link #logWarn(Object)}
-   * 
-   * @return warnを許可するかどうか (default = true)
-   */
-  public boolean isWarnEnabled() {
-    return true;
-  }
-
-  /**
-   * {@link #logTrace(Object)}
-   * 
-   * @return traceを許可するかどうか (default = true)
-   */
-  public boolean isTraceEnabled() {
-    return true;
-  }
-
-  /**
-   * {@link #logDebug(Object)}
-   * 
-   * @return debugを許可するかどうか (default = true)
-   */
-  public boolean isDebugEnabled() {
-    return true;
-  }
-
-  /**
-   * {@link #logError(Object)}
-   * 
-   * @return errorを許可するかどうか (default = true)
-   */
-  public boolean isErrorEnabled() {
-    return true;
   }
 
   public final void send(UUID uuid, Object str) {
@@ -157,33 +112,17 @@ public class PrefixUtil {
   }
 
   public final void send(CommandSender sender, Object str) {
-    if (sender != null && isSendEnabled()) {
+    if (sender != null) {
       sender.sendMessage(Util.mm(getPrefix()).append(Util.mm(str)));
     }
   }
 
-  /**
-   * {@link #send}
-   * 
-   * @return sendを許可するかどうか
-   */
-  public boolean isSendEnabled() {
-    return true;
+  public final void cast(Object str) {
+    Bukkit.broadcast(getPrefix().append(Util.mm(str)));
   }
 
-  public final void Cast(String str) {
-    if (isCastEnabled()) {
-      Bukkit.broadcast(getPrefix().append(Util.mm(str)));
-    }
-  }
-
-  /**
-   * {@link #Cast(String)}
-   * 
-   * @return castを許可するかどうか
-   */
-  public boolean isCastEnabled() {
-    return true;
+  public final void important(Object str) {
+    Util.important(Util.mm(getPrefix()).append(Util.mm(str)));
   }
 
   public final Component getPrefix() {

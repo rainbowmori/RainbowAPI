@@ -270,4 +270,16 @@ public class Util {
     Bukkit.broadcast(Util.mm(str));
   }
 
+  /**
+   * send message to all op players
+   *
+   * @param str message
+   */
+  public static void important(Object str) {
+    Bukkit.getOnlinePlayers().forEach(player -> {
+      if (player.isOp()) {
+        player.sendMessage(mm(str));
+      }
+    });
+  }
 }
