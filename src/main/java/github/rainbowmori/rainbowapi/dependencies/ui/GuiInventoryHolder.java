@@ -3,6 +3,8 @@ package github.rainbowmori.rainbowapi.dependencies.ui;
 import github.rainbowmori.rainbowapi.dependencies.ui.menu.MenuHolder;
 import github.rainbowmori.rainbowapi.util.Util;
 import java.util.Objects;
+
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -356,4 +358,23 @@ public abstract class GuiInventoryHolder<P extends Plugin> implements InventoryH
   public void onDrag(InventoryDragEvent event) {
   }
 
+  /**
+   * このinventoryを開く
+   *
+   * @param entity 開く対象
+   */
+  public void openInv(HumanEntity entity) {
+    entity.openInventory(getInventory());
+  }
+
+  /**
+   * このinventoryを複数の対象に開く
+   *
+   * @param entities 開く対象達
+   */
+  public void openInv(HumanEntity... entities) {
+    for (HumanEntity e : entities) {
+      e.openInventory(getInventory());
+    }
+  }
 }
