@@ -15,8 +15,7 @@ public class ConfigAPI extends YmlAPI {
   }
 
   /**
-   * 引数のプラグインのフォルダーの {@link #path} {@link #name} のファイルを読み込みます 例 [plugin=TEST]
-   * [path=first/second]
+   * 引数のプラグインのフォルダーの {@link #path} {@link #name} のファイルを読み込みます 例 [plugin=TEST] [path=first/second]
    * [path=fileName] -> TEST/first/second/fileName.yml のファイルを読み込みます
    *
    * @param plugin 読み込みたいフォルダーのプラグイン

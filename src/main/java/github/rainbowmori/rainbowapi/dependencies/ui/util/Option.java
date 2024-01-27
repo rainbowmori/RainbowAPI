@@ -15,7 +15,7 @@ public interface Option<T> {
    * @param <T>   the type of the value
    * @return a new Option
    */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings({"rawtypes", "unchecked"})
   static <T> Option<T> some(T value) {
     return new Some(value);
   }

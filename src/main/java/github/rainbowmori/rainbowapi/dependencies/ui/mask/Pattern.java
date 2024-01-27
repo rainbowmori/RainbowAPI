@@ -19,12 +19,10 @@ import org.bukkit.plugin.Plugin;
 
 /**
  * <p>
- * パターンは、スロットからある種のオブジェクトへのマッピングを表します。
- * このオブジェクトタイプは、適切なequalsとhashCodeの実装を持たなければなりません（MUST）。
+ * パターンは、スロットからある種のオブジェクトへのマッピングを表します。 このオブジェクトタイプは、適切なequalsとhashCodeの実装を持たなければなりません（MUST）。
  * </p>
  * <p>
- * パターンはマスクと組み合わせて使用するのが最適です, see
- * {@link Mask#applyInventory(Mask, Pattern, Inventory)},
+ * パターンはマスクと組み合わせて使用するのが最適です, see {@link Mask#applyInventory(Mask, Pattern, Inventory)},
  * {@link Mask#applyMenu(Mask, Pattern, MenuHolder)}.
  * </p>
  *
@@ -78,8 +76,7 @@ public interface Pattern<Symbol> {
   }
 
   /**
-   * インデックスを指定された文字列の文字に対応させるパターンを作成します。 改行文字である
-   * '\r'、'\n'はカウントされないので、Javaのテキストブロックとの併用に適しています。
+   * インデックスを指定された文字列の文字に対応させるパターンを作成します。 改行文字である '\r'、'\n'はカウントされないので、Javaのテキストブロックとの併用に適しています。
    *
    * @param grid パターンの文字列-リテラル形式
    * @return the pattern
@@ -114,8 +111,7 @@ public interface Pattern<Symbol> {
   }
 
   /**
-   * すべての偶数スロットを{@link Tile#BLACK}
-   * に、すべての奇数スロットを{@link Tile#WHITE} にマッピングするパターンです。
+   * すべての偶数スロットを{@link Tile#BLACK} に、すべての奇数スロットを{@link Tile#WHITE} にマッピングするパターンです。
    *
    * @param size 在庫の大きさ
    * @return the checkerboard pattern
@@ -134,8 +130,7 @@ public interface Pattern<Symbol> {
   }
 
   /**
-   * すべてのスロットをそのスロットタイプに対応させるパターンです。
-   * インベントリ外のインデックスは{@link SlotType#OUTSIDE}にマッピングされます。
+   * すべてのスロットをそのスロットタイプに対応させるパターンです。 インベントリ外のインデックスは{@link SlotType#OUTSIDE}にマッピングされます。
    *
    * @param shape the shape of the inventory.
    * @return the pattern
@@ -174,7 +169,8 @@ public interface Pattern<Symbol> {
     }
   }
 
-  default <P extends Plugin, MH extends MenuHolder<P>> void applyMenu(Mask<Symbol, ? extends MenuButton<MH>> mask,
+  default <P extends Plugin, MH extends MenuHolder<P>> void applyMenu(
+      Mask<Symbol, ? extends MenuButton<MH>> mask,
       MH menu) {
     for (int slot = 0; slot < menu.getInventory().getSize(); slot++) {
       Symbol symbol = getSymbol(slot);

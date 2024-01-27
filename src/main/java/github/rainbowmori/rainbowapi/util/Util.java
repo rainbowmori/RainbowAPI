@@ -5,18 +5,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.title.Title;
 
 /**
  * よく使うメゾットがある
@@ -39,8 +36,7 @@ public class Util {
    */
   public static Component mm(Object str) {
     return str instanceof Component ? ((Component) str)
-        : MiniMessage.miniMessage().deserialize(String.valueOf(str))
-            .decoration(TextDecoration.ITALIC, false);
+        : MiniMessage.miniMessage().deserialize(String.valueOf(str));
   }
 
   /**
@@ -51,16 +47,6 @@ public class Util {
 
   public static void consoleCommand(String command) {
     Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
-  }
-
-  /**
-   * <red>と&cのadventureとvanillaに対応したものです
-   *
-   * @param str str
-   * @return component
-   */
-  public static Component component(String str) {
-    return mm(vanillaToMM(str));
   }
 
   /**
@@ -106,38 +92,6 @@ public class Util {
   }
 
   /**
-   * &c to <red>
-   *
-   * @param str string
-   * @return change
-   */
-
-  public static String vanillaToMM(String str) {
-    StringBuilder builder = new StringBuilder();
-    char[] chars = str.toCharArray();
-    for (int i = 0; i < chars.length; i++) {
-      if (chars[i] == '&' && i + 1 < chars.length) {
-        char next = chars[i + 1];
-        if ("0123456789AaBbCcDdEeFfKkLlMmNnOoRrXx".indexOf(next) > -1) {
-          ChatColor byChar = ChatColor.getByChar(next);
-          assert byChar != null;
-          String s = byChar.name().toLowerCase();
-          String name = switch (s) {
-            case "underline" -> "underlined";
-            case "magic" -> "obfuscated";
-            default -> s;
-          };
-          builder.append('<').append(name).append('>');
-          i++;
-          continue;
-        }
-      }
-      builder.append(chars[i]);
-    }
-    return builder.toString();
-  }
-
-  /**
    * &c to component
    *
    * @param str string
@@ -160,25 +114,6 @@ public class Util {
   }
 
   /**
-   * § to &
-   *
-   * @param str string
-   * @return convert
-   */
-
-  public static String toAndChatColor(String str) {
-    char[] b = str.toCharArray();
-    for (int i = 0; i < b.length - 1; i++) {
-      if (b[i] == ChatColor.COLOR_CHAR
-          && "0123456789AaBbCcDdEeFfKkLlMmNnOoRrXx".indexOf(b[i + 1]) > -1) {
-        b[i] = '&';
-        b[i + 1] = Character.toLowerCase(b[i + 1]);
-      }
-    }
-    return new String(b);
-  }
-
-  /**
    * listの内容をComponentに変換
    *
    * @param list 変換したいlist
@@ -190,21 +125,14 @@ public class Util {
   }
 
   /**
-   * {@link Component}をStringに変換
+   * {@link Component} をStringに変換
    *
    * @param str 変換したいコンポーネント
    * @return 変換されたString
    */
 
   public static String serialize(Component str) {
-    String serialize = MiniMessage.miniMessage().serialize(str);
-    if (serialize.startsWith("\\u003c!italic\\u003e")) {
-      return serialize.substring("\\u003c!italic\\u003e".length());
-    }
-    if (serialize.startsWith("<!italic>")) {
-      return serialize.substring("<!italic>".length());
-    }
-    return serialize;
+    return MiniMessage.miniMessage().serializeOrNull(str);
   }
 
   /**

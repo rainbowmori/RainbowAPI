@@ -1,11 +1,9 @@
 package github.rainbowmori.rainbowapi.util;
 
 import java.util.UUID;
-
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-
-import net.kyori.adventure.text.Component;
 
 /**
  * {@link #prefix} を先頭につけメッセージを送信するUtil
@@ -26,7 +24,7 @@ public class PrefixUtil {
 
   /**
    * consoleにmessageを送信します
-   * 
+   *
    * @param message 送信するメッセージ
    */
   protected final void log(Object message) {
@@ -35,7 +33,7 @@ public class PrefixUtil {
 
   /**
    * 引数のbooleanに寄って送信するかを選択します
-   * 
+   *
    * @param message  送信するメッセージ
    * @param loggable メッセージを送信するか
    */
@@ -46,9 +44,8 @@ public class PrefixUtil {
   }
 
   /**
-   * consoleにmessageを送信しますが {@link #isInfoEnabled()}
-   * がfalseの場合は送信しません
-   * 
+   * consoleにmessageを送信します
+   *
    * @param message 送信するメッセージ
    */
   public final void logInfo(Object message) {
@@ -57,7 +54,7 @@ public class PrefixUtil {
 
   /**
    * consoleに[prefix + "DEBUG" + message] を送信します
-   * 
+   *
    * @param message 送信するメッセージ
    */
   public final void logWarn(Object message) {
@@ -70,7 +67,7 @@ public class PrefixUtil {
 
   /**
    * consoleに[prefix + "TRACE" + message] を送信します
-   * 
+   *
    * @param message 送信するメッセージ
    */
   public final void logTrace(Object message) {
@@ -83,7 +80,7 @@ public class PrefixUtil {
 
   /**
    * consoleに[prefix + "DEBUG" + message] を送信します
-   * 
+   *
    * @param message 送信するメッセージ
    */
   public final void logDebug(Object message) {
@@ -96,7 +93,7 @@ public class PrefixUtil {
 
   /**
    * consoleに[prefix + "ERROR" + message] を送信します
-   * 
+   *
    * @param message 送信するメッセージ
    */
   public final void logError(Object message) {

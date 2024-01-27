@@ -1,11 +1,7 @@
 package github.rainbowmori.rainbowapi;
 
-import org.bukkit.Location;
-import org.bukkit.inventory.ItemStack;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import de.tr7zw.changeme.nbtapi.NBTContainer;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
@@ -13,6 +9,8 @@ import github.rainbowmori.rainbowapi.api.serializer.ItemStackSerializer;
 import github.rainbowmori.rainbowapi.api.serializer.LocationSerializer;
 import github.rainbowmori.rainbowapi.dependencies.ui.GuiListener;
 import github.rainbowmori.rainbowapi.listener.BlockBreak;
+import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * プラグインのメインクラス
@@ -20,8 +18,7 @@ import github.rainbowmori.rainbowapi.listener.BlockBreak;
 public final class RainbowAPI extends RMPlugin {
 
   /**
-   * {@link Location} and {@link ItemStack} を Serializer and Deserializer
-   * できる {@link Gson}
+   * {@link Location} and {@link ItemStack} を Serializer and Deserializer できる {@link Gson}
    */
   public static final Gson gson = new GsonBuilder()
       .registerTypeAdapter(ItemStack.class, new ItemStackSerializer())

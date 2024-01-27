@@ -10,11 +10,11 @@ import java.util.regex.Pattern;
  */
 public class FormatterUtil {
 
-  private FormatterUtil() {
-  }
-
   // {\w+} → \w+
   private static final Pattern pattern = Pattern.compile("\\{(\\w+)}");
+
+  private FormatterUtil() {
+  }
 
   /**
    * 文字列をマップ名によってフォーマットします。

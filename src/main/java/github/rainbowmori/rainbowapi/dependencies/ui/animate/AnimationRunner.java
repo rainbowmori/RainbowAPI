@@ -30,10 +30,8 @@ public final class AnimationRunner<Item> {
    * @param plugin    アニメーションタスクの実行に使用されるプラグイン
    * @param animation アニメ
    * @param container コンテナを設定します。これは通常
-   *                  {@link org.bukkit.inventory.Inventory#setItem(int, ItemStack)}
-   *                  または
-   *                  {@link MenuHolder#setButton(int,
-   *                  MenuButton)} です。
+   *                  {@link org.bukkit.inventory.Inventory#setItem(int, ItemStack)} または
+   *                  {@link MenuHolder#setButton(int, MenuButton)} です。
    */
   public AnimationRunner(Plugin plugin, Animation animation, IntBiConsumer<Item> container) {
     this.plugin = Objects.requireNonNull(plugin, "plugin cannot be null");
@@ -197,7 +195,7 @@ public final class AnimationRunner<Item> {
     }
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings({"rawtypes", "unchecked"})
   private void showFrame() {
     if (!animation.hasNextFrame()) {
       status = AnimationState.FINISHED;

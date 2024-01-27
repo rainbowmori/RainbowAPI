@@ -7,8 +7,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * アイテムを持ってクリックするとそのアイテムで {@link #itemStackConsumer} が実行され 何も持たずにすると
- * {@link #nullConsumer} が実行されます
+ * アイテムを持ってクリックするとそのアイテムで {@link #itemStackConsumer} が実行され 何も持たずにすると {@link #nullConsumer} が実行されます
  *
  * @param <MH> the MenuHolder type
  */

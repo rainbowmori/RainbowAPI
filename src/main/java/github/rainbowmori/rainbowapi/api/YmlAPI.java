@@ -1,7 +1,6 @@
 package github.rainbowmori.rainbowapi.api;
 
 import java.io.IOException;
-
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -22,8 +21,7 @@ public class YmlAPI extends FileAPI<FileConfiguration> {
   }
 
   /**
-   * 引数のプラグインのフォルダーの {@link #path} {@link #name} のファイルを読み込みます 例 [plugin=TEST]
-   * [path=first/second]
+   * 引数のプラグインのフォルダーの {@link #path} {@link #name} のファイルを読み込みます 例 [plugin=TEST] [path=first/second]
    * [path=fileName] -> TEST/first/second/fileName.yml のファイルを読み込みます
    *
    * @param plugin 読み込みたいフォルダーのプラグイン

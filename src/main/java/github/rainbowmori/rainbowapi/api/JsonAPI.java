@@ -1,22 +1,19 @@
 package github.rainbowmori.rainbowapi.api;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
+import github.rainbowmori.rainbowapi.RainbowAPI;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 import java.util.Objects;
-
 import org.bukkit.plugin.Plugin;
 import org.codehaus.plexus.util.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
-
-import github.rainbowmori.rainbowapi.RainbowAPI;
 
 /**
  * .json ファイルを読み込む {@link FileAPI}
@@ -65,9 +62,10 @@ public class JsonAPI extends FileAPI<JsonObject> {
    * @param json 取得する対象
    * @param path ["data",1,] など
    * @return pathの通りにあった場合はその値を返しますがない場合はnullを返します
-   * @see #getJsonObject(JsonObject, List, boolean )
+   * @see #getJsonObject(JsonObject, List, boolean)
    */
-  public static @Nullable JsonObject getExistJsonObject(@NotNull JsonObject json, List<Object> path) {
+  public static @Nullable JsonObject getExistJsonObject(@NotNull JsonObject json,
+      List<Object> path) {
     return getJsonObject(json, path, false);
   }
 
@@ -76,11 +74,11 @@ public class JsonAPI extends FileAPI<JsonObject> {
    *
    * @param json 取得する対象
    * @param path ["data",1,] など
-   * @return
-   *         pathの通りにあった場合はその値を返しますがない場合はpathを作成して空のJsonObjectを返します
-   * @see #getJsonObject(JsonObject, List, boolean )
+   * @return pathの通りにあった場合はその値を返しますがない場合はpathを作成して空のJsonObjectを返します
+   * @see #getJsonObject(JsonObject, List, boolean)
    */
-  public static @NotNull JsonObject getCreateJsonObject(@NotNull JsonObject json, List<Object> path) {
+  public static @NotNull JsonObject getCreateJsonObject(@NotNull JsonObject json,
+      List<Object> path) {
     return Objects.requireNonNull(getJsonObject(json, path, true));
   }
 

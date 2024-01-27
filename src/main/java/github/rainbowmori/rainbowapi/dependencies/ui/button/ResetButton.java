@@ -22,8 +22,7 @@ public class ResetButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
 
   /**
    * スロットプロバイダとスロットからボタンへのマッピングがないリセットボタンを作成します。
-   * このメソッドを使用するサブクラスは、{@link #setMapping(Supplier, IntFunction)} )}
-   * またはそのオーバーロードのいずれかを呼び出す必要があります。
+   * このメソッドを使用するサブクラスは、{@link #setMapping(Supplier, IntFunction)} )} またはそのオーバーロードのいずれかを呼び出す必要があります。
    * または、{@link #getResetSlots()}と{@link #getButtonFor(int)}をオーバーライドする必要があります。
    *
    * @param icon the button's icon

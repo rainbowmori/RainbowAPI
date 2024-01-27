@@ -1,9 +1,9 @@
 package github.rainbowmori.rainbowapi.dependencies.ui.animate;
 
 import github.rainbowmori.rainbowapi.dependencies.ui.button.MenuButton;
-import github.rainbowmori.rainbowapi.dependencies.ui.menu.MenuHolder;
 import github.rainbowmori.rainbowapi.dependencies.ui.mask.Mask;
 import github.rainbowmori.rainbowapi.dependencies.ui.mask.Pattern;
+import github.rainbowmori.rainbowapi.dependencies.ui.menu.MenuHolder;
 import github.rainbowmori.rainbowapi.dependencies.ui.util.IntBiConsumer;
 import github.rainbowmori.rainbowapi.dependencies.ui.util.IntGenerator;
 import github.rainbowmori.rainbowapi.dependencies.ui.util.Option;
@@ -39,9 +39,7 @@ public class Frame<Symbol, Item> {
   /**
    * コンテナにフレームを適用する。
    *
-   * @param container コンテナを使用します。通常、これは
-   *                  {@link MenuHolder#setButton(int,
-   *                  MenuButton)} or
+   * @param container コンテナを使用します。通常、これは {@link MenuHolder#setButton(int, MenuButton)} or
    *                  {@link org.bukkit.inventory.Inventory#setItem(int, ItemStack)};
    */
   public void apply(IntBiConsumer<? super Item> container) {

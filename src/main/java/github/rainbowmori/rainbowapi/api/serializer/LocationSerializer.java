@@ -1,10 +1,5 @@
 package github.rainbowmori.rainbowapi.api.serializer;
 
-import java.lang.reflect.Type;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -12,6 +7,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import java.lang.reflect.Type;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 public class LocationSerializer implements JsonSerializer<Location>, JsonDeserializer<Location> {
 

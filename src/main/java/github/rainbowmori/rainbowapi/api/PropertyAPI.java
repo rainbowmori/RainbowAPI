@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
-
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -25,8 +24,7 @@ public class PropertyAPI extends FileAPI<Properties> {
   }
 
   /**
-   * 引数のプラグインのフォルダーの {@link #path} {@link #name} のファイルを読み込みます 例 [plugin=TEST]
-   * [path=first/second]
+   * 引数のプラグインのフォルダーの {@link #path} {@link #name} のファイルを読み込みます 例 [plugin=TEST] [path=first/second]
    * [path=fileName] -> TEST/first/second/fileName.properties のファイルを読み込みます
    *
    * @param plugin 読み込みたいフォルダーのプラグイン

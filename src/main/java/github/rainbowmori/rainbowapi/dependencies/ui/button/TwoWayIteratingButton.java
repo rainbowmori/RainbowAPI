@@ -21,8 +21,7 @@ public class TwoWayIteratingButton<T, MH extends MenuHolder<?>> extends Iteratin
    * このコンストラクタを使用すると、サブクラスは構築時にフィールド{@link #backwardsFunction}、{@link #stateUpdater}、{@link
    * #currentState}を初期化することが必要になります。
    * あるいは、{@link #updateStateForwards(MenuHolder, InventoryClickEvent)}、{@link
-   * #updateStateBackwards(MenuHolder, InventoryClickEvent)}、
-   * {@link #getCurrentState()}
+   * #updateStateBackwards(MenuHolder, InventoryClickEvent)}、 {@link #getCurrentState()}
    * をオーバーライドしなければならない。
    *
    * @param icon the icon of this button

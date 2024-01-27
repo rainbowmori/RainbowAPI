@@ -1,19 +1,18 @@
 package github.rainbowmori.rainbowapi.dependencies.anvilgui;
 
+import github.rainbowmori.rainbowapi.util.ItemBuilder;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
-
+import net.wesjd.anvilgui.AnvilGUI;
+import net.wesjd.anvilgui.AnvilGUI.StateSnapshot;
 import org.bukkit.Material;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-import github.rainbowmori.rainbowapi.util.ItemBuilder;
-import net.wesjd.anvilgui.AnvilGUI;
-import net.wesjd.anvilgui.AnvilGUI.StateSnapshot;
-
 public class AnvilInputs {
+
   private AnvilInputs() {
   }
 

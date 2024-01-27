@@ -6,8 +6,7 @@ import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 /**
- * アニメーションは、{@link Frame}のコンテナです。
- * アニメーションは、{@link AnimationRunner}を使って実行することができます。
+ * アニメーションは、{@link Frame}のコンテナです。 アニメーションは、{@link AnimationRunner}を使って実行することができます。
  */
 public interface Animation {
 
@@ -56,8 +55,7 @@ public interface Animation {
   Frame<?, ?> nextFrame();
 
   /**
-   * このアニメーションに別のフレームがあるかどうかをテストします。
-   * このアニメーションに少なくとも1つのフレームがあればtrueを、そうでなければfalseを返す。
+   * このアニメーションに別のフレームがあるかどうかをテストします。 このアニメーションに少なくとも1つのフレームがあればtrueを、そうでなければfalseを返す。
    */
   boolean hasNextFrame();
 

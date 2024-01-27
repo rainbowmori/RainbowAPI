@@ -33,7 +33,7 @@ public class ToggleButton<MH extends MenuHolder<?>> extends CycleButton<Boolean,
    * @param enabled whether the icon is enabled from the start
    */
   public ToggleButton(ItemStack icon, boolean enabled) {
-    super(icon, new Boolean[] { false, true }, enabled ? 1 : 0, false);
+    super(icon, new Boolean[]{false, true}, enabled ? 1 : 0, false);
   }
 
   private static ItemStack enable(ItemStack stack) {

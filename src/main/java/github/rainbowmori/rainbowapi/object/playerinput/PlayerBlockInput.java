@@ -3,7 +3,6 @@ package github.rainbowmori.rainbowapi.object.playerinput;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 
@@ -14,7 +13,8 @@ public abstract class PlayerBlockInput {
 
   public PlayerBlockInput(Player player) {
     if (inputMap.containsKey(player.getUniqueId())) {
-      throw new RuntimeException("ブロック入力中なのにまた入力のメゾットを使用しています player = " + player.getName());
+      throw new RuntimeException(
+          "ブロック入力中なのにまた入力のメゾットを使用しています player = " + player.getName());
     } else {
       inputMap.put(player.getUniqueId(), this);
     }

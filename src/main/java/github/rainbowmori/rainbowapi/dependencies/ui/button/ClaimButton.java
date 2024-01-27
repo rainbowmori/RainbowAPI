@@ -40,8 +40,7 @@ public class ClaimButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
    * Creates the ClaimButton.
    *
    * @param item                  プレーヤーが請求できるアイテム
-   * @param inventoryFullCallback アイテムがプレイヤーのインベントリに移動できなかった場合に呼び出されるコールバック -
-   *                              nullも可
+   * @param inventoryFullCallback アイテムがプレイヤーのインベントリに移動できなかった場合に呼び出されるコールバック - nullも可
    */
   public ClaimButton(ItemStack item, PlayerInventoryFullCallback<MH> inventoryFullCallback) {
     this(item, false, inventoryFullCallback, null);
@@ -52,8 +51,7 @@ public class ClaimButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
    *
    * @param copy                  アイテムのコピーをトップインベントリに残すかどうか
    * @param item                  プレーヤーが請求できるアイテム
-   * @param inventoryFullCallback アイテムがプレイヤーのインベントリに移動できなかった場合に呼び出されるコールバック -
-   *                              nullも可
+   * @param inventoryFullCallback アイテムがプレイヤーのインベントリに移動できなかった場合に呼び出されるコールバック - nullも可
    */
   public ClaimButton(ItemStack item, boolean copy,
       PlayerInventoryFullCallback<MH> inventoryFullCallback) {
@@ -86,8 +84,7 @@ public class ClaimButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
    * Creates the ClaimButton.
    *
    * @param item                       プレーヤーが請求できるアイテム
-   * @param inventoryFullCallback      アイテムがプレイヤーのインベントリに移動できなかった場合に呼び出されるコールバック -
-   *                                   nullも可
+   * @param inventoryFullCallback      アイテムがプレイヤーのインベントリに移動できなかった場合に呼び出されるコールバック - nullも可
    * @param successFulTransferCallback アイテムが正常に転送された後に呼び出されるコールバック - nullも可能です。
    */
   public ClaimButton(ItemStack item, PlayerInventoryFullCallback<MH> inventoryFullCallback,
@@ -100,8 +97,7 @@ public class ClaimButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
    *
    * @param item                       プレーヤーが請求できるアイテム
    * @param copy                       アイテムのコピーをトップインベントリに残すかどうか
-   * @param inventoryFullCallback      アイテムがプレイヤーのインベントリに移動できなかった場合に呼び出されるコールバック -
-   *                                   nullも可
+   * @param inventoryFullCallback      アイテムがプレイヤーのインベントリに移動できなかった場合に呼び出されるコールバック - nullも可
    * @param successFulTransferCallback アイテムが正常に転送された後に呼び出されるコールバック - nullも可能です。
    */
   public ClaimButton(ItemStack item, boolean copy,
@@ -176,8 +172,7 @@ public class ClaimButton<MH extends MenuHolder<?>> extends ItemButton<MH> {
     void onPlayerInventoryFull(MH menuHolder, InventoryClickEvent event);
 
     /**
-     * {@linkplain BiConsumer}が必要な場所で{@linkplain PlayerInventoryFullCallback}を動作させるための便利なメソッドです。
-     * The
+     * {@linkplain BiConsumer}が必要な場所で{@linkplain PlayerInventoryFullCallback}を動作させるための便利なメソッドです。 The
      * default implementation delegates to
      * {@link #onPlayerInventoryFull(MenuHolder, InventoryClickEvent)}.
      *

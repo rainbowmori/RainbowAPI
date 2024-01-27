@@ -4,8 +4,7 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
- * A supplier that caches it's supplied value when it is supplied for the first
- * time.
+ * A supplier that caches it's supplied value when it is supplied for the first time.
  *
  * @param <R> the result type
  */
@@ -26,19 +25,19 @@ public class CachedSupplier<R> implements Supplier<R> {
   }
 
   /**
-   * Gets the result from the cache, or from the delegate supplier if no value was
-   * cached.
+   * Gets the result from the cache, or from the delegate supplier if no value was cached.
    *
    * @return the supplied value
    */
   @SuppressWarnings("unchecked")
   @Override
   public R get() {
-    if (result == NULL) { // use or own NULL instead of the java null because the supplier may supply
-                          // null.
+    if (result
+        == NULL) { // use or own NULL instead of the java null because the supplier may supply
+      // null.
       result = internal.get();
       internal = null; // discard the underlying supplier since it is no longer needed and can be
-                       // garbage collected.
+      // garbage collected.
     }
     return (R) result;
   }

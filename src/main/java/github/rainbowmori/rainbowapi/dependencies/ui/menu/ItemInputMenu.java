@@ -69,7 +69,8 @@ public class ItemInputMenu<P extends Plugin> extends MenuHolder<P> {
     if (!isCloseable) {
       getPlugin().getServer().getScheduler().runTask(getPlugin(), () -> {
         event.getPlayer().openInventory(getInventory());
-        Util.send(event.getPlayer(), "<red>このインベントリーを閉じることはできるません<gray>(noボタンを押して閉じてください)");
+        Util.send(event.getPlayer(),
+            "<red>このインベントリーを閉じることはできるません<gray>(noボタンを押して閉じてください)");
       });
     }
   }

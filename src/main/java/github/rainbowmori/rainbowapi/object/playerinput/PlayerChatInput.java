@@ -40,7 +40,8 @@ public class PlayerChatInput implements ConversationAbandonedListener {
 
   public final void build(Player player) {
     if (isInputted(player)) {
-      throw new RuntimeException("チャット入力中なのにまた入力のメゾットを使用しています player = " + player.getName());
+      throw new RuntimeException(
+          "チャット入力中なのにまた入力のメゾットを使用しています player = " + player.getName());
     } else {
       factory.buildConversation(player).begin();
     }

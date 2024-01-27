@@ -1,7 +1,12 @@
 package github.rainbowmori.rainbowapi.dependencies.ui.mask;
 
-import static github.rainbowmori.rainbowapi.dependencies.ui.mask.Shapes.*;
+import static github.rainbowmori.rainbowapi.dependencies.ui.mask.Shapes.chest;
+import static github.rainbowmori.rainbowapi.dependencies.ui.mask.Shapes.combine;
+import static github.rainbowmori.rainbowapi.dependencies.ui.mask.Shapes.generic;
+import static github.rainbowmori.rainbowapi.dependencies.ui.mask.Shapes.grid;
 
+import java.util.Arrays;
+import java.util.Objects;
 import org.bukkit.entity.Llama;
 import org.bukkit.entity.Mule;
 import org.bukkit.event.inventory.InventoryType.SlotType;
@@ -9,9 +14,6 @@ import org.bukkit.inventory.AbstractHorseInventory;
 import org.bukkit.inventory.HorseInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.LlamaInventory;
-
-import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Represents the shape of an inventory.
@@ -22,8 +24,10 @@ public interface Shape {
   Shape ANVIL = combine(generic(2, SlotType.CRAFTING), generic(1, SlotType.RESULT));
   Shape BARREL = grid(9, 3, SlotType.CONTAINER);
   Shape BEACON = generic(1, SlotType.CRAFTING);
-  Shape BLAST_FURNACE = combine(generic(1, SlotType.CRAFTING), generic(1, SlotType.FUEL), generic(1, SlotType.RESULT));
-  Shape BREWING = combine(generic(3, SlotType.RESULT), generic(1, SlotType.CRAFTING), generic(1, SlotType.FUEL));
+  Shape BLAST_FURNACE = combine(generic(1, SlotType.CRAFTING), generic(1, SlotType.FUEL),
+      generic(1, SlotType.RESULT));
+  Shape BREWING = combine(generic(3, SlotType.RESULT), generic(1, SlotType.CRAFTING),
+      generic(1, SlotType.FUEL));
   Shape CARTOGRAPHY = combine(generic(2, SlotType.CRAFTING), generic(1, SlotType.RESULT));
   Shape CHEST1 = chest(1);
   Shape CHEST2 = chest(2);
@@ -39,19 +43,22 @@ public interface Shape {
   Shape DROPPER = grid(3, 3, SlotType.CONTAINER);
   Shape ENCHANTING = generic(2, SlotType.CRAFTING);
   Shape ENDER_CHEST = chest(3);
-  Shape FURNACE = combine(generic(1, SlotType.CRAFTING), generic(1, SlotType.FUEL), generic(1, SlotType.RESULT));
+  Shape FURNACE = combine(generic(1, SlotType.CRAFTING), generic(1, SlotType.FUEL),
+      generic(1, SlotType.RESULT));
   Shape GRINDSTONE = combine(generic(2, SlotType.CRAFTING), generic(1, SlotType.RESULT));
   Shape HOPPER = grid(5, 1, SlotType.CONTAINER);
   Shape JUKEBOX = generic(1, SlotType.CONTAINER);
   Shape LECTERN = generic(1, SlotType.CONTAINER/* TODO SlotType.BOOK */);
   Shape LOOM = combine(generic(3, SlotType.CRAFTING), generic(1, SlotType.RESULT));
   Shape MERCHANT = combine(generic(2, SlotType.CRAFTING), generic(1, SlotType.RESULT));
-  Shape PLAYER = combine(grid(9, 1, SlotType.QUICKBAR), grid(9, 3, SlotType.CONTAINER), generic(4, SlotType.ARMOR),
+  Shape PLAYER = combine(grid(9, 1, SlotType.QUICKBAR), grid(9, 3, SlotType.CONTAINER),
+      generic(4, SlotType.ARMOR),
       generic(1, SlotType.CONTAINER /* off hand */));
   Shape SHULKER_BOX = grid(9, 3, SlotType.CONTAINER);
   Shape SMITHING = combine(generic(2, SlotType.CRAFTING), generic(1, SlotType.RESULT));
   Shape SMITHING_NEW = combine(generic(3, SlotType.CRAFTING), generic(1, SlotType.RESULT));
-  Shape SMOKER = combine(generic(1, SlotType.CRAFTING), generic(1, SlotType.FUEL), generic(1, SlotType.RESULT));
+  Shape SMOKER = combine(generic(1, SlotType.CRAFTING), generic(1, SlotType.FUEL),
+      generic(1, SlotType.RESULT));
   Shape STONECUTTER = combine(generic(1, SlotType.CRAFTING), generic(1, SlotType.RESULT));
   Shape WORKBENCH = combine(grid(3, 3, SlotType.CRAFTING), generic(1, SlotType.RESULT));
 
@@ -93,11 +100,13 @@ public interface Shape {
           case 54:
             return CHEST6;
           default:
-            if (size % 9 == 0)
+            if (size % 9 == 0) {
               return chest(size / 9);
-            else
-              // can't be sure that it's actually a grid. just return a generic shape.
+            } else
+            // can't be sure that it's actually a grid. just return a generic shape.
+            {
               return generic(size, SlotType.CONTAINER);
+            }
         }
       case CHISELED_BOOKSHELF:
         return CHISELED_BOOKSHELF;
@@ -174,6 +183,7 @@ public interface Shape {
 }
 
 class Shapes {
+
   private Shapes() {
   }
 
@@ -187,8 +197,9 @@ class Shapes {
 
   static CombinedShape combine(Shape... shapes) {
     Objects.requireNonNull(shapes, "shapes cannot be null");
-    if (shapes.length <= 1)
+    if (shapes.length <= 1) {
       throw new IllegalArgumentException("It is non-sensical to combine less than 2 shapes");
+    }
 
     return new CombinedShape(shapes);
   }
@@ -234,10 +245,12 @@ final class GenericShape implements Shape {
 
   @Override
   public boolean equals(Object o) {
-    if (o == this)
+    if (o == this) {
       return true;
-    if (!(o instanceof GenericShape that))
+    }
+    if (!(o instanceof GenericShape that)) {
       return false;
+    }
 
     return this.getSize() == that.getSize();
   }
