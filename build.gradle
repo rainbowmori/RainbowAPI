@@ -15,19 +15,15 @@ group = 'github.rainbowmori'
 version = '3.0.0'
 description = 'Rainbow API'
 
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-}
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
-    maven { url = "https://repo.papermc.io/repository/maven-public/" }
-    maven {
-        name = 'sonatype'
-        url = 'https://oss.sonatype.org/content/groups/public/'
-    }
-    maven { url = "https://repo.codemc.org/repository/maven-public/" }
-    maven { url "https://libraries.minecraft.net" }
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url = 'https://oss.sonatype.org/content/groups/public/' }
+    maven { url = 'https://repo.codemc.org/repository/maven-public/' }
+    maven { url = 'https://libraries.minecraft.net' }
 }
 
 def paperAPI = 'io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT'
@@ -35,12 +31,14 @@ def anvilGUI = 'net.wesjd:anvilgui:1.9.2-SNAPSHOT'
 def commandAPI = 'dev.jorel:commandapi-bukkit-shade:9.3.0'
 def paperLib = 'io.papermc:paperlib:1.0.8'
 def nbtAPI = 'de.tr7zw:item-nbt-api:2.12.2'
+def fastBoard = 'fr.mrmicky:fastboard:2.0.2'
 
 def relocates = [
         'dev.jorel.commandapi': 'github.rainbowmori.rainbowapi.dependencies.commandapi',
         'io.papermc.lib'      : 'github.rainbowmori.rainbowapi.dependencies.paperlib',
         'net.wesjd.anvilgui'  : 'github.rainbowmori.rainbowapi.dependencies.anvilgui',
-        'de.tr7zw.changeme.nbtapi'  : 'github.rainbowmori.rainbowapi.dependencies.nbtapi'
+        'de.tr7zw.changeme.nbtapi'  : 'github.rainbowmori.rainbowapi.dependencies.nbtapi',
+        'fr.mrmicky.fastboard' : 'github.rainbowmori.rainbowapi.dependencies.fastboard',
 ]
 
 dependencies {
@@ -51,6 +49,7 @@ dependencies {
     shadow commandAPI
     shadow paperLib
     shadow nbtAPI
+    shadow fastBoard
 }
 
 def buildFileName = "${project.name}"
@@ -73,7 +72,7 @@ static void withFileSystem(URI uri, callback) {
 task shadowSources {
     doLast{
         Charset sourceCharset = StandardCharsets.UTF_8
-        java.nio.file.Path shadowedSourceDir = file("build/tmp/src").toPath()
+        java.nio.file.Path shadowedSourceDir = file('build/tmp/src').toPath()
 
         delete shadowedSourceDir
 
@@ -108,12 +107,12 @@ task shadowSources {
 
                 int sourceFileCounter = 0
 
-                withFileSystem(new URI("jar:" + it.file.toURI())) { sourceJarFileSystem ->
+                withFileSystem(new URI('jar:' + it.file.toURI())) { sourceJarFileSystem ->
 
                     zipTree(it.file).visit { element ->
                         String relativePath = element.relativePath.toString()
-                        if (relativePath.startsWith("META-INF") || element.file.isDirectory() ||
-                                !element.file.getName().endsWith(".java")) {
+                        if (relativePath.startsWith('META-INF') || element.file.isDirectory() ||
+                                !element.file.getName().endsWith('.java')) {
                             return
                         }
 
@@ -148,7 +147,7 @@ task sourceJar(type: Jar, dependsOn: shadowSources) {
     archiveBaseName.set(buildFileName)
     archiveClassifier.set('sources')
     archiveVersion.set('')
-    from files("build/tmp/src")
+    from files('build/tmp/src')
 }
 
 task copyJar(dependsOn: 'shadowJar', type: Exec) {
