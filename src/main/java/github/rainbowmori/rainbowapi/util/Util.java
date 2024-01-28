@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.Title;
@@ -36,7 +37,8 @@ public class Util {
    */
   public static Component mm(Object str) {
     return str instanceof Component ? ((Component) str)
-        : MiniMessage.miniMessage().deserialize(String.valueOf(str));
+        : MiniMessage.miniMessage().deserialize(String.valueOf(str))
+            .decoration(TextDecoration.ITALIC, false);
   }
 
   /**
